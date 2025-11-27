@@ -3,13 +3,13 @@ import re
 from typing import List, Optional
 
 import numexpr
-from langchain.chains.openai_functions import create_structured_output_runnable
+from src.llm_factory import build_structured_runnable
 from langchain_core.messages import SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.pydantic_v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 from langchain_core.runnables import RunnableConfig
 from langchain_core.tools import StructuredTool
-from langchain_openai import ChatOpenAI
+from langchain_core.language_models import BaseChatModel
 
 _MATH_DESCRIPTION = (
     "math(problem: str, context: Optional[list[str]]) -> float:\n"
@@ -106,7 +106,7 @@ def _evaluate_expression(expression: str) -> str:
     return re.sub(r"^\[|\]$", "", output)
 
 
-def get_math_tool(llm: ChatOpenAI):
+def get_math_tool(llm: BaseChatModel):
     prompt = ChatPromptTemplate.from_messages(
         [
             ("system", _SYSTEM_PROMPT),
@@ -114,7 +114,7 @@ def get_math_tool(llm: ChatOpenAI):
             MessagesPlaceholder(variable_name="context", optional=True),
         ]
     )
-    extractor = create_structured_output_runnable(ExecuteCode, llm, prompt)
+    extractor = build_structured_runnable(llm, prompt, ExecuteCode)
 
     def calculate_expression(
         problem: str,

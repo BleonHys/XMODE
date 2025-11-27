@@ -1,6 +1,5 @@
-from langchain.chains.openai_functions import create_structured_output_runnable
 from langchain_core.messages import AIMessage
-from langchain_core.pydantic_v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 from typing import Sequence
 from typing import Any, Callable, Dict, Literal, Optional, Sequence, Type, Union, List
 
@@ -42,16 +41,42 @@ class JoinOutputs(BaseModel):
     action: Union[FinalResponse, Replan]
 
 
+def _strip_content(content: Any) -> Any:
+    if isinstance(content, str):
+        return content.strip()
+    if isinstance(content, list):
+        sanitized = []
+        for item in content:
+            if isinstance(item, dict):
+                new_item = dict(item)
+                if "text" in new_item and isinstance(new_item["text"], str):
+                    new_item["text"] = new_item["text"].strip()
+                sanitized.append(new_item)
+            else:
+                sanitized.append(_strip_content(item))
+        return sanitized
+    if isinstance(content, dict):
+        return {
+            key: _strip_content(value) if key == "text" else value
+            for key, value in content.items()
+        }
+    return content
+
+
 def parse_joiner_output(decision: JoinOutputs) -> List[BaseMessage]:
-    response = [AIMessage(content=f"Thought: {decision.thought}")]
+    response = [AIMessage(content=_strip_content(f"Thought: {decision.thought}"))]
     if isinstance(decision.action, Replan):
         return response + [
             SystemMessage(
-                content=f"Context from last attempt: {decision.action.feedback}"
+                content=_strip_content(
+                    f"Context from last attempt: {decision.action.feedback}"
+                )
             )
         ]
     else:
-        return response + [AIMessage(content=str(decision.action.response))]
+        return response + [
+            AIMessage(content=_strip_content(str(decision.action.response)))
+        ]
 
 
 def select_recent_messages(messages: list) -> dict:
@@ -60,4 +85,9 @@ def select_recent_messages(messages: list) -> dict:
         selected.append(msg)
         if isinstance(msg, HumanMessage):
             break
-    return {"messages": selected[::-1]}
+    sanitized = []
+    for msg in selected[::-1]:
+        clone = msg.copy()
+        clone.content = _strip_content(clone.content)
+        sanitized.append(clone)
+    return {"messages": sanitized}

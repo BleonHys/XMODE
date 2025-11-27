@@ -1,11 +1,11 @@
 from typing import List, Optional
-from langchain.chains.openai_functions import create_structured_output_runnable
+from src.llm_factory import build_structured_runnable
 from langchain_core.messages import SystemMessage, HumanMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.pydantic_v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 from langchain_core.runnables import RunnableConfig
 from langchain_core.tools import StructuredTool
-from langchain_openai import ChatOpenAI
+from langchain_core.language_models import BaseChatModel
 import sqlite3
 import re
 import json
@@ -119,7 +119,7 @@ def _execute_sql_query(query: str, db_path: str, as_dict=True) -> Dict[str, Any]
 
 
 
-def get_text2SQL_tools(llm: ChatOpenAI, db_path:str):
+def get_text2SQL_tools(llm: BaseChatModel, db_path:str):
     """
     Provide the SQL code from a given question.
 
@@ -141,13 +141,15 @@ def get_text2SQL_tools(llm: ChatOpenAI, db_path:str):
             MessagesPlaceholder(variable_name="info", optional=True),
         ]
     )
-    # extractor = create_structured_output_runnable(ExecuteCode, llm, prompt)
+    # extractor = build_structured_runnable(llm, prompt, ExecuteCode)
     extractor= prompt | llm.with_structured_output(ExecuteCode)
     
     def text2SQL(
-        problem: str,
+        problem: Optional[str] = None,
         context: Optional[Union[str,List[str]]] = None,
     ):
+        if not problem:
+            return {"status": "error", "message": "text2SQL called without problem"}
         #tables_columns=_parse_input(tables_columns)
         chain_input = {"problem": problem}
         if context:

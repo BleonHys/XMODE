@@ -1,19 +1,19 @@
-import re
-from typing import List, Optional, Union
-import json
 import ast
-import re, sys,os
-sys.path.append(os.path.dirname(os.getcwd()) + '/src')
+import json
+import os
+import re
+from pathlib import Path
+from typing import List, Optional, Union
 
-from langchain.chains.openai_functions import create_structured_output_runnable
+from src.llm_factory import build_structured_runnable
 from langchain_core.messages import SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.pydantic_v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 from langchain_core.runnables import RunnableConfig
 from langchain_core.tools import StructuredTool
-from langchain_openai import ChatOpenAI
-from pathlib import Path
+from langchain_core.language_models import BaseChatModel
 from src.utils import correct_malformed_json
+from src.settings import get_settings
 
 from langchain_core.messages import (
     BaseMessage,
@@ -69,7 +69,10 @@ def _get_study_id(data, db_path):
     except:
         return None
 
-def _get_report_url(_d, db_path, current_path ='.'):
+SETTINGS = get_settings()
+
+
+def _get_report_url(_d, db_path, current_path: Optional[str] = None):
      
     print("_d",_d)
     if 'study_id' not in _d:
@@ -78,8 +81,8 @@ def _get_report_url(_d, db_path, current_path ='.'):
                 return ValueError(f"The report analysis task requires study_id or any related in the data\nstate:\n{_d}")
     d = _d
     print("the after d: ",d )
-    root_path = Path(current_path).resolve()
-    files_path = root_path /'reports' 
+    base_path = Path(current_path).resolve() if current_path else SETTINGS.base_dir
+    files_path = base_path /'reports' 
     res=[]
 
     # find all the image files under the folder
@@ -111,7 +114,7 @@ class ExecuteCode(BaseModel):
    
 
 
-def get_report_analysis_tools(llm: ChatOpenAI,db_path:str):
+def get_report_analysis_tools(llm: BaseChatModel,db_path:str):
     """
    
     Args:
@@ -127,7 +130,7 @@ def get_report_analysis_tools(llm: ChatOpenAI,db_path:str):
             MessagesPlaceholder(variable_name="report_info"),
         ]
     )
-    extractor = create_structured_output_runnable(ExecuteCode, llm, prompt)
+    extractor = build_structured_runnable(llm, prompt, ExecuteCode)
 
 
     def report_analysis(
@@ -199,4 +202,3 @@ def get_report_analysis_tools(llm: ChatOpenAI,db_path:str):
         func=report_analysis,
         description=_DESCRIPTION,
     )
-

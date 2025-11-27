@@ -1,8 +1,5 @@
 
-import getpass
 import os
-
-from langchain_openai import ChatOpenAI
 
 # Imported from the https://github.com/langchain-ai/langgraph/tree/main/examples/plan-and-execute repo
 from tools.text2SQL import get_text2SQL_tools
@@ -12,15 +9,14 @@ from tools.image_analysis_tool_m3ae import get_image_analysis_tools as m3ae
 from tools.intent_table_tool import get_intent_tables_tool
 
 
-from langchain.chains.openai_functions import create_structured_output_runnable
+from src.llm_factory import build_structured_runnable
 from langchain_core.messages import AIMessage
-from langchain_core.pydantic_v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 from src.joiner import Replan, JoinOutputs
 from src.joiner import *
 
 
 from langchain import hub
-from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import (
     BaseMessage,
     FunctionMessage,
@@ -29,7 +25,6 @@ from langchain_core.messages import (
 )
 from langchain_core.prompts import ChatPromptTemplate, FewShotChatMessagePromptTemplate
 
-from langchain_openai import ChatOpenAI
 
 import itertools
 from src.planner import *
@@ -40,17 +35,17 @@ from typing import Dict
 
 from langgraph.graph import END, MessageGraph, START
 
+from src.llm_factory import build_chat_model
 
 
-def graph_construction(model,saver=None):
-    # 
-    db_path="/home/ubuntu/workspace/XMODE-LLMCompiler/mimic_iv_cxr.db"
-    temperature = 0
+def graph_construction(model, db_path, temperature=0, saver=None):
+    db_path = str(db_path)
     ## Tools
-    translate= get_text2SQL_tools(ChatOpenAI(model=model, temperature=temperature),db_path)
-    image_analysis = get_image_analysis_tools(ChatOpenAI(model=model, temperature= temperature),db_path)
+    base_kwargs = {"model": model, "temperature": temperature}
+    translate = get_text2SQL_tools(build_chat_model(**base_kwargs), db_path)
+    image_analysis = get_image_analysis_tools(build_chat_model(**base_kwargs), db_path)
     tools = [translate, image_analysis]
-    llm = ChatOpenAI(model=model)
+    llm = build_chat_model(**base_kwargs)
    
     prompt = ChatPromptTemplate.from_messages(
     [
@@ -260,18 +255,17 @@ def graph_construction(model,saver=None):
     Available actions:
     (1) Finish(the final answer to return to the user): returns the answer and finishes the task.
     (2) Replan(the reasoning and other information that will help you plan again. Can be a line of any length): instructs why we must replan
+
+    Using the above previous actions, decide whether to replan or finish. 
+    If all the required information is present, you may finish. 
+    If you have made many attempts to find the information without success, admit so and respond with whatever information you have gathered so the user can work well with you. 
     ''' ),
         ("user", '{messages}'),
-        ("assistant", '''
-        Using the above previous actions, decide whether to replan or finish. 
-        If all the required information is present, you may finish. 
-        If you have made many attempts to find the information without success, admit so and respond with whatever information you have gathered so the user can work well with you. 
-        '''),
         ]
     ).partial(
         examples=""
     )  
-    runnable = create_structured_output_runnable(JoinOutputs, llm, joiner_prompt)
+    runnable = build_structured_runnable(llm, joiner_prompt, JoinOutputs)
 
     joiner = select_recent_messages | runnable | parse_joiner_output
 
@@ -314,15 +308,13 @@ def graph_construction(model,saver=None):
     
     return chain
 
-def graph_construction_m3ae(model,saver=None):
-    # 
-    db_path="/home/ubuntu/workspace/XMODE-LLMCompiler/mimic_iv_cxr.db"
-    temperature=0
+def graph_construction_m3ae(model, db_path, temperature=0, saver=None):
+    db_path = str(db_path)
     ## Tools
-    translate= get_text2SQL_tools(ChatOpenAI(model=model, temperature=temperature),db_path)
+    translate= get_text2SQL_tools(build_chat_model(model=model, temperature=temperature),db_path)
     image_analysis = m3ae(db_path)
     tools = [translate, image_analysis]
-    llm = ChatOpenAI(model=model, temperature=temperature)
+    llm = build_chat_model(model=model, temperature=temperature)
    
     prompt = ChatPromptTemplate.from_messages(
     [
@@ -536,16 +528,12 @@ def graph_construction_m3ae(model,saver=None):
     (2) Replan(the reasoning and other information that will help you plan again. Can be a line of any length): instructs why we must replan
     ''' ),
         ("user", '{messages}'),
-        ("assistant", '''
-        Using the above previous actions, decide whether to replan or finish. 
-        If all the required information is present, you may finish. 
-        If you have made many attempts to find the information without success, admit so and respond with whatever information you have gathered so the user can work well with you.      
-        '''),
+        
         ]
     ).partial(
         examples=""
     )  
-    runnable = create_structured_output_runnable(JoinOutputs, llm, joiner_prompt)
+    runnable = build_structured_runnable(llm, joiner_prompt, JoinOutputs)
 
     joiner = select_recent_messages | runnable | parse_joiner_output
 
@@ -588,15 +576,13 @@ def graph_construction_m3ae(model,saver=None):
     
     return chain
 
-def graph_construction_report(model,saver=None):
-    # 
-    db_path="/home/ubuntu/workspace/XMODE-LLMCompiler/mimic_iv_cxr.db"
-    temperature=0
+def graph_construction_report(model, db_path, temperature=0, saver=None):
+    db_path = str(db_path)
     ## Tools
-    translate= get_text2SQL_tools(ChatOpenAI(model=model, temperature=temperature),db_path)
-    report_analysis = get_report_analysis_tools(ChatOpenAI(model=model, temperature= temperature),db_path)
+    translate= get_text2SQL_tools(build_chat_model(model=model, temperature=temperature),db_path)
+    report_analysis = get_report_analysis_tools(build_chat_model(model=model, temperature=temperature),db_path)
     tools = [translate,report_analysis]
-    llm = ChatOpenAI(model=model)
+    llm = build_chat_model(model=model, temperature=temperature)
    
     prompt = ChatPromptTemplate.from_messages(
     [
@@ -802,15 +788,12 @@ def graph_construction_report(model,saver=None):
     (2) Replan(the reasoning and other information that will help you plan again. Can be a line of any length): instructs why we must replan
     ''' ),
         ("user", '{messages}'),
-        ("assistant", '''Using the above previous actions, decide whether to replan or finish. 
-         If all the required information is present, you may finish. 
-         If you have made many attempts to find the information without success, admit so and respond with whatever information you have gathered so the user can work well with you. 
-        '''),
+        
         ]
     ).partial(
         examples=""
     )  
-    runnable = create_structured_output_runnable(JoinOutputs, llm, joiner_prompt)
+    runnable = build_structured_runnable(llm, joiner_prompt, JoinOutputs)
 
     joiner = select_recent_messages | runnable | parse_joiner_output
 
@@ -853,15 +836,13 @@ def graph_construction_report(model,saver=None):
     
     return chain
 
-def graph_construction_m3ae_few_shot(model, few_shots_list=None, saver=None):
-    # 
-    db_path="/home/ubuntu/workspace/XMODE-LLMCompiler/mimic_iv_cxr.db"
-    temperature=0
+def graph_construction_m3ae_few_shot(model, db_path, few_shots_list=None, temperature=0, saver=None):
+    db_path = str(db_path)
     ## Tools
-    translate= get_text2SQL_tools(ChatOpenAI(model=model, temperature=temperature),db_path)
+    translate= get_text2SQL_tools(build_chat_model(model=model, temperature=temperature),db_path)
     report_analysis = m3ae(db_path)
     tools = [translate, report_analysis]
-    llm = ChatOpenAI(model=model)
+    llm = build_chat_model(model=model, temperature=temperature)
     if few_shots_list is None or len(few_shots_list)==0:
         prompt = ChatPromptTemplate.from_messages(
             [
@@ -910,50 +891,6 @@ def graph_construction_m3ae_few_shot(model, few_shots_list=None, saver=None):
         example_prompt = ChatPromptTemplate.from_messages(
             [("user", "{user}"),
              ("assistant", 'Remember, ONLY respond with the task list in the correct format! E.g.:\nidx. tool(arg_name=args)'),
-             ("assistant", "{assistant}"),
-            ])
-        few_shots_prompt = FewShotChatMessagePromptTemplate(
-            example_prompt=example_prompt,
-            examples=few_shots_list
-        )
-        
-        prompt = ChatPromptTemplate.from_messages(
-            [
-            ("system",'''Given a user question and a database schema, analyze the question to identify and break it down into relevant sub-questions. 
-            Determine which tools (e.g., text2SQL, image_analysis) are appropriate for answering each sub-question based on the available database information and tools.
-            First, you should begin by thoroughly analyzing the user's main question. It’s important to understand the key components and objectives within the query.
-            Next, you must review the database schema. This involves examining the tables, fields, and relationships within the database to identify which parts of the schema are relevant to the user’s question, and creat a set of sub-questions.
-            In cases where the user’s question involves data that is not directly available in the database schema —such as when there is no corresponding table or column for the required information or chest x-ray analysis— you must consider the need for image analysis using the image_analysis tools. 
-            For instance, if the question involves comparision of studies, images, chest x-rays  for specific abnormality, disease or finding in the paitent study and the relevant column (e.g., abnormality, findings, chest x-ray) is not found in the database schema, you must retrieve th`image_id` of the study for image analysis, 
-            This ensures we can address parts of the question that rely on visual data. If the question includes the study ID, you can directly initiate the image analysis task using the mentioned id for a study.
-            With a clear understanding of the question and the database schema, you can now break down the main question into smaller, more manageable sub-questions. 
-            These sub-questions should each target a specific aspect of the main question. 
-            After identifying the sub-questions, you should determine the most appropriate tools to answer each one. Depending on the nature of the sub-questions, we might use a variety of tools.
-            Each sub-question should be a textual question. Dont generate a code as a sub-question.
-            Each image analysis task should consider only one study. Study id is different than image id. 
-            Include the database schema in the context for text2SQL tasks. 
-            It is also important to note that in the database, the current time is set to 2105-12-31 23:59:00. This must be taken into account when performing any time-based data queries or analyses.
-            In any database retreival task, retieve `subject_id` together with other columns.
-            Create a plan to solve it with the utmost parallelizability. 
-            Each plan should comprise an action from the following  {num_tools} types:
-            {tool_descriptions}
-            {num_tools}. join(): Collects and combines results from prior actions.
-
-        - An LLM agent is called upon invoking join() to either finalize the user query or wait until the plans are executed.
-        - join should always be the last action in the plan, and will be called in two scenarios:
-        (a) if the answer can be determined by gathering the outputs from tasks to generate the final response.
-        (b) if the answer cannot be determined in the planning phase before you execute the plans. Guidelines:
-        - Each action described above contains input/output types and description.
-            - You must strictly adhere to the input and output types for each action.
-            - The action descriptions contain the guidelines. You MUST strictly follow those guidelines when you use the actions.
-        - Each action in the plan should strictly be one of the above types. Follow the Python conventions for each action.
-        - Each action MUST have a unique ID, which is strictly increasing.
-        - Inputs for actions can either be constants or outputs from preceding actions. In the latter case, use the format $id to denote the ID of the previous action whose output will be the input.
-        - If there is an input from from preceding actions, always point its id as `$id` in the context of the action/
-        - Always call join as the last action in the plan. Say '<END_OF_PLAN>' after you call join
-        - Ensure the plan maximizes parallelizability.
-        - Only use the provided action types. If a query cannot be addressed using these, invoke the join action for the next steps.
-        - Never introduce new actions other than the ones provided.'''),
                 ("user", "Below are some examples of the few-shot tasks you will be asked to complete. These samples are only for generate the plan. They MUST NOT affect any other tasks."),
                 few_shots_prompt,
                 ("user", 'Now let\'s try the real question answering task. Please ALWAYS looking for the tables and columns from the LAST given database schema by the text2SQL tasks. '),
@@ -1126,16 +1063,12 @@ def graph_construction_m3ae_few_shot(model, few_shots_list=None, saver=None):
     (2) Replan(the reasoning and other information that will help you plan again. Can be a line of any length): instructs why we must replan
     ''' ),
         ("user", '{messages}'),
-        ("assistant", '''
-        Using the above previous actions, decide whether to replan or finish. 
-        If all the required information is present, you may finish. 
-        If you have made many attempts to find the information without success, admit so and respond with whatever information you have gathered so the user can work well with you.      
-        '''),
+        
         ]
     ).partial(
         examples=""
     )  
-    runnable = create_structured_output_runnable(JoinOutputs, llm, joiner_prompt)
+    runnable = build_structured_runnable(llm, joiner_prompt, JoinOutputs)
 
     joiner = select_recent_messages | runnable | parse_joiner_output
 

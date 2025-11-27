@@ -1,23 +1,21 @@
-import re, sys,os
-sys.path.append(os.path.dirname(os.getcwd()) + '/src')
-sys.path.append(os.path.dirname(os.getcwd()) + '/tools')
-
-from typing import List, Optional, Union
-import json
+import base64
 import ast
+from pathlib import Path
+from typing import List, Optional, Union
 
-from langchain.chains.openai_functions import create_structured_output_runnable
+from src.llm_factory import build_structured_runnable
 from langchain_core.messages import SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.pydantic_v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 from langchain_core.runnables import RunnableConfig
 from langchain_core.tools import StructuredTool
-from langchain_openai import ChatOpenAI
+from langchain_core.language_models import BaseChatModel
 from PIL import Image
-import base64
-from pathlib import Path
+from src.settings import get_settings
+from tools.vqa_m3ae import post_vqa_m3ae_with_url
 from utils import correct_malformed_json
-from vqa_m3ae import post_vqa_m3ae_with_url
+
+SETTINGS = get_settings()
 
 from langchain_core.messages import (
     BaseMessage,
@@ -74,7 +72,7 @@ def _get_study_id(data,db_path):
     except:
         return None
 
-def _get_image_url(_d, db_path, current_path ='.'):
+def _get_image_url(_d, db_path, current_path: Optional[str] = None):
      
     # print("_d",_d)
     if 'image_id' not in _d and 'study_id' not in _d:
@@ -83,8 +81,8 @@ def _get_image_url(_d, db_path, current_path ='.'):
                 return ValueError(f"The image analysis task requires image_id or study_id or any related in the data\nstate:\n{_d}")
             
     d = _d
-    root_path = Path(current_path).resolve()
-    files_path = root_path /'files' 
+    base_path = Path(current_path).resolve() if current_path else SETTINGS.base_dir
+    files_path = base_path / 'files' 
     res=[]
     if 'image_id' in d:
         # find all the image files under the folder

@@ -1,13 +1,13 @@
 import re
 from typing import List, Optional, Union
 import json
-from langchain.chains.openai_functions import create_structured_output_runnable
+from src.llm_factory import build_structured_runnable
 from langchain_core.messages import SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.pydantic_v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 from langchain_core.runnables import RunnableConfig
 from langchain_core.tools import StructuredTool
-from langchain_openai import ChatOpenAI
+from langchain_core.language_models import BaseChatModel
 from PIL import Image
 import base64
 from pathlib import Path
@@ -92,7 +92,7 @@ class PythonREPL:
 python_repl = PythonREPL() 
       
 
-def get_plotting_tools(llm: ChatOpenAI, log_path):
+def get_plotting_tools(llm: BaseChatModel, log_path):
     """
    
     Args:
@@ -110,15 +110,16 @@ def get_plotting_tools(llm: ChatOpenAI, log_path):
         ]
     )
     
-    extractor = create_structured_output_runnable(ExecuteCode, llm, prompt)
+    extractor = build_structured_runnable(llm, prompt, ExecuteCode)
 
 
     def data_plotting(
-        question: str,
+        question: Optional[str] = None,
         context: Union[str, List[str],dict] = None,
         config: Optional[RunnableConfig] = None,
     ):
-       
+        if not question:
+            return {"status": "error", "message": "data_plotting called without question"}
         #test
         
         #context="[{'study_id': 56222792, 'image_id': '3c7d71b0-383da7fc-80f78f8c-6be2da46-3614e059'}]"
@@ -156,4 +157,3 @@ def get_plotting_tools(llm: ChatOpenAI, log_path):
         func = data_plotting,
         description=_DESCRIPTION,
     )
-

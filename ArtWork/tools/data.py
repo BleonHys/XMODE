@@ -1,13 +1,13 @@
 import re
 from typing import List, Optional, Union
 import json
-from langchain.chains.openai_functions import create_structured_output_runnable
+from src.llm_factory import build_structured_runnable
 from langchain_core.messages import SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.pydantic_v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 from langchain_core.runnables import RunnableConfig
 from langchain_core.tools import StructuredTool
-from langchain_openai import ChatOpenAI
+from langchain_core.language_models import BaseChatModel
 from PIL import Image
 import base64
 from pathlib import Path
@@ -95,7 +95,7 @@ class PythonREPL:
 python_repl = PythonREPL() 
       
 
-def get_data_preparation_tools(llm: ChatOpenAI, log_path):
+def get_data_preparation_tools(llm: BaseChatModel, log_path):
     """
    
     Args:
@@ -113,15 +113,16 @@ def get_data_preparation_tools(llm: ChatOpenAI, log_path):
         ]
     )
     
-    extractor = create_structured_output_runnable(ExecuteCode, llm, prompt)
+    extractor = build_structured_runnable(llm, prompt, ExecuteCode)
 
 
     def data_preparation(
-        question: str,
+        question: Optional[str] = None,
         context: Union[str, List[str],dict] = None,
         config: Optional[RunnableConfig] = None,
     ):
-       
+        if not question:
+            return {"status": "error", "message": "data_preparation called without question"}
         print("context-first:", context,type(context))
         context_str= str(context).strip()
         # context_str = _ADDITIONAL_CONTEXT_PROMPT.format(
@@ -157,4 +158,3 @@ def get_data_preparation_tools(llm: ChatOpenAI, log_path):
         func = data_preparation,
         description=_DESCRIPTION,
     )
-

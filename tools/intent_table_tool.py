@@ -1,11 +1,11 @@
 from typing import List, Dict, Any, Optional
-from langchain.chains.openai_functions import create_structured_output_runnable
+from src.llm_factory import build_structured_runnable
 from langchain_core.messages import SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.pydantic_v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 from langchain_core.runnables import RunnableConfig
 from langchain_core.tools import StructuredTool
-from langchain_openai import ChatOpenAI
+from langchain_core.language_models import BaseChatModel
 from src.utils import _get_db_schema_json, _get_db_schema
 import sqlite3
 import json
@@ -61,7 +61,7 @@ class TableSelectionOutput(BaseModel):
         description="The list of tables from the database schema that are relevant to answering the user's question.",
     )
 
-def get_intent_tables_tool(llm: ChatOpenAI, db_path: str):
+def get_intent_tables_tool(llm: BaseChatModel, db_path: str):
     """
     Tool for identifying relevant tables in a database schema for a given question.
 
@@ -81,7 +81,7 @@ def get_intent_tables_tool(llm: ChatOpenAI, db_path: str):
         ]
     )
     
-    # extractor = create_structured_output_runnable(TableSelectionOutput, llm, prompt)
+    # extractor = build_structured_runnable(llm, prompt, TableSelectionOutput)
     extractor= prompt | llm.with_structured_output(TableSelectionOutput)
 
     

@@ -3,7 +3,6 @@ import time
 from concurrent.futures import ThreadPoolExecutor, wait
 from typing import Any, Dict, Iterable, List, Union
 from langchain import hub
-from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import (
     BaseMessage,
     FunctionMessage,
@@ -13,7 +12,6 @@ from langchain_core.messages import (
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnableBranch
 from langchain_core.tools import BaseTool
-from langchain_openai import ChatOpenAI
 from src.output_parser import Task
 
 from langchain_core.runnables import (
@@ -33,6 +31,14 @@ def _get_observations(messages: List[BaseMessage]) -> Dict[int, Any]:
             results[int(message.additional_kwargs["idx"])] = message.content
     
     return results
+
+
+def _last_user_question(messages: List[BaseMessage]) -> str:
+    """Return the most recent human message content as a fallback question."""
+    for msg in reversed(messages):
+        if isinstance(msg, HumanMessage):
+            return str(msg.content)
+    return ""
 
 
 class SchedulerInput(TypedDict):
@@ -137,6 +143,7 @@ def schedule_tasks(scheduler_input: SchedulerInput) -> List[FunctionMessage]:
     # avoid race conditions...
     futures = []
     retry_after = 0.25  # Retry every quarter second
+    user_question = _last_user_question(messages)
     with ThreadPoolExecutor() as executor:
         for task in tasks:
             deps = task["dependencies"]
@@ -144,6 +151,23 @@ def schedule_tasks(scheduler_input: SchedulerInput) -> List[FunctionMessage]:
                 task["tool"] if isinstance(task["tool"], str) else task["tool"].name
             )
             args_for_tasks[task["idx"]] = task["args"]
+            # Lightweight guard: skip scheduling tools with clearly missing required args
+            if isinstance(task["tool"], BaseTool):
+                # Skip obviously invalid invocations to avoid cascading crashes
+                missing_args_error = None
+                if task["tool"].name == "text2SQL":
+                    # opportunistically fill missing problem from last user question
+                    if not task["args"]:
+                        task["args"] = {}
+                    if not task["args"].get("problem"):
+                        task["args"]["problem"] = user_question or "UNKNOWN QUESTION"
+                        args_for_tasks[task["idx"]] = task["args"]
+                if task["tool"].name in {"data_preparation", "data_plotting"}:
+                    if not task["args"]:
+                        task["args"] = {}
+                    if not task["args"].get("question"):
+                        task["args"]["question"] = user_question or "UNKNOWN QUESTION"
+                        args_for_tasks[task["idx"]] = task["args"]
             if (
                 # Depends on other tasks
                 deps

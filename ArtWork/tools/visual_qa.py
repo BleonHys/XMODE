@@ -1,28 +1,24 @@
-import re, sys,os
-sys.path.append(os.path.dirname(os.getcwd()) + '/src')
-sys.path.append(os.path.dirname(os.getcwd()) + '/tools')
-
+import os
+import re
+from pathlib import Path
 from typing import List, Optional, Union
 import json
 import ast
 
-from langchain.chains.openai_functions import create_structured_output_runnable
+from src.llm_factory import build_structured_runnable
 from langchain_core.messages import SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.pydantic_v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 from langchain_core.runnables import RunnableConfig
 from langchain_core.tools import StructuredTool
-from langchain_openai import ChatOpenAI
 from PIL import Image
 import base64
-from pathlib import Path
 from src.utils import correct_malformed_json
+from src.settings import get_settings
 
 
-
-
-
-IMAGE_PATH='/home/ubuntu/workspace/XMODE/ArtWork/data'
+SETTINGS = get_settings()
+IMAGE_PATH = Path(os.environ.get("ARTWORK_IMAGE_DIR", SETTINGS.base_dir / "ArtWork" / "data"))
 # 'For example, 1. text2SQL("given the last study of patient 13859433 this year") and then 2. image_analysis("are there any anatomicalfinding that are still no in the left hilar structures in $1") is NEVER allowed. '
 #'Use 2. image_analysis("are there any anatomicalfinding that are still no in the left hilar structures", context=["$1"]) instead.\n'
 _DESCRIPTION = (
@@ -100,7 +96,7 @@ def get_image_analysis_tools(vqa):
             context=[context]
         try:
             vqa_answers=[]
-            image_paths=[f"{IMAGE_PATH}/{ctx['img_path']}" for ctx in context]
+            image_paths=[(IMAGE_PATH / ctx['img_path']).as_posix() for ctx in context]
             
             # print(image_paths)
             

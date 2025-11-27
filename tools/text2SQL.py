@@ -1,16 +1,15 @@
 import ast
 from typing import List, Optional
-from langchain.chains.openai_functions import create_structured_output_runnable
 from langchain_core.messages import SystemMessage, HumanMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.pydantic_v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 from langchain_core.runnables import RunnableConfig
 from langchain_core.tools import StructuredTool
-from langchain_openai import ChatOpenAI
+from langchain_core.language_models import BaseChatModel
 import sqlite3
 import re
 import json
-from langchain.sql_database import SQLDatabase
+from langchain_community.utilities import SQLDatabase
 from src.utils import _get_db_schema
 from sqlalchemy import create_engine
 
@@ -150,7 +149,7 @@ def _execute_sql_query(query: str, db_path: str, as_dict=True) -> Dict[str, Any]
 
 
 
-def get_text2SQL_tools(llm: ChatOpenAI, db_path:str):
+def get_text2SQL_tools(llm: BaseChatModel, db_path:str):
     """
     Provide the SQL code from a given question.
 
@@ -210,4 +209,3 @@ def get_text2SQL_tools(llm: ChatOpenAI, db_path:str):
         func=text2SQL,
         description=_DESCRIPTION,
     )
-

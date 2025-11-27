@@ -1,8 +1,5 @@
 
-import getpass
 import os
-
-from langchain_openai import ChatOpenAI
 
 # Imported from the https://github.com/langchain-ai/langgraph/tree/main/examples/plan-and-execute repo
 from tools.text2SQL import get_text2SQL_tools
@@ -12,15 +9,14 @@ from tools.image_analysis_tool_m3ae import get_image_analysis_tools as m3ae
 from tools.intent_table_tool import get_intent_tables_tool
 
 
-from langchain.chains.openai_functions import create_structured_output_runnable
+from src.llm_factory import build_structured_runnable
 from langchain_core.messages import AIMessage
-from langchain_core.pydantic_v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 from src.joiner import Replan, JoinOutputs
 from src.joiner import *
 
 
 from langchain import hub
-from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import (
     BaseMessage,
     FunctionMessage,
@@ -28,8 +24,6 @@ from langchain_core.messages import (
     SystemMessage,
 )
 from langchain_core.prompts import ChatPromptTemplate
-
-from langchain_openai import ChatOpenAI
 
 import itertools
 from src.planner import *
@@ -40,18 +34,16 @@ from typing import Dict
 
 from langgraph.graph import END, MessageGraph, START
 
+from src.llm_factory import build_chat_model
 
-
-def graph_construction(model,saver=None):
-    # 
-    db_path="/home/ubuntu/workspace/XMODE-LLMCompiler/mimic_iv_cxr.db"
-    temperature=0
+def graph_construction(model, db_path, temperature=0, saver=None):
+    db_path = str(db_path)
     ## Tools
-    translate= get_text2SQL_tools(ChatOpenAI(model=model, temperature=temperature),db_path)
-    image_analysis = get_image_analysis_tools(ChatOpenAI(model=model, temperature= temperature),db_path)
-    intent_table = get_intent_tables_tool(ChatOpenAI(model=model, temperature=temperature),db_path)
+    translate= get_text2SQL_tools(build_chat_model(model=model, temperature=temperature),db_path)
+    image_analysis = get_image_analysis_tools(build_chat_model(model=model, temperature=temperature),db_path)
+    intent_table = get_intent_tables_tool(build_chat_model(model=model, temperature=temperature),db_path)
     tools = [intent_table, translate, image_analysis]
-    llm = ChatOpenAI(model=model)
+    llm = build_chat_model(model=model, temperature=temperature)
    
     prompt = ChatPromptTemplate.from_messages(
     [
@@ -257,16 +249,11 @@ def graph_construction(model,saver=None):
     (2) Replan(the reasoning and other information that will help you plan again. Can be a line of any length): instructs why we must replan
     ''' ),
         ("user", '{messages}'),
-        ("assistant", '''
-        Using the above previous actions, decide whether to replan or finish. 
-        If all the required information is present, you may finish. 
-        If you have made many attempts to find the information without success, admit so and respond with whatever information you have gathered so the user can work well with you. 
-        '''),
         ]
     ).partial(
         examples=""
     )  
-    runnable = create_structured_output_runnable(JoinOutputs, llm, joiner_prompt)
+    runnable = build_structured_runnable(llm, joiner_prompt, JoinOutputs)
 
     joiner = select_recent_messages | runnable | parse_joiner_output
 
@@ -309,16 +296,14 @@ def graph_construction(model,saver=None):
     
     return chain
 
-def graph_construction_m3ae(model,saver=None):
-    # 
-    db_path="/home/ubuntu/workspace/XMODE-LLMCompiler/mimic_iv_cxr.db"
-    temperature=0
+def graph_construction_m3ae(model, db_path, temperature=0, saver=None):
+    db_path = str(db_path)
     ## Tools
-    translate= get_text2SQL_tools(ChatOpenAI(model=model, temperature=temperature),db_path)
+    translate= get_text2SQL_tools(build_chat_model(model=model, temperature=temperature),db_path)
     image_analysis = m3ae(db_path)
-    intent_tables = get_intent_tables_tool(ChatOpenAI(model=model, temperature=temperature),db_path)
+    intent_tables = get_intent_tables_tool(build_chat_model(model=model, temperature=temperature),db_path)
     tools = [intent_tables, translate, image_analysis]
-    llm = ChatOpenAI(model=model,temperature=temperature)
+    llm = build_chat_model(model=model, temperature=temperature)
    
     prompt = ChatPromptTemplate.from_messages(
     [
@@ -531,16 +516,11 @@ def graph_construction_m3ae(model,saver=None):
     (2) Replan(the reasoning and other information that will help you plan again. Can be a line of any length): instructs why we must replan
     ''' ),
         ("user", '{messages}'),
-        ("assistant", '''
-        Using the above previous actions, decide whether to replan or finish. 
-        If all the required information is present, you may finish. 
-        If you have made many attempts to find the information without success, admit so and respond with whatever information you have gathered so the user can work well with you.      
-        '''),
         ]
     ).partial(
         examples=""
     )  
-    runnable = create_structured_output_runnable(JoinOutputs, llm, joiner_prompt)
+    runnable = build_structured_runnable(llm, joiner_prompt, JoinOutputs)
 
     joiner = select_recent_messages | runnable | parse_joiner_output
 
@@ -583,15 +563,13 @@ def graph_construction_m3ae(model,saver=None):
     
     return chain
 
-def graph_construction_report(model,saver=None):
-    # 
-    db_path="/home/ubuntu/workspace/XMODE-LLMCompiler/mimic_iv_cxr.db"
-    temperature=0
+def graph_construction_report(model, db_path, temperature=0, saver=None):
+    db_path = str(db_path)
     ## Tools
-    translate= get_text2SQL_tools(ChatOpenAI(model=model, temperature=temperature),db_path)
-    report_analysis = get_report_analysis_tools(ChatOpenAI(model=model, temperature= temperature),db_path)
+    translate= get_text2SQL_tools(build_chat_model(model=model, temperature=temperature),db_path)
+    report_analysis = get_report_analysis_tools(build_chat_model(model=model, temperature=temperature),db_path)
     tools = [translate,report_analysis]
-    llm = ChatOpenAI(model=model)
+    llm = build_chat_model(model=model, temperature=temperature)
    
     prompt = ChatPromptTemplate.from_messages(
     [
@@ -797,15 +775,11 @@ def graph_construction_report(model,saver=None):
     (2) Replan(the reasoning and other information that will help you plan again. Can be a line of any length): instructs why we must replan
     ''' ),
         ("user", '{messages}'),
-        ("assistant", '''Using the above previous actions, decide whether to replan or finish. 
-         If all the required information is present, you may finish. 
-         If you have made many attempts to find the information without success, admit so and respond with whatever information you have gathered so the user can work well with you. 
-        '''),
         ]
     ).partial(
         examples=""
     )  
-    runnable = create_structured_output_runnable(JoinOutputs, llm, joiner_prompt)
+    runnable = build_structured_runnable(llm, joiner_prompt, JoinOutputs)
 
     joiner = select_recent_messages | runnable | parse_joiner_output
 

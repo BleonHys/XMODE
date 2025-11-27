@@ -3,13 +3,13 @@ import re
 from typing import List, Optional
 import json
 import numexpr
-from langchain.chains.openai_functions import create_structured_output_runnable
+from src.llm_factory import build_structured_runnable
 from langchain_core.messages import SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.pydantic_v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 from langchain_core.runnables import RunnableConfig
 from langchain_core.tools import StructuredTool
-from langchain_openai import ChatOpenAI
+from langchain_core.language_models import BaseChatModel
 
 
 _DESCRIPTION = (
@@ -84,7 +84,7 @@ output_schema = {
                     }
                 }
 
-def get_identifier_tools(llm: ChatOpenAI):
+def get_identifier_tools(llm: BaseChatModel):
     """
     Identifies relevant columns from the given database schema.
 
@@ -104,13 +104,14 @@ def get_identifier_tools(llm: ChatOpenAI):
         ]
     )
 
-    extractor = create_structured_output_runnable(
-        output_schema,
-        llm, 
+    extractor = build_structured_runnable(
+        llm,
         prompt,
+        output_schema,
         mode="openai-tools",
-        enforce_function_usage=True, 
-        return_single=True)
+        enforce_function_usage=True,
+        return_single=True,
+    )
 
     def identify_columns(
         problem: str,
@@ -138,4 +139,3 @@ def get_identifier_tools(llm: ChatOpenAI):
         func=identify_columns,
         description=_DESCRIPTION,
     )
-
