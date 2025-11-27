@@ -45,6 +45,12 @@ Add the API keys for the following services in the `.env` file:
 ```sh
 OPENAI_API_KEY={your_openai_api_key}
 LANGCHAIN_API_KEY={your_langchain_api_key}
+ANTHROPIC_API_KEY={your_anthropic_api_key}  # Required when using Claude
+# Optional: required when using the OpenRouter VQA backend
+OPENROUTER_API_KEY={your_openrouter_api_key}
+# Optional headers for OpenRouter rankings (only if you want to expose them)
+OPENROUTER_SITE_URL={https://your-site.example}   # optional
+OPENROUTER_SITE_NAME={Your Site Name}             # optional
 ```
 
 ### Running the experiments:
@@ -52,10 +58,20 @@ LANGCHAIN_API_KEY={your_langchain_api_key}
 #### Preparing the datasets:
 
 1. Preparing the databases:
-We have preprocessed the databases for both `Artwork` and `EHRXQA` datasets. You can download the preprocessed databases from the following links :
 
-   - [art.db](https://drive.google.com/uc?export=download&id=1OMyab3ZbY92gKQ9FfC0z2c6SImakESrf) to the `ArtWork` directory.
-   - [mimic_iv_cxr.db](https://drive.google.com/uc?export=download&id=19o7R_nZ3vSkVn8QXXoMVfe1zw6xqXv-N) to the root directory.
+   Run the helper script to fetch the pre-processed SQLite databases referenced throughout the project:
+
+   ```sh
+   python scripts/prepare_data.py          # downloads every configured asset
+   # or fetch only what you need, e.g.
+   python scripts/prepare_data.py --target artwork_db
+   python scripts/prepare_data.py --target ehrxqa_db
+   ```
+
+   The script reads the download metadata from `config/defaults.json` (or your custom config) and saves the files to the locations expected by the pipelines. If you prefer to download manually, the current sources are:
+
+   - [art.db](https://drive.google.com/uc?export=download&id=1OMyab3ZbY92gKQ9FfC0z2c6SImakESrf) → `ArtWork/art.db`
+   - [mimic_iv_cxr.db](https://drive.google.com/uc?export=download&id=19o7R_nZ3vSkVn8QXXoMVfe1zw6xqXv-N) → project root
 
 2. Preparing the images for the __EHRXQA__ dataset:
 
@@ -74,6 +90,9 @@ You can get the images from the [repository of Artwork]() and copy them to the `
 ```sh
 python ArtWork/main.py
 ```
+
+- To run the Artwork pipeline with Anthropic Claude, set `"provider": "anthropic"` in `config/defaults.json` and ensure `ANTHROPIC_API_KEY` is available. Du kannst die Einrichtung interaktiv in `ArtWork/playground/playground_XMODE_ArtWork_claude.ipynb` ausprobieren.
+- To offload the Artwork visual question answering to OpenRouter, set `"vqa_provider": "openrouter"` in `config/defaults.json`, optionally point `"openrouter_model"` to any vision-capable model available on OpenRouter, and provide the `OPENROUTER_*` variables in `.env`.
 
 2. On EHRXQA Dataset
 

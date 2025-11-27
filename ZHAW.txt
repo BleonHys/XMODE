@@ -1,0 +1,920 @@
+                                                 Explainable Multi-Modal Data Exploration in Natural
+                                                              Language via LLM Agent
+                                                               Farhad Nooralahzadeh                                                          Yi Zhang
+                                                                 noor@zhaw.ch                                                           zhay@zhaw.ch
+                                                       Zurich University of Applied Sciences                                  Zurich University of Applied Sciences
+                                                                   Switzerland                                                            Switzerland
+
+                                                                     Jonathan Fürst                                                      Kurt Stockinger
+arXiv:2412.18428v1 [cs.AI] 24 Dec 2024
+
+
+
+
+                                                                  fues@zhaw.ch                                                           stog@zhaw.ch
+                                                       Zurich University of Applied Sciences                                  Zurich University of Applied Sciences
+                                                                   Switzerland                                                            Switzerland
+                                         ABSTRACT                                                                      medical example to queries over shared scientific databases
+                                         International enterprises, organizations, or hospitals collect                (also containing structured data, text, images, and videos),
+                                         large amounts of multi-modal data stored in databases, text                   queries over public datasets, and more. However, building
+                                         documents, images, and videos. While there has been recent                    such a system presents significant research challenges in un-
+                                         progress in the separate fields of multi-modal data exploration               derstanding user intent, which often relies on complex queries,
+                                         as well as in database systems that automatically translate                   querying multimedia databases, and ensuring explainability.
+                                         natural language questions to database query languages, the                      To understand these challenges, a concrete scenario of
+                                         research challenge of querying database systems combined                      multi-modal exploration involving a relational database,
+                                         with other unstructured modalities such as images in natural                  text documents, and images is outlined here.. Assume that a
+                                         language is widely unexplored.                                                user asks the following question in natural language: Show
+                                            In this paper, we propose XMODE 1 - a system that enables                  me the progression of cancer lesions over the last 12 months of
+                                         explainable, multi-modal data exploration in natural language.                patients with lung cancer who are smokers. (see the upper part
+                                         Our approach is based on the following research contributions:                of Figure 1 b). This seemingly straightforward query encap-
+                                         (1) Our system is inspired by a real-world use case that en-                  sulates several fundamental challenges in multifaceted data
+                                         ables users to explore multi-modal information systems. (2)                   exploration. First, it requires the decomposition of a natural
+                                         XMODE leverages a LLM-based agentic AI framework to de-                       language query into semantically precise sub-queries, each
+                                         compose a natural language question into subtasks such as                     targeting diverse data modalities while preserving the origi-
+                                         text-to-SQL generation and image analysis. (3) Experimental                   nal intent. Critical to this process is optimizing the workflow
+                                         results on multi-modal datasets over relational data and im-                  sequence - determining which queries should be executed
+                                         ages demonstrate that our system outperforms state-of-the-art                 first to minimize computational overhead and maximize ef-
+                                         multi-modal exploration systems, excelling not only in accu-                  ficiency. For instance, filtering patients through structured
+                                         racy but also in various performance metrics such as query                    database queries before retrieving and analyzing medical im-
+                                         latency, API costs, planning efficiency, and explanation qual-                ages significantly reduces the computational burden compared
+                                         ity, thanks to the more effective utilization of the reasoning                to analyzing all available images first. In our example in Fig-
+                                         capabilities of LLMs.                                                         ure 1, natural language 𝑁 𝐿1 is a text-to-SQL task to query the
+                                                                                                                       relational database for the name and age of patients diagnosed
+                                         1    INTRODUCTION                                                             with lung cancer. The result is then used for 𝑁 𝐿2 - an image
+                                                                                                                       analysis task - looking for cancer lesions in those patients’
+                                         Consider a hospital in the near future in which doctors, nurses,
+                                                                                                                       images. Finally, 𝑁 𝐿3 - a visualization task - shows the can-
+                                         and data scientists naturally access digital patient data. This
+                                                                                                                       cer progression for each patient. This workflow sequence is
+                                         data includes electronic health records (EHR), usually stored
+                                                                                                                       deliberately optimized: starting with structured data filtering
+                                         in relational databases [19], but also multimedia data such as
+                                                                                                                       before proceeding to more computationally intensive image
+                                         medical images from CT scans or X-rays and the correspond-
+                                                                                                                       analysis tasks. The complexity compounds when considering
+                                         ing reports written by medical experts (unstructured data).
+                                                                                                                       the temporal aspect of disease progression, which necessitates
+                                         Each participant seeks to interactively query all these datasets
+                                                                                                                       careful alignment of data across different modalities and times-
+                                         in natural language. Different participants also have different
+                                                                                                                       tamps. Furthermore, in healthcare settings, result verification
+                                         skill sets and exploration goals. Additionally, given the appli-
+                                                                                                                       and transparency are paramount. Users must be able to trace
+                                         cation domain, each user wants to understand exactly how the
+                                                                                                                       back any conclusions to the source data, understand how inter-
+                                         system evaluates their queries. A system that supports such
+                                                                                                                       mediate results were derived, and verify the accuracy of each
+                                         a scenario would unlock a plethora of applications, from this
+                                                                                                                       analytical step. This necessitates a workflow where users can
+                                         1 The source code, data, and/or other artifacts have been made available at
+                                                                                                                       validate intermediate results before proceeding to subsequent
+                                         https://github.com/yizhang-unifr/XMODE.
+                                                                          Farhad Nooralahzadeh, Yi Zhang, Jonathan Fürst, and Kurt Stockinger
+
+
+
+
+                      (a) Medical Data Exploration                              (b) Art Work Data Exploration
+
+
+Figure 1: Example workflows of multi-modal data exploration in natural language over heterogeneous data sources. A
+complex natural language question is decomposed into sub-questions to better enable answer explainability. Each
+sub-question is designated to a particular task (such as text-to-SQL translation or image analysis). These tasks may be
+expanded to utilize various tools and machine learning models to address specific downstream requirements necessary
+for answering a user’s natural language question.
+
+
+analysis stages, with the ability to refine queries if the results   are embedded in a single query language, e.g., NeuralSQL [1]
+don’t align with their clinical expectations.                        embeds visual QA functions directly in SQL; (2) agentic work-
+   Now imagine a museum or art gallery in the near future,           flows, in which different tools (e.g., relational database oper-
+where curators, researchers, and data scientists can naturally       ators, vision model) are intelligently combined to answer a
+access and explore digital art collections. This data includes       user-question such as Caesura [20].
+structured information about paintings, such as artist, title,          In this paper, we propose XMODE - a multi-modal data
+medium, and subject matter, which is typically stored in a           exploration system that uses an Large language Model based
+relational database. The collection also includes unstructured       agentic framework to tackle these challenges. The basic idea
+data, such as the full text of art critiques and descriptions, as    is to first decompose a complex natural language question
+well as digital images of the artworks. Similar to the previous      into simpler sub-questions. Each question is then translated
+use case for medical data exploration, also the use case for         into a workflow of specific tasks. By applying smart planning,
+artwork exploration is multi-modal and requires analysis of          our approach can reason about which task in the workflow
+heterogeneous data (e.g. tabular and image) as shown in Figure       fails and thus re-plan that specific task rather than restarting
+1(b).                                                                the complete workflow. The advantage of our approach com-
+   The goal of our paper is to support such multi-modal data         pared to similar systems such as Caesura [20] is that it enables
+exploration scenarios in natural language by designing and           parallel task execution through the construction of a directed
+implementing a system to address the following challenges:           acyclic task graph and requires a lower number of tokens from
+• Heterogeneous data exploration: How can we design a system         prompt engineering resulting in more efficient query execu-
+  that accurately interprets user queries in natural language        tion times and API calling costs. The main contributions of
+  for exploring heterogeneous data sources with high accu-           our paper are as follows:
+  racy?                                                              • Higher accuracy: XMODE is based on an agentic AI frame-
+• Orchestrating multiple expert models and tools for data ex-           work that shows higher accuracy for exploring multi-modal
+  ploration: How can we automatically break down a user                 data than traditional work due to the smart orchestration
+  question into sub-questions that can later be organized into          of different tasks of the data exploration pipeline.
+  a workflow plan? How do we delegate these tasks to the             • Improved performance: XMODE demonstrates performance
+  appropriate expert models from the available toolbox, con-            improvements compared to state-of-the-art through paral-
+  sidering dependencies and the potential for parallel execu-           lelism, reasoning and smart re-planning.
+  tion?                                                              • Better explainability: XMODE enhances explainability by
+• Explainability: How can we design a system that facilitates           enabling a user to inspect the decisions and reasoning at
+  multi-modal exploration, allowing end users to trace conclu-          each step that led to the final output, tracing back through
+  sions back to their source data, comprehend how interme-              the results of all previous steps.
+  diate results were generated, and identify situations where        • Generalizablilty: XMODE is designed and evaluated in a
+  questions remain unanswered due to missing data?                      zero-shot setting, demonstrating its ability to perform com-
+                                                                        plex tasks without relying on In-Context Learning (ICL),
+   Existing works on multi-modal data exploration in natural
+                                                                        thereby improving both adaptability and accessibility.
+language follow mainly two paradigms (1) multiple modalities
+Explainable Multi-Modal Data Exploration in Natural Language via LLM Agent
+
+
+2    RELATED WORK
+   Text-to-SQL systems. The research field of text-to-SQL sys-
+tems has seen tremendous progress over the last few years
+[5, 18] due to advances in large language models. Original
+success can be attributed to rather simplistic datasets consist-
+ing of databases with only several tables as in Spider [24].
+Especially the introduction of new benchmarks such as Sci-
+enceBenchmark [27] or BIRD [13] has further pushed these
+limits of these systems. Most of the research efforts have been
+restricted to querying databases in English apart from a few
+exceptions such as Statbot.Swiss [17].
+   Explainability. Explainability aims to provide a deeper un-
+                                                                                       Figure 2: XMODE system architecture.
+derstanding of how machine learning models make predictions
+by illuminating the decision-making processes within these
+models. It strives to offer transparency, enabling stakeholders              science, where medical device regulations mandate systems
+to comprehend, trust, and effectively manage the outcomes                    to provide detailed explanations of how specific results are
+produced by these models [10, 16]. Although there has been re-               obtained, ensuring that no potentially fatal medical treatment
+cent progress in artificial intelligence in general, for the task of         is recommended.
+data exploration in natural language, explainability is an open
+issue. Recently, in the multi-agent collaboration framework                  3     SYSTEM DESIGN
+[23], explainability has been designed to mimic human-like
+top-down reasoning by utilizing the extensive knowledge of                   We now describe the design of our system called XMODE,
+Large Language Models (LLMs). For the task of text-to-SQL,                   which enables explainable multi-modal data exploration in
+explainability is basically an unexplored research topic with                natural language.
+the exception of back-translating automatically generated SQL
+statements to natural language [2, 22, 27]. However, back trans-             3.1    System Architecture of XMODE
+lation is often not enough to fully explain how a system comes               The architecture of our system, XMODE, is illustrated in Fig-
+up with an answer and how to interpret the results.                          ures 2. We describe the five primary components of XMODE
+                                                                             using an example query applied to artwork data, which in-
+   Multi-modal systems. Video Database Management Systems                    cludes relational tables and images: Plot the number of paint-
+(VDBMSs) support efficient and complex queries over video                    ings that depict war for each century. The system’s operation
+data, but are often restricted to videos only (e.g., [4, 7, 25]).            is depicted in Figure 3.
+ThalamusDB [6] enables queries over multi-modal data but                        XMODE is an agentic system [9] driven by a llm-based
+requires SQL as input, with explicit identification of the pred-             dynamic planner pattern [11] equipped with a comprehen-
+icates that should be applied to an attribute corresponding                  sive toolkit containing all the necessary models to decompose
+to video or audio data. Similarly, MindsDB2 and VIVA [8] re-                 a user’s question, such as a multi-modal natural language
+quire that users write SQL and manually combine data from                    question, into a workflow (i.e., a graph of sub-questions). The
+relational tables and models. Vision-language models provide                 workflow is represented as a Directed Acyclic Graph (DAG), of
+textual descriptions of video data [26], but are not designed to             which each node corresponds to a simple sub-question with a
+support precise, structured queries.                                         specific tool assigned by the planner. The planner determines
+   Most closely related to our approach are CAESURA [21],                    sub-tasks that can be executed in parallel and it manages their
+which supports natural language queries over multi-modal                     dependencies. XMODE is designed to be adaptable and to allow
+data lakes, and PALIMPZEST [15], which enables optimizing                    for dynamic debugging and plan modification (re-planning) if
+AI workload. The key distinction of our system, XMODE, is its                necessary, e.g., in case of failures during a text-to-SQL sub-task.
+focus on efficiently orchestrating various model calls and their             As it shown in Figure 1, the design of XMODE incorporates
+dependencies. This approach not only improves latency and                    multiple components:
+cost but also enhances accuracy by minimizing interference
+from the outputs of intermediate function calls.                             (1) Planning & Expert Model Allocation. The system analyzes
+   Moreover, the related systems enable multi-modal queries                      the user question, then constructs a sequence of tasks to
+across structured and unstructured data with a focus on query                    be executed considering their dependency. It determines
+planning. However, these systems do not address enhancing                        the required expert models from an available toolkit for
+the accuracy and explainability of the underlying model for                      each task, as well as their input arguments and their inter-
+natural language data exploration tasks. Explainability and                      dependencies to synthesize them as a workflow. To do
+answer justification are crucial in domains like medical data                    so, it employs the power of reasoning capability of LLMs.
+                                                                                 The output of this stage is a workflow in the form of a
+2 https://docs.mindsdb.com                                                       DAG that formalizes task dependencies. As we can see in
+                                                                       Farhad Nooralahzadeh, Yi Zhang, Jonathan Fürst, and Kurt Stockinger
+
+
+
+
+Figure 3: XMODE system architecture in ArtWork [20] with an example of processing a multi-modal query. The query
+is automatically decomposed into various components such as text2SQL, and image analysis which can be inspected
+by the user for explainability.
+
+
+
+
+Figure 4: XMODE system architecture in EHRXQA [1] with an example of processing a multi-modal query. The query
+is automatically decomposed into various components which can be inspected by the user for explainability.
+
+
+    Figure 3, the original natural language question is split         them according to the workflow. Each expert model has an
+    into four tasks 𝑡 1 to 𝑡 4 , namely text2SQL, image_anal-         inner self-debugging component to handle errors that can
+    ysis, data_preparation and data_plotting. We lever-               occur during its execution. As we can see in the middle of
+    age LLMs’ reasoning ability to generate a workflow from           Figure 3, XMODE provides reasoning in natural language
+    natural language questions by providing detailed specifi-         for each task which can easily be understood by humans.
+    cations of each expert model available in the toolkit.        (3) Decision Making. In this part, XMODE synthesizes results
+(2) Execution and Self-Debugging. The system executes tasks           from a state object and inspects them for a final decision.
+    according to a generated workflow by calling allocated            If the task results are sufficient to fulfill a user request,
+    expert models from a toolkit. The system employs a state          it will prepare the final results to respond to the user,
+    object that stores all the intermediate interactions during       otherwise it will request the planning component to re-
+    the execution of a workflow. The independent tasks are            plan a new workflow by providing the intermediate results
+    executed concurrently and after completing each task, the         and reasons for re-planning. This process repeats until the
+    outcomes are passed on as input to the tasks that rely on         decision making components are satisfied with the final
+Explainable Multi-Modal Data Exploration in Natural Language via LLM Agent
+
+
+    outcome to present to the user or the maximum loop limit                 demand two plots, and two questions involve a combination
+    is reached. This component benefits from the reasoning                   of plotting and showing the results in a specific data structure,
+    capability of LLMs in the decision making process.                       i.e. either as a tabular format or as a JSON format. The final
+(4) Expert Models & Tools. This component contains expert                    test dataset contains 30 natural language questions derived
+    models such as machine learning models that perform spe-                 from the original 24 in the artwork dataset. These include 8
+    cific downstream tasks such as text-to-SQL, image analysis,              queries seeking a single result value, 11 requiring structured
+    and text analysis. It also contains particular tools such as             data as output, and 11 requesting a plot. Of these, 18 queries
+    data formatting and plotting tools. Taking into account                  involve multi-modal data, while the remaining 12 are based
+    various use cases, the toolkit section of XMODE provides                 exclusively on relational data.
+    access to these models and tools. Each expert model or tool                  We have chosen this dataset to directly compare our system
+    should include a description and argument specifications                 with CAESURA [21], one of the state-of-the-art systems for
+    and they will be available to the planning module.                       multi-modal data exploration in natural language.
+(5) Data Lake. A repository containing structured and unstruc-
+    tured data such as tabular data, images, and text. Each                  Dataset 2: Electronic Health Records (EHR). We also uti-
+    model expert and tool has direct access to the repository                lized the EHRXQA [1] dataset, a multi-modal question answer-
+    to conduct the assigned task.                                            ing dataset that integrates structured electronic health records
+Our current XMODE implementation offers a range of features,                 (EHRs) with chest X-ray images. This dataset consists of 18
+including query debugging, query re-planning, optimization                   tables and 432 images, and specifically requiring cross-modal
+and explainability to better understand how a natural language               reasoning. The questions of EHRXQA are categorized based
+question is decomposed into multiple sub-tasks. Each feature                 on their scope in terms of modality and patient relevance.
+of our system is available at varying levels of complexity.                  For modality-based categorization, questions were classified
+                                                                             into three types: Table-related, image-related, and table-image-
+4     EXPERIMENTS                                                            related, based on the data modality required. The patient-based
+                                                                             categorization classified questions based on their relevance to
+In this section, we evaluate the performance of our system                   a single patient, a group of patients, or none (i.e., unrelated
+XMODE. In particular, we want to address the following re-                   to specific patients). We have chosen this dataset since it was
+search questions:                                                            used to evaluate NeuralSQL, another state-of-the-art system
+• How well does XMODE tackle multi-modal natural lan-                        for multi-modal data exploration. To manage the cost of an API
+  guage questions on two different datasets consisting of tab-               call, we extracted randomly 100 questions. The selection pro-
+  ular data, and images?                                                     cess was guided by three predefined categories within the test
+                                                                             set of the EHRXQA dataset: Image Single-1, Image Single-2,
+• How does the system perform compared to state-of-the-art                   and Image+Table Single.
+  systems such as CAESURA [21] and NeuralSQL [1]?                               Here are examples from each category, taken from the orig-
+                                                                             inal paper [1]. All questions in these categories require multi-
+• Which explanations does the system provide to justify the                  modal data exploration for the reasoning process.
+  answers?                                                                   • Image Single-1: Given the last study of patient 15439, which
+                                                                                anatomical finding is associated with the right lower lung
+4.1     Experimental Setup                                                      zone, pneumothorax or vascular redistribution?
+4.1.1 Datasets. For our experiments, we used two different                   • Image Single-2: Enumerate all newly detected diseases in the
+datasets, namely information about artwork as well as elec-                     last study of patient 19290 in 2103 compared to the previous
+tronic health records.                                                          study.
+Dataset 1: Artwork. We use the artwork dataset introduced                    • Image+Table Single: Did a chest X-ray study for patient
+by [21]. This dataset contains information about paintings in                   15110 reveal any anatomical findings within 2 months after
+tabular form as well as an image collection containing 100 im-                  the prescription of hydralazine since 2021?
+ages of the artworks. This data is taken from Wikipedia. The
+tabular data contains metadata information about paintings                   4.1.2 Baseline Systems and Setup. We compare XMODE to the
+such as title, inception, movement, etc. as well as a reference to           baseline implementations of CAESURA [21] and NeuralSQL
+the respective paintings. A typical example question from this               [1] - two important state-of-the-art systems for multi-modal
+dataset is Plot the number of paintings depicting war for each               data exploration.
+century (as previously shown in Figure 3). In addition to the                    CAESURA supports natural language queries over a multi-
+24 existing questions in the artwork dataset, we propose six                 modal data lake leveraging BLIP-2 [14] for visual question
+new questions aimed at evaluating parallel task planning and                 answering and BART [12] for text question answering. We
+execution, facilitating a comparison between the characteris-                reproduced the results of CAESURA on the Artwork dataset
+tics of the two architectures. These six questions incorporate               using GPT4o. To compare to our system, we utilize GPT4o as
+both single and multiple modalities. Moreover, four of the six               an LLM and the same model for visual question answering
+questions require responses in various formats: two questions                (i.e., BLIP-2) in XMODE.
+                                                                              Farhad Nooralahzadeh, Yi Zhang, Jonathan Fürst, and Kurt Stockinger
+
+
+   In NeuralSQL, an LLM is integrated with an external vi-               of four researchers. The comparison between XMODE and
+sual question answering system, M3AE model [3], to handle                CAESURA reveals notable differences in their performance
+multi-modal questions over a structured database with im-                across various aspects of the artwork dataset. Starting with the
+ages by translating a user question to SQL in one step. To               metric accuracy for evaluating queries of different modalities:
+ensure that we used the optimal hyperparameter settings and              XMODE outperforms CAESURA in both single- and multi-
+prompt structure, we contacted the authors of EHRXQA [1],                modality questions. For single cases, XMODE achieves an
+who provided the results of their experiment for NeuralSQL               output accuracy of 100.00%, while CAESURA falls behind at
+using GPT-4o on 100 randomly selected questions.                         60.00%. In the more challenging multiple-modality scenarios,
+   For XMODE, we employ the M3AE model with task-specific                XMODE demonstrates a significant edge with 26.67% accuracy,
+fine-tuned weights, provided by [1], for the image analysis              compared to CAESURA’s much lower 6.67%.
+task. The customized M3AE model is encapsulated as a web                    The accuracy based on the output types shows that for
+service and is deployed on the same computing node described             single-value outputs CAESURA achieves an accuracy of 37.5%,
+in Section 4.1.4                                                         while XMODE yields 50%. XMODE’s edge is even more ev-
+                                                                         ident for complex tasks where the output is plot, plot-plot,
+4.1.3 Evaluation Metrics. To evaluate XMODE against state-               or plot-data structure. Here XMODE reaches an accuracy of
+of-the-art systems, we use the following metrics:                        75%, 100%, and 100%, respectively, significantly surpassing
+• Accuracy: Measures the accuracy (i.e., exact match) of the             CAESURA’s performance of 25%, 0%, and 0%, respectively.
+   generated result set compared with the gold standard result              Moreover, CAESURA requires sequential reasoning and act-
+   set or with the human expert.                                         ing for each natural language question which can result in high
+• Steps: Number of steps required by the respective system to            latency, cost, and sometimes inaccurate behavior. XMODE
+   come up with the final result. These steps include reasoning,         identifies dependencies between tasks during workflow plan-
+   planning, re-planning etc.                                            ning and thus enables concurrent and parallel task execution.
+• Tokens: Number of tokens used for prompt engineering.                  On a set of six new questions requiring parallel task planning
+• Latency: End-to-end execution time for a system to come                and execution, CAESURA fails entirely, while XMODE suc-
+   up with the final result.                                             cessfully generates proper plans and achieves 66.67% accuracy.
+• API costs: Costs for calling the LLM, e.g. for GPT4o.                     Overall, XMODE emerges as the stronger system, with an
+We apply the above-mentioned metrics under various question              overall output accuracy of 63.33%, compared to CAESURA’s
+and system categories:                                                   33.33%. XMODE distinguishes itself with its ability to pro-
+• Modality: Questions can either be of single modality, i.e.             vide better explanations, support re-planning, and concur-
+   querying only relational data or image data, or of multiple           rency—features absent in CAESURA.
+   modality, i.e. querying both relational and image data.                  From an efficiency perspective, XMODE demonstrates sig-
+• Output Type: The output type of a question can either be a             nificant advantages over CAESURE in several areas. It requires
+   single value, e.g. true or false, a data structure, e.g. in tabular   fewer steps (203 vs. 316) and achieves significantly lower la-
+   or JSON format, a plot, or a combination of plots and data            tency (3,040.12 ms vs. 5,821.23 ms) demonstrating a faster
+   structures.                                                           response time. Finally, XMODE also incurs a lower API cost
+• Workflow: The generated workflow plan can either be se-                (2.10) compared to CAESURA’s 2.98, indicating that XMODE
+   quential or parallel.                                                 is more cost-effective in terms of API usage.
+                                                                            In summary, the experiment results using the artwork bench-
+   Finally, we evaluate if a system generates a correct (multi-
+                                                                         mark showed that XMODE consistently outperforms CAESURA
+modal) query plan (i.e. generated plan), and if it supports
+                                                                         in accuracy, efficiency, and feature support, demonstrating its
+re-planning.
+                                                                         robustness across a variety of tasks on the artwork dataset. Its
+4.1.4 Hardware Setup. We conduct the following experiments               ability to handle complex outputs, provide explanations, and
+using a CUDA-accelerated computational node on an Open-                  adapt through replanning positions it as the better choice in
+Stack virtual host. This node is equipped with a 16-core CPU,            this benchmark.
+16 GB of main memory, and 240 GB of SSD storage. Addition-
+ally, it features an NVIDIA T4 GPU with 16 GB of dedicated               4.2.2 Optimizations of XMODE Explained with Examples. To
+graphics memory.                                                         better demonstrate advantages of XMODE, we provide several
+                                                                         examples (see Figures 3 and 5) across three key aspects: expla-
+4.2    Results on the Artwork Dataset                                    nations, smart replanning, and parallel planning. The following
+We first evaluate the results on the artwork dataset and after-          examples provide a detailed illustration of these three aspects.
+ward on the EHR dataset.                                                  Example 1: Plot the number of paintings that depict war for
+                                                                          each century (see Figure 3).
+4.2.1 Performance Results. Table 1 presents a comparison of
+XMODE and CAESURA on the artwork dataset across various                  Through a series of well-planned and systematically executed
+aspects. The performance metrics for each aspect were deter-             steps, the model demonstrates not only how it processes the
+mined through a manual evaluation conducted by our team                  query but also how it provides transparency and reasoning
+Explainable Multi-Modal Data Exploration in Natural Language via LLM Agent
+
+
+    System                       Category                  Accuracy Steps Tokens Latency [s] API Cost [USD] Generated Plan Re-planning
+                                  Single (15)                 60.00%   152 214,014     973.28     1.33
+                   Modality
+                                  Multiple (15)                6.67%   164 268,918   4,847.95     1.65
+                                 Single Value (8)             37.50%    88 135,077   1,047.24     0.82
+                                 Data Structure (10)          50.00%   116 183,454   2,683.03     1.14
+    CAESURA          Output Type Plot (8)                     25.00%    79 112,732   1,856.66     0.69           80%           No
+    few-shot (𝑛 = 4)             Plot-Plot (2)                    0%    16 21,508      108.87     0.14
+    in planning                  Plot-Data Structure (2)          0%    17 30,161      125.42     0.19
+                                  Sequential (24)             41.67%   261 399,045   5,330.12     2.45
+                   Workflow
+                                  Parallel (6)                    0%    55 83,887      491.11     0.52
+                                Overall (30)                  33.33%   316 482,932   5,821.23     2.98
+                                  Single (15)                100.00%    96 159,212     525.09     0.61
+                   Modality
+                                  Multiple (15)               26.67%   107 326,400   2,515.03     1.49
+                               Single Value (8)               50.00%    56 71,575      494.78     0.39
+                               Data Structure (10)            50.00%    67 223,528   1,330.40     0.89
+    XMODE          Output Type Plot (8)                       75.00%    52 118,431     798.97     0.48
+    zero-shot                  Plot-Plot (2)                 100.00%    14 50,108      308.92     0.22          100%          Yes
+                               Plot-Data Structure (2)       100.00%    14 21,970      107.05     0.10
+                                  Sequential (24)             62.50%   163 338,766   2,131.11     1.51
+                   Workflow
+                                  Parallel (6)                66.67%    40 146,846     909.01     0.59
+                                Overall (30)                 63.33%    203 485,612   3,040.12    2.10
+                      Table 1: Performance metrics of Caesura [20] and XMODE on the artwork dataset.
+
+
+
+
+                                         Figure 5: Optimization of XMODE: Smart replanning.
+
+
+at every stage, ensuring the user understands the process                     Planning & Expert Model Allocation, (2) Execution & Self-
+and results. The figure depicts a workflow that involves (1)                  Debugging, and (3) Decision Making. Here’s a breakdown of
+                                                                        Farhad Nooralahzadeh, Yi Zhang, Jonathan Fürst, and Kurt Stockinger
+
+
+each step:                                                         This shows that XMODE not only answers the query effec-
+1) Planning & Expert Model Allocation: The process begins          tively but also ensures its steps are understandable, logical,
+with the query being broken down into a sequence of subtasks:      and well-documented, building trust in its analysis.
+Task 1: Retrieve painting metadata, including their years and       Example 2 - Smart Replanning: What is depicted on the oldest
+associated centuries, from the database. Task 2: Analyze the        Renaissance painting in the database? (see Figure 5).
+images to determine whether they depict war. Task 3: Prepare
+the data by counting the number of war-related paintings per       Contrary to the previous example, XMODE here involves
+century. Task 4: Visualize these counts in a bar chart.            smart replanning - a major optimization technique of XMODE.
+    Each task is allocated to specialized tools or models, such    The main idea is to dynamically adapt the planning in case
+as text2SQL to translate the natural language question to SQL      some tasks of the workflow fail or do not produce any results.
+and database retrieval, image analysis tools for visual inter-     Here’s a breakdown of each step:
+pretation, coding tools to structure the data, and visualization   1) Planning & Expert Model Allocation: XMODE outputs the
+libraries like matplotlib. This stage establishes a clear plan,    initial workflow plan that has 2 tasks. The first task involves re-
+showing how the overall query will be tackled in logical steps.    trieving the image path and the year of the oldest Renaissance
+2) Execution & Self-Debugging: The model begins executing          painting in the database using a "text2SQL" expert model. It
+the tasks, providing explanations and outputs at every stage to    also involves an "image_analysis" expert model in the second
+ensure clarity. Task 1 - Retrieving Data: The model constructs     task, which aims to determine what is depicted in the image.
+a SQL query to retrieve the required information from the          2) Execution and Self-Debugging: XMODE takes the informa-
+database. It explains its reasoning: to determine the century      tion about the planned workflow as well as task dependencies
+of each painting, it converts the inception year into century      and puts it into action. In Task 1, it comes with a reason-
+values. The result is a list of paintings, each associated with    ing statement to generate the SQL query as: SELECT img_-
+its image path and century. Task 2 - Image Analysis: With          path, strftime(’%Y’, inception) AS year FROM paint-
+the retrieved data, the model analyzes each painting to de-        ings WHERE movement = ’Renaissance’ ORDER BY incep-
+termine if it depicts war. It applies image analysis tools to      tion ASC LIMIT 1. Then it executes the query over the Art-
+interpret the visual content of the paintings. The reasoning       work database and retrieves the specific image path and year
+here is clear—war-related imagery, such as battles or soldiers,    for the oldest Renaissance painting as [’img_path’: ’im-
+must be identified to answer the query. The output is a dataset    ages/img_0.jpg’, ’year’: ’1438’]. This allows the model
+indicating whether each painting depicts war. Task 3 - Data        to access the actual painting data in the subsequent task.
+Preparation: The model filters and aggregates the data, count-         In Task 2, XMODE utilizes the "image_analysis" expert
+ing the number of paintings depicting war for each century.        model (i.e. visual question answering based on BLIP) to exam-
+It explains that grouping the paintings by century allows for      ine the contents of img_0.jpg to answer the question: What
+easy comparison of trends across time periods. The result is a     is depicted in the image? The output of this task is transferred
+concise summary: 1 painting from the 16th century and              as a final result to the decision making component. At this
+2 from the 18th century are identified as depicting                point, the model’s "thought" process in this component be-
+war. Task 4 - Data Visualization: Finally, the model prepares      comes evident. It reasons that while it knows that img_0.jpg
+a bar chart to visualize the results. It explains its reasoning    is a painting, the details about what is depicted in the painting
+for choosing this visualization: bar charts effectively compare    have not been provided. Therefore, the model decides to not
+counts across categories, in this case, centuries. A Python        provide a final answer to the user and does replanning.
+script is provided, showing how the chart was generated, and           The replanning capability is a crucial aspect of the XMODE’s
+the output is saved as an image for user reference.                approach. Rather than blindly accepting the final answer which
+3) Decision Making: When the tasks are completed, the model        does not produce a satisfiable or correct result, the model recog-
+reflects on its work and provides a final output based on its      nizes the need to replan and calls the "image_analysis" module
+thought as Summary:"The number of paintings depict-                again. Since the model already knows which image in the data-
+ing war has been plotted for the 16th and 18th                     base contains the oldest Renaissance painting, it smartly plans
+centuries.", "Details": "The analysis identified 1                 the "image_analysis" task as Task 3, by reformulating the ques-
+painting from the 16th century and 2 paintings from                tion as What is specifically depicted in the painting? XMODE
+the 18th century that depict war. The plot visu-                   then executes the task, and receives the more concrete answer
+alizes these findings. [..]". Throughout the workflow,             "umbrellas".
+the model demonstrates a commitment to transparency.                   Moving forward, the decision making component confirms
+    At every stage, XMODE provides reasoning to justify its        the details about the painting. Here, it verifies that the infor-
+actions, from choosing SQL for retrieval to selecting a bar        mation it has gathered so far aligns with the natural language
+chart for visualization. Intermediate outputs, like the dataset    question and makes sense as a comprehensive understand-
+of war paintings and the Python plotting code, are made visi-      ing of the oldest Renaissance painting. The key aspect is the
+ble, ensuring the user can trace the steps taken. The decision     model’s ability to replan effectively and to strategically lever-
+making phase wraps up the process by summarizing findings,         age the available information to avoid repeating tasks.
+clarifying the approach, and sharing the final visual result.
+Explainable Multi-Modal Data Exploration in Natural Language via LLM Agent
+
+
+
+
+                                         Figure 6: Optimization of XMODE: Parallel planning.
+
+
+Example 3 - Parallel Planning: In the Renaissance, find the                  2, the system uses image analysis to determine if each paint-
+total number of paintings depicting war and the number of                    ing depicts war. For Task 3, a similar image analysis process
+paintings depicting swords (see Figure 6).                                   identifies paintings that depict swords. Running these tasks
+                                                                             in parallel significantly speeds up the workflow, as they op-
+The figure illustrates how XMODE process a complex query                     erate independently of each other. Once the image analysis
+about Renaissance paintings, focusing on identifying how                     tasks are complete, the model transitions to Task 4, where it
+many paintings depict war and how many depict swords.                        aggregates the results. The reasoning here details how the sys-
+The pipeline is structured to combine parallel task execution                tem compiles two lists - one for paintings depicting war and
+with step-by-step explanations, ensuring clarity and efficiency              one for those depicting swords. Afterwards, XMODE counts
+throughout the process.                                                      the entries in each list. The final results are prepared for the
+   The process begins in the Planning & Expert Model Allo-                   decision making module.
+cation, where the model breaks down the user’s query into                        In the decision making phase, the model reflects on its find-
+distinct subtasks. These subtasks are assigned to specialized                ings. It confirms that sufficient data was processed to answer
+modules: Task 1 "text2SQL": This task retrieves image paths                  the query and provides a summary: "There is 1 painting
+and relevant metadata for Renaissance paintings from a data-                 depicting war and 38 paintings depicting swords."
+base using a SQL query. Task 2 "image_analysis": This task                       XMODE offers details, explaining how the analysis was
+examines whether each painting depicts war. Task 3 "image_-                  conducted and highlighting the disparity between the two
+analysis": Simultaneously, another module analyzes whether                   categories of paintings. The system further provides an expla-
+each painting depicts a sword. Task 4 "data_preparation": This               nation of its methodology, emphasizing how it worked sys-
+task consolidates the results from Task 2 and Task 3 to count                tematically to answer the query. This demonstrates XMODE’s
+and summarize the paintings.                                                 ability to manage tasks efficiently through parallel execution
+   The execution phase begins with Task 1, where the model                   and to ensure transparency through reasoned explanations at
+generates and runs a SQL query. The reasoning provided for                   every step. By combining these capabilities, the system pro-
+this step explains how the schema is understood and how the                  vides a clear, accurate, and well-supported response to the
+query ensures that only Renaissance paintings are retrieved.                 user’s query.
+The output of Task 1 includes image paths and metadata, which                    It is important to note that we did not compare XMODE
+are then sent to the next stage.                                             to NeuralSQL on ArtWork’s questions, as such a comparison
+   At this point, the model showcases its parallel planning                  would be unfair due to NeuralSQL’s inability to support plot-
+capability. Tasks 2 and 3 are performed concurrently: For Task               ting.
+                                                                         Farhad Nooralahzadeh, Yi Zhang, Jonathan Fürst, and Kurt Stockinger
+
+
+4.3    Results on the EHRXQA Dataset                               4.4    Error Analysis
+In this section, we evaluate the performance of NeuralSQL          In this section, we conduct a comprehensive analysis of errors
+and XMODE on the EHRXQA dataset. This comparison ex-               encountered during the evaluation process. These errors are
+cludes metrics like steps, tokens, and latency because evalu-      systematically classified into the following categories:
+ating XMODE’s performance on these aspects against Neu-            • Planning Errors: These errors stem from incorrect or in-
+ralSQL is not meaningful. NeuralSQL generates the final an-           complete task planning, such as task decomposition, the
+swer in a single step without providing a plan or intermediate        generation of completely faulty natural language questions,
+steps, whereas our approach focuses on decomposing natu-              etc.
+ral language questions, planning workflows, and responding         • Text-to-SQL Errors: Errors where the generated SQL fails
+transparently.                                                        to accurately retrieve the intended data.
+    We also exclude CAESURA from the EHRXQA experiments.           • Image Analysis Inaccuracy: Errors caused by inaccurate
+While CAESURA is intended to be a general-purpose multi-              outputs from the image analysis model, even when the
+modal system, it processes the relational database through            underlying task plan is correct.
+multiple steps, examining each table and relationship sequen-      • Plot Generation Errors: Errors where plots are completely
+tially. This limitation introduces significant overhead when          not generated, partially generated or incorrectly visualized,
+handling the complex data schema of the EHRXQA dataset                thereby failing to meet expected outcomes.
+(there are 18 tables) during the discovery phase. Consequently,    To systematically analyze key issues, we prioritize the identi-
+reproduing CAESURA on EHRXQA questions fails to perform            fied categories based on their inter-dependencies during task
+inferences at the early stages of the planning phase, ultimately   execution. The priority sequence of these categories is defined
+terminating after exceeding the maximum number of allowed          as follows: task planning > text-to-SQL generation > Image
+attempts.                                                          analysis > plot generation. Only the first affected category is
+    Table 2 demonstrates the experimental results of XMODE         considered if an error occurs at any stage, which may involve
+against NeuralSQL on the EHRXQA dataset. Our evaluation            issues across multiple categories. For instance, if an error is
+encompasses three scope categories: single-table queries with      detected during the planning phase but the subsequent tasks
+one image (Image Single-1), single-table queries with two im-      are successful, and another error occurs at the later plot gen-
+ages (Image Single-2), and multiple-table queries with single      eration stage, only the error in the planning phase is counted.
+images (Image+Table Single). XMODE demonstrates robust             In this case, the sample is classified under the Planning Error
+performance across all evaluation metrics, achieving an over-      category.
+all accuracy of 51.00%. Notably, XMODE excels in handling             This approach to error analysis is grounded in the logical
+multiple-table scenarios, where it achieves 77.50% accuracy,       dependency structure of the tasks. Since each task is a prereq-
+significantly outperforming NeuralSQL’s 47.50% in the 10-shot      uisite for the succeeding one, a failure in an earlier task renders
+setting. For single-table queries, XMODE shows strong per-         the success of subsequent tasks irrelevant to the overall rea-
+formance with 43.33% accuracy on two-image queries, though         soning process. As a result, errors are attributed to the earliest
+it achieves a slightly lower score (23.33%) compared to Neural-    point of failure better to reflect the hierarchical nature of the
+SQL’s 10-shot performance (26.67%) on single-image queries.        task dependencies, thereby facilitating targeted optimization.
+    When examining the output types, XMODE exhibits par-
+ticularly strong performance on binary questions, achieving        4.4.1 Error Analysis on the Artwork Dataset. As illustrated
+74.00% accuracy compared to NeuralSQL’s 48.00%. For categor-       in Figure 7 (a), a total of 20 errors are identified out of 30
+ical questions, both systems show lower performance, with          inference tasks for CAESURA. Of these, 14 errors occur within
+XMODE reaching 28.00% and NeuralSQL achieving 18.00% in            CAESURA’s sequential workflow. The errors include three
+the 10-shot setting.                                               single-modal questions and 11 multi-modal questions. Among
+    A key distinguishing feature of XMODE is its comprehen-        the three single-modal, one task could not be resolved due
+sive functionality beyond raw accuracy. Unlike NeuralSQL,          to insufficient data available in the data pool. Following this
+XMODE generates executable plans with 98% coverage, pro-           failure, CAESURA attempts to replan twice but ultimately
+vides explanations for traceability of final outputs, and sup-     generates an incorrect plan, and consequently results in an
+ports dynamic replanning capabilities. In contrast, NeuralSQL,     erroneous response. The remaining two errors in single-modal
+even in its 10-shot configuration, lacks these additional fea-     tasks were classified as Plot Generation Errors, which are caused
+tures and shows no performance in the zero-shot setting across     by inconsistencies in the time axis units of the plot output.
+all metrics. These results highlight XMODE’s effectiveness as         For 11 errors in multi-modal questions, five are related to
+a more complete solution for EHRXQA tasks, particularly in         single-value outputs, four to plots, and three to data structures.
+complex scenarios involving multiple tables and binary de-         All of these errors are attributed to incorrect outputs generated
+cisions, while also offering important auxiliary features for      by the image analysis model. After further research, we found
+practical deployment.                                              two ambiguous tasks in classifying the error categories. (1) Plot
+                                                                   the number of paintings that depict war for each year and (2)
+                                                                   What is depicted on the oldest religious artwork in the database?
+                                                                   Both tasks failed due to improperly parsed sub question for the
+Explainable Multi-Modal Data Exploration in Natural Language via LLM Agent
+
+
+                                                                         Scope                                                Output Type                       Generated
+           System                        Image Single-1 Image Single-2 Image+Table Single Binary Categorical Overall (100)                                                               Replanning
+                                                                                                                                                                        Plan
+                                                   (30)           (30)               (40)    (50)       (50)
+                        zero-shot                     0.00%                    0.00%                         0.00% 0.00%              0.00%             0.00%
+NeuralSQL                                                                                                                                                               N/A                            No
+                     few-shot (𝑛 = 10)               26.67%                   20.00%                        47.50% 48.00%            18.00%            33.00%
+XMODE                   zero-shot                    23.33%               43.33%                            77.50% 74.00%            28.00%           51.00%            98%                        Yes
+Table 2: Performance metrics of NeuralSQL (zero-shot and few-shot) and XMODE (zero-shot) on the EHRXQA dataset.
+
+
+         Error categories in diverse creteria of Caesura                                                            Error categories in diverse creteria of EM2X
+
+       Work ﬂow                     Modality            Output type                Error category              Work ﬂow              Modality          Output type                Error category
+                                                                 Single
+                                                                  Single value
+                                                                 Single  value
+                                                                         value
+                                                                 (5)
+                                                                 (5)
+                                                                  (5)                                                                                           Data
+                                                                                                                                                                 Data
+                                                                                                                                                                 Data Structure
+                                                                                                                                                                Data
+                                                                                                                                                                Data  Structure
+                                                                                                                                                                      Structure
+                                                                                                                                                                      Structure
+                                                                                                                                                                      Structure
+                                                                                                                                                                (5)
+                                                                                                                                                                 (5)
+                                                                                                                                                                (5)
+                                                                                                                                                                (5)
+                                                                                                                                                                 (5)
+                                                                 Data
+                                                                  Data
+                                                                  Data Structure
+                                                                 Data
+                                                                 Data  Structure
+                                                                       Structure
+                                                                       Structure
+                                                                       Structure
+                                                                 (5)
+                                                                  (5)
+                                                                 (5)
+                                                                 (5)
+                                                                  (5)                   Image
+                                                                                         Image Analysis
+                                                                                        Image
+                                                                                         Image Analysis
+                                                                                               Analysis
+                                                                                               Analysis
+                                                                                                   (11)
+                                                                                                    (11)        Sequencial
+                                                                                                                 Sequencial
+                                                                                                                Sequencial
+                                                                                                                Sequencial
+                                                                                                                 Sequencial
+                                                                                                   (11)
+                                                                                                    (11)                                                                            Image
+                                                                                                                                                                                     Image Analysis
+                                                                                                                                                                                           Analysis
+                                                                                                                (9)
+                                                                                                                 (9)
+                                                                                                                (9)
+                                                                                                                (9)
+                                                                                                                 (9)                     Multiple
+                                                                                                                                          Multiple
+                                                                                                                                         Multiple
+                                                                                                                                         Multiple
+                                                                                                                                          Multiple                                  Image
+                                                                                                                                                                                     Image Analysis
+                                                                                                                                                                                           Analysis
+         Sequencial
+          Sequencial
+         Sequencial
+         Sequencial
+          Sequencial                     Multiple
+                                          Multiple
+                                         Multiple
+                                         Multiple
+                                          Multiple               Plot
+                                                                  Plot
+                                                                 Plot
+                                                                 Plot
+                                                                  Plot                                                                   (11)
+                                                                                                                                          (11)
+                                                                                                                                         (11)
+                                                                                                                                         (11)
+                                                                                                                                          (11)                                                 (11)
+                                                                                                                                                                                                (11)
+                                                                                                                                                                                               (11)
+                                                                                                                                                                                                (11)
+         (14)
+          (14)
+         (14)
+         (14)
+          (14)                           (14)
+                                          (14)
+                                         (14)
+                                         (14)
+                                          (14)                                                                                                                  Single
+                                                                                                                                                                 Single
+                                                                                                                                                                 Single value
+                                                                                                                                                                Single
+                                                                                                                                                                Single  value
+                                                                                                                                                                        value
+                                                                                                                                                                        value
+                                                                                                                                                                        value
+                                                                 (6)
+                                                                  (6)
+                                                                 (6)
+                                                                 (6)
+                                                                  (6)                                                                                           (4)
+                                                                                                                                                                 (4)
+                                                                                                                                                                (4)
+                                                                                                                                                                (4)
+                                                                                                                                                                 (4)
+                                                                                              Planning
+                                                                                              Planning
+                                                                 Plot|Plot
+                                                                  Plot|Plot
+                                                                 Plot|Plot
+                                                                 Plot|Plot
+                                                                  Plot|Plot                         (7)
+                                                                                                     (7)
+                                                                 (2)
+                                                                  (2)
+                                                                 (2)
+                                                                 (2)
+                                                                  (2)
+         Parallel
+          Parallel
+         Parallel
+         Parallel
+          Parallel                       Single
+                                          Single
+                                         Single
+                                         Single
+                                          Single                                                                Parallel
+                                                                                                                 Parallel
+                                                                                                                Parallel
+                                                                                                                Parallel
+                                                                                                                 Parallel                                       Plot
+                                                                                                                                                                 Plot
+                                                                                                                                                                Plot
+                                                                                                                                                                Plot
+                                                                                                                                                                 Plot
+         (6)
+          (6)                            (6)
+                                          (6)                    Plot|Data
+                                                                  Plot|Data
+                                                                  Plot|Data Structure
+                                                                 Plot|Data
+                                                                 Plot|Data  Structure
+                                                                            Structure
+                                                                            Structure
+                                                                            Structure     Data
+                                                                                          Data
+                                                                                          Data Plotting
+                                                                                          Data Plotting
+                                                                                               Plotting
+                                                                                               Plotting
+         (6)
+         (6)
+          (6)                            (6)
+                                         (6)
+                                          (6)                                                                   (2)
+                                                                                                                 (2)
+                                                                                                                (2)
+                                                                                                                (2)
+                                                                                                                 (2)                                            (2)
+                                                                                                                                                                 (2)
+                                                                                                                                                                (2)
+                                                                                                                                                                (2)
+                                                                                                                                                                 (2)
+                                                                 (2)
+                                                                  (2)
+                                                                 (2)
+                                                                 (2)
+                                                                  (2)                                (2)
+                                                                                                      (2)
+                                                                                                     (2)
+                                                                                                      (2)
+
+
+
+
+                                              (a) CAESURA                                                                                       (b) XMODE
+
+
+     Figure 7: Error analysis of CAESURA [20] (a) and XMODE (b) on the ArtWork dataset across different steps.
+
+
+image analysis task, specifically the oversimplified term “war.”                                              systematically as in the XMODE or CAESURA systems. Con-
+While this term is semantically related to the correct natural                                                sequently, we focus our error analysis solely on the XMODE
+language question, “Does the image depict war?”, it does not                                                  system using the EHRXQA dataset.
+fully capture the intent of the task. As a result, it cannot be                                                  Figure 8 presents the distribution of 49 errors across various
+classified as a completely faulty question. Notably, the XMODE                                                steps, categorized by their respective scopes: Image Single-1
+model generated correct results for these tasks, underscoring                                                 (23 errors), Image Single-2 (17 errors), and Image+Table Sin-
+the limitations of CAESURA’s approach in handling subtle                                                      gle (9 errors). Among these, 36 errors are associated with the
+semantic distinctions.                                                                                        categorical scope, with 20 attributed to Image Single-1 and
+   In questions which require a parallel workflow - including                                                 16 to Image Single-2. In contrast, errors linked to the binary
+two data structure , two plot|plot, and two plot|data structure                                               output type are primarily found in the Image+Table Single
+outputs — errors are observed at the early planning stage.                                                    scope. Specifically, Image Single-1 contributes three binary
+Our analysis reveals that CAESURA encounters significant                                                      errors, Image Single-2 accounts for one, and Image+Table Sin-
+challenges in generating accurate plans for embarrassingly                                                    gle includes nine, summing up to 13 binary errors out of the
+parallel tasks. For two of these tasks, the system fails to gener-                                            total 49. Considering the uneven distribution of errors across
+ate any plan at all. For the remaining four tasks, CAESURA can                                                various output types and scopes, we identified inaccurate im-
+provide partial results for some subtasks, but other subtasks                                                 age analysis — primarily driven by the M3AE model [3] —
+are left unanswered, reflecting a broader issue in its ability to                                             as the main source of errors. Our analysis reveals that errors
+manage parallel planning. Our XMODE system successfully                                                       linked to categorical output types (36) are nearly three times
+generates the appropriate plans for all tasks. In addition, all                                               higher than those associated with binary output types (13).
+text-to-SQL steps , data preparation pipelines, and plot out-                                                 This suggests that the error pattern is less related to the task
+puts, where required, are validated as correct. As illustrated in                                             difficulty across different scopes and more influenced by the
+Figure 7(b), the only source of errors is the inaccurate output                                               output type, as binary questions demonstrate a statistically
+of the image analysis model, which accounted for 11 errors.No                                                 higher success rate compared to categorical ones. Notably, the
+other errors are located in the text-to-SQL task, plot genera-                                                Image + Table Single scope exclusively utilizes binary output
+tion, or task planning deficiencies. This analysis highlights the                                             types.
+image analysis model as the bottleneck in system performance,                                                    To gain a deeper understanding, a step-by-step error analy-
+underscoring the need for further refinement in its predictive                                                sis reveals that out of the 23 errors in the Image Single-1 scope,
+accuracy.                                                                                                     22 are due to inaccuracies in image analysis, while only one is
+                                                                                                              related to a misstep in the text-to-SQL process. The specific
+4.4.2 Error Analysis on the EHRXQA Dataset. Since Neural-
+                                                                                                              question text for this case is: “Catalog all the anatomical find-
+SQL is a one-step approach lacking task planning and ex-
+                                                                                                              ings seen in the image, given the first study of patient 11801290
+plainability, we are unable to localize the source of errors as
+                                                                           Farhad Nooralahzadeh, Yi Zhang, Jonathan Fürst, and Kurt Stockinger
+                                                                         Error categories in diverse creteria of EHRXQA-XMODE
+
+on the first hospital visit.” The generated SQL query fails to            Scope                       Output type                  Error category
+include the condition specifying the first study, resulting in
+                                                                           Image
+                                                                            Image Single-1
+                                                                                  Single-1
+                                                                                  Single-1
+an incorrect output. In the Image Single-2 category, 16 out of             (23)
+                                                                            (23)
+                                                                                                              Categorical
+                                                                                                               Categorical
+                                                                                                              Categorical
+                                                                                                               Categorical
+                                                                                                                                     Image
+                                                                                                                                      Image Analysis
+                                                                                                                                     Image  Analysis
+                                                                                                                                            Analysis
+                                                                                                                                                (40)
+                                                                                                                                                (40)
+                                                                                                                                                 (40)
+17 total errors are due to inaccurate image analysis, with one                                                (36)
+                                                                                                               (36)
+                                                                                                              (36)
+                                                                                                               (36)
+
+                                                                           Image
+                                                                            Image
+                                                                            Image Single-2
+                                                                           Image  Single-2
+                                                                                  Single-2
+                                                                                  Single-2
+                                                                                  Single-2
+error attributed to the text-to-SQL step. The specific query in            (17)
+                                                                            (17)
+                                                                           (17)
+                                                                            (17)
+                                                                                                                                          text2SQL
+                                                                                                                                           text2SQL
+                                                                                                                                          text2SQL
+                                                                                                              Binary
+                                                                                                               Binary                            (7)
+question is: “Does the second-to-last study of patient 16345504            Image+Table
+                                                                            Image+Table
+                                                                            Image+Table Single
+                                                                           Image+Table
+                                                                           (9)
+                                                                            (9)
+                                                                           (9)
+                                                                            (9)
+                                                                                        Single
+                                                                                        Single
+                                                                                        Single                (13)
+                                                                                                               (13)
+                                                                                                                                                 (7)
+                                                                                                                                                  (7)
+                                                                                                                                           Planning
+                                                                                                                                           Planning
+                                                                                                                                           Planning
+                                                                                                                                           Planning
+                                                                                                                                           Planning
+                                                                                                                                                 (2)
+                                                                                                                                                  (2)
+                                                                                                                                                 (2)
+                                                                                                                                                 (2)
+                                                                                                                                                  (2)
+this year reveal still-present fluid overload/heart failure in the
+right lung compared to the first study this year?”. The text-to-
+SQL task fails to correctly retrieve the first and last study of
+                                                                     Figure 8: Error analysis of XMODE on the EHRXQA [1]
+this year as required, instead erroneously returning multiple
+                                                                     dataset across different steps.
+studies from the current year. In the Image+Table Single scope,
+all nine errors involve binary output types. Of these, six result
+from inaccurate image analysis, one from incomplete planning,
+and two from an incorrect text-to-SQL step. The error caused         which makes it transparent and supports the end user to bet-
+by incomplete planning occurs with the question: “Did pa-            ter understand and verify the results. The main findings from
+tient 19055351 undergo the combined right and left heart cardiac     our experiments are that the text-to-SQL task shows high
+catheterization procedure within the same month after a chest        accuracy, while the image analysis task only shows limited
+x-ray revealed any anatomical findings until 2104?”. In this case,   accuracy. Hence, future work on multi-modal data exploration
+the plan omits the necessary image analysis step, leading to an      should focus on improving the accuracy of the image inter-
+incorrect final output. During the reasoning stage, instances        pretation and understanding models. Potential avenues for
+were identified where an empty output produced a no response         research are better alignment approaches between tabular and
+that coincidentally aligned with the ground truth. However,          image data or iterative prompt engineering with natural lan-
+XMODE’s explainability highlights this as a misclassification,       guage question re-writing to better probe the image search
+as the absence of output was not due to correct reasoning.           space. Another promising approach is to focus on human in
+    Two errors in the Image+Table Single category are attrib-        the loop approaches where the system and the humans solve
+uted to text-to-SQL misbehavior. The specific questions caus-        tasks jointly.
+ing these errors are: "Was patient 12724975 diagnosed with
+hypoxemia until 1 year ago, and did a chest x-ray reveal any         6    ACKNOWLEDGEMENTS
+tubes/lines in the abdomen during the same period?” and "Was         We want to thank Magda Balazinska from the University of
+patient 10762986 diagnosed with a personal history of tobacco        Washington for fruitful discussions on the initial idea of the
+use within the same month after a chest x-ray showing any            XMODE system. We also want to thank the CAESURA [20]
+abnormalities in the aortic arch until 1 year ago?" In both cases,   and EHRXQA [1] team for providing their expertise in running
+the SQL queries fail to correctly apply the condition (since         their respective systems.
+current time) until 1 year ago, instead treating 1 year ago as a
+fixed point in time.                                                 REFERENCES
+    These findings highlight the pivotal role of accurate image       [1] Seongsu Bae, Daeun Kyung, Jaehee Ryu, Eunbyeol Cho, Gyubok Lee, Sun-
+analysis in multi-modal data exploration systems. Particularly,           jun Kweon, Jungwoo Oh, Lei Ji, Eric Chang, Tackeun Kim, et al. Ehrxqa: A
+they emphasize a formidable challenge associated with cate-               multi-modal question answering dataset for electronic health records with
+                                                                          chest x-ray images. Advances in Neural Information Processing Systems,
+gorical outputs. Moreover, the findings underscore the neces-             36, 2024.
+sity of robust planning and effective SQL query generation to         [2] Saptarashmi Bandyopadhyay and Tianyang Zhao. Natural language re-
+achieve optimal system performance. Addressing these chal-                sponse generation from sql with generalization and back-translation. In
+                                                                          Workshop on Interactive and Executable Semantic Parsing, 2020.
+lenges requires advancements in visual reasoning, temporal            [3] Zhihong Chen, Yuhao Du, Jinpeng Hu, Yang Liu, Guanbin Li, Xiang Wan,
+logic comprehension, and SQL generation, all of which are                 and Tsung-Hui Chang. Multi-modal masked autoencoders for medical
+                                                                          vision-and-language pretraining. In Medical Image Computing and Com-
+essential for mitigating errors and enhancing system accuracy.            puter Assisted Intervention – MICCAI 2022: 25th International Conference,
+                                                                          Singapore, September 18–22, 2022, Proceedings, Part V, page 679–689, Berlin,
+                                                                          Heidelberg, 2022. Springer-Verlag.
+5   CONCLUSIONS                                                       [4] Gaurav Tarlok Kakkar et. al. EVA: an end-to-end exploratory video ana-
+                                                                          lytics system. In Workshop on Data Management for End-to-End Machine
+We demonstrated that multi-agent collaboration using large                Learning, DEEM, 2023.
+language models, such as GPT-4, offers a promising approach           [5] Avrilia Floratou, Fotis Psallidas, Fuheng Zhao, Shaleen Deep, Gunther
+                                                                          Hagleither, Wangda Tan, Joyce Cahoon, Rana Alotaibi, Jordan Henkel,
+for explainable multi-modal data exploration in natural lan-              Abhik Singla, Alex van Grootel, Brandon Chow, Kai Deng, Katherine
+guage. Our experimental evaluation against two state-of-the-              Lin, Marcos Campos, Venkatesh Emani, Vivek Pandit, Victor Shnayder,
+                                                                          Wenjing Wang, and Carlo Curino. Nl2sql is a solved problem... not! In
+art systems on two different datasets with tabular and image              CIDR, 2024.
+data shows that XMODE not only performs the task of multi-            [6] Saehan Jo and Immanuel Trummer. Thalamusdb: Approximate query
+modal data exploration with higher accuracy but also faster               processing on multi-modal data. Proc. ACM Manag. Data, 2(3), 2024.
+                                                                      [7] Daniel Kang, Peter Bailis, and Matei Zaharia. Blazeit: Optimizing declara-
+due to smart re-planning and parallel execution. Moreover,                tive aggregation and limit queries for neural network-based video analyt-
+XMODE also provides detailed explanations and reasoning                   ics. Proc. VLDB Endow., 13(4):533–546, 2019.
+Explainable Multi-Modal Data Exploration in Natural Language via LLM Agent
+
+
+ [8] Daniel Kang, Francisco Romero, Peter D. Bailis, Christos Kozyrakis, and              Bilingual Open Data Exploration in Natural Language. In Findings of ACL,
+     Matei Zaharia. VIVA: an end-to-end system for interactive video analytics.           2024.
+     In CIDR, 2022.                                                                [18]   Mohammadreza Pourreza and Davood Rafiei. Din-sql: Decomposed in-
+ [9] Sayash Kapoor, Benedikt Stroebl, Zachary S Siegel, Nitya Nadgir, and                 context learning of text-to-sql with self-correction. NeurIPS, 2024.
+     Arvind Narayanan. Ai agents that matter. arXiv preprint arXiv:2407.01502,     [19]   Sithursan Sivasubramaniam, Cedric Osei-Akoto, Yi Zhang, Kurt
+     2024.                                                                                Stockinger, and Jonathan Fuerst. Sm3-text-to-query: Synthetic multi-
+[10] Been Kim, Martin Wattenberg, Justin Gilmer, Carrie Cai, James Wexler,                model medical text-to-query benchmark. In The Thirty-eight Conference
+     Fernanda Viegas, et al. Interpretability beyond feature attribution: Quan-           on Neural Information Processing Systems Datasets and Benchmarks Track.
+     titative testing with concept activation vectors (tcav). In ICML, 2018.       [20]   Matthias Urban and Carsten Binnig. Caesura: Language models as multi-
+[11] Sehoon Kim, Suhong Moon, Ryan Tabrizi, Nicholas Lee, Michael W Ma-                   modal query planners. arXiv preprint arXiv:2308.03424, 2023.
+     honey, Kurt Keutzer, and Amir Gholami. An llm compiler for parallel           [21]   Matthias Urban and Carsten Binnig. CAESURA: language models as
+     function calling. arXiv preprint arXiv:2312.04511, 2023.                             multi-modal query planners. In CIDR, 2024.
+[12] Mike Lewis, Yinhan Liu, Naman Goyal, Marjan Ghazvininejad, Abdel-             [22]   Pius Von Däniken, Jan Milan Deriu, Eneko Agirre, Ursin Brunner, Mark
+     rahman Mohamed, Omer Levy, Veselin Stoyanov, and Luke Zettlemoyer.                   Cieliebak, and Kurt Stockinger. Improving nl-to-query systems through
+     Bart: Denoising sequence-to-sequence pre-training for natural language               re-ranking of semantic hypothesis. In ICNLSP, 2022.
+     generation, translation, and comprehension. In Proceedings of the 58th        [23]   Zeqing Wang, Wentao Wan, Runmeng Chen, Qiqing Lao, Minjie Lang, and
+     Annual Meeting of the Association for Computational Linguistics, page 7871.          Keze Wang. Towards top-down reasoning: An explainable multi-agent
+     Association for Computational Linguistics, 2020.                                     approach for visual question answering. arXiv preprint arXiv:2311.17331,
+[13] Jinyang Li, Binyuan Hui, Ge Qu, Jiaxi Yang, Binhua Li, Bowen Li, Bailin              2023.
+     Wang, Bowen Qin, Ruiying Geng, Nan Huo, et al. Can llm already serve          [24]   Tao Yu, Rui Zhang, Kai Yang, Michihiro Yasunaga, Dongxu Wang, Zifan
+     as a database interface? a big bench for large-scale database grounded               Li, James Ma, Irene Li, Qingning Yao, Shanelle Roman, et al. Spider: A
+     text-to-sqls. NeurIPS, 2024.                                                         large-scale human-labeled dataset for complex and cross-domain semantic
+[14] Junnan Li, Dongxu Li, Silvio Savarese, and Steven Hoi. Blip-2: Bootstrap-            parsing and text-to-sql task. In EMNLP, 2018.
+     ping language-image pre-training with frozen image encoders and large         [25]   Enhao Zhang, Maureen Daum, Dong He, Brandon Haynes, Ranjay Kr-
+     language models. In International conference on machine learning, pages              ishna, and Magdalena Balazinska. Equi-vocal: Synthesizing queries for
+     19730–19742. PMLR, 2023.                                                             compositional video events from limited user interactions. Proceedings of
+[15] Chunwei Liu, Matthew Russo, Michael Cafarella, Lei Cao, Peter                        the VLDB Endowment, 16(11):2714–2727, 2023.
+     Baille Chen, Zui Chen, Michael Franklin, Tim Kraska, Samuel Madden,           [26]   Jingyi Zhang, Jiaxing Huang, Sheng Jin, and Shijian Lu. Vision-language
+     and Gerardo Vitagliano. A declarative system for optimizing ai workloads.            models for vision tasks: A survey. IEEE Transactions on Pattern Analysis
+     arXiv e-prints, pages arXiv–2405, 2024.                                              and Machine Intelligence, 2024.
+[16] Scott M Lundberg and Su-In Lee. A unified approach to interpreting model      [27]   Yi Zhang, Jan Deriu, George Katsogiannis-Meimarakis, Catherine Kosten,
+     predictions. NeurIPS, 2017.                                                          Georgia Koutrika, and Kurt Stockinger. Sciencebenchmark: A complex
+[17] Farhad Nooralahzadeh, Yi Zhang, Ellery Smith, Sabine Maennel, Cyril                  real-world benchmark for evaluating natural language to sql systems.
+     Matthey-Doret, Raphaël de Fondville, and Kurt Stockinger. StatBot.Swiss:             Proceedings of the VLDB Endowment, 17(4):685–698, 2024.
+
