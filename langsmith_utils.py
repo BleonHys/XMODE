@@ -68,9 +68,15 @@ def extract_child_runs_by_paths(root_run, project_name):
     all_runs = [root_run] + all_child_runs
     for run in all_runs:
         if parent_ids[run['id']] is not None:
-            parent_run = list(filter(lambda x: x['id'] == parent_ids[run['id']], all_runs))[0]
+            matches = [x for x in all_runs if x['id'] == parent_ids[run['id']]]
+            if not matches:
+                # Parent not present in fetched runs; skip linking to avoid IndexError.
+                continue
+            parent_run = matches[0]
             parent_run['child_runs'].append(run)
-    parent_run['child_runs'] = sorted(parent_run['child_runs'], key=lambda x: datetime.strptime(x['start_time'], "%Y-%m-%dT%H:%M:%S.%f"))
+    # Sort children if any
+    if 'child_runs' in root_run:
+        root_run['child_runs'] = sorted(root_run['child_runs'], key=lambda x: datetime.strptime(x['start_time'], "%Y-%m-%dT%H:%M:%S.%f"))
     return root_run
 
 def extract_all_child_runs_by_paths(runs, project_name):
