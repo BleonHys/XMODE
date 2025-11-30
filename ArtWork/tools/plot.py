@@ -1,6 +1,8 @@
 import re
 from typing import List, Optional, Union
 import json
+import os
+os.environ.setdefault("MPLBACKEND", "Agg")
 from src.llm_factory import build_structured_runnable
 from langchain_core.messages import SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -54,7 +56,7 @@ class ExecuteCode(BaseModel):
     )
 
     code: str = Field(
-        ...,
+        "",
         description="The simple code expression to execute by python_executor.",
     )
 

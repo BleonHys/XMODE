@@ -53,7 +53,7 @@ class ExecuteCode(BaseModel):
     )
 
     code: str = Field(
-        ...,
+        "",
         description="The simple code expression to execute by python_executor.",
     )
     
