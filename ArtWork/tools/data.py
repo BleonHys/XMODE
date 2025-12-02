@@ -114,6 +114,12 @@ def _invoke_with_retry(extractor, chain_input, attempts: int = 2):
         try:
             return extractor.invoke(chain_input)
         except Exception as exc:
+            # If the model truncated structured output, surface a clear signal
+            if "max_tokens" in str(exc) or "ValidationError" in str(exc):
+                return {
+                    "status": "error",
+                    "message": "LLM truncated structured output (max_tokens); replan or retry with higher max_tokens.",
+                }
             last_err = exc
     raise last_err
 

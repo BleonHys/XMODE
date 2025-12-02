@@ -70,7 +70,7 @@ def build_structured_runnable(
     **kwargs,
 ):
     # Encourage models to return full structured payloads by allowing more tokens
-    llm = llm.bind(max_tokens=1024)
+    llm = llm.bind(max_tokens=2048)
     provider = getattr(llm, "_llm_provider", "openai")
     if provider == "anthropic":
         return prompt | llm.with_structured_output(schema)
