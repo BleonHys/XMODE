@@ -108,11 +108,11 @@ def _extract_data_from_context(context) -> Optional[list]:
         return None
     return None
 
-def _compress_data(parsed_data: list, max_rows: int = 50):
+def _compress_data(parsed_data: list, max_rows: int = 10):
     """
     Reduce oversized datasets passed to the LLM by aggregating and sampling.
     """
-    if not parsed_data or len(parsed_data) <= max_rows:
+    if not parsed_data:
         return parsed_data
     # Group by year-like fields to keep plotting-friendly info small.
     year_counts = {}
@@ -130,7 +130,7 @@ def _compress_data(parsed_data: list, max_rows: int = 50):
             or row.get("painting_count")
             or 1
         )
-    sample = parsed_data[:10]
+    sample = parsed_data[:max_rows]
     return {"summary": {"total_rows": len(parsed_data), "year_counts": year_counts}, "sample": sample}
 
 def _invoke_with_retry(extractor, chain_input, attempts: int = 2):
