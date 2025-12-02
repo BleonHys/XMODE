@@ -141,6 +141,7 @@ def _invoke_with_retry(extractor, chain_input, attempts: int = 2):
                 return {
                     "status": "error",
                     "message": "LLM truncated structured output (max_tokens); replan or retry with higher max_tokens.",
+                    "truncated": True,
                 }
             last_err = exc
     raise last_err

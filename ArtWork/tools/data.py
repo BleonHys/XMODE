@@ -144,6 +144,7 @@ def _invoke_with_retry(extractor, chain_input, attempts: int = 2):
                 return {
                     "status": "error",
                     "message": "LLM truncated structured output (max_tokens); replan or retry with higher max_tokens.",
+                    "truncated": True,
                 }
             last_err = exc
     raise last_err
@@ -193,7 +194,7 @@ def get_data_preparation_tools(llm: BaseChatModel, log_path):
             if isinstance(parsed_data, dict) and "summary" in parsed_data:
                 year_counts = parsed_data["summary"].get("year_counts", {})
                 aggregated = [{"year": y, "count": c} for y, c in sorted(year_counts.items())]
-                return {"status": "success", "data": aggregated, "note": "Aggregated locally to reduce prompt size."}
+                return {"status": "success", "data": aggregated, "note": "Aggregated locally to reduce prompt size (no LLM call)."}
             context_str = str(parsed_data)
         try:
             data_len = len(parsed_data) if parsed_data is not None else "n/a"
@@ -208,6 +209,13 @@ def get_data_preparation_tools(llm: BaseChatModel, log_path):
             code_model = _invoke_with_retry(extractor, chain_input, attempts=2)
         except Exception as e:
             return {"status": "error", "message": f"data_preparation failed: {e}"}
+
+        # Handle parser/LLM truncation signaled above
+        if isinstance(code_model, dict) and code_model.get("truncated"):
+            return {
+                "status": "error",
+                "message": "LLM truncated structured output (max_tokens); replan or retry with higher max_tokens.",
+            }
 
         if code_model.code=='':
             return code_model.reasoning 
