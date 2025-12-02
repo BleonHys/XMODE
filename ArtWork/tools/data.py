@@ -1,3 +1,4 @@
+import ast
 import re
 from typing import List, Optional, Union
 import json
@@ -94,6 +95,28 @@ class PythonREPL:
         
 python_repl = PythonREPL() 
       
+def _extract_data_from_context(context) -> Optional[list]:
+    try:
+        payload = context
+        if isinstance(payload, str):
+            payload = ast.literal_eval(payload)
+        if isinstance(payload, list) and len(payload) == 1:
+            payload = payload[0]
+        if isinstance(payload, dict) and "data" in payload:
+            return payload.get("data")
+    except Exception:
+        return None
+    return None
+
+def _invoke_with_retry(extractor, chain_input, attempts: int = 2):
+    last_err = None
+    for _ in range(attempts):
+        try:
+            return extractor.invoke(chain_input)
+        except Exception as exc:
+            last_err = exc
+    raise last_err
+
 
 def get_data_preparation_tools(llm: BaseChatModel, log_path):
     """
@@ -130,11 +153,17 @@ def get_data_preparation_tools(llm: BaseChatModel, log_path):
         # )
         # if 'data' in context:
         #     context=context['data']
+        parsed_data = _extract_data_from_context(context_str)
+        if parsed_data is not None and len(parsed_data) == 0:
+            return {"status": "error", "message": "No data returned from previous step; replan to retrieve rows before preparing data."}
         context_str += f"Save the generated data to the following directory: {log_path} and output the final data structure in data filed"
         chain_input = {"question": question,"context":context_str}
         # chain_input["context"] = [SystemMessage(content=context)]
                        
-        code_model = extractor.invoke(chain_input, config)
+        try:
+            code_model = _invoke_with_retry(extractor, chain_input, attempts=2)
+        except Exception as e:
+            return {"status": "error", "message": f"data_preparation failed: {e}"}
 
         if code_model.code=='':
             return code_model.reasoning 

@@ -4,6 +4,7 @@ import base64
 import mimetypes
 from pathlib import Path
 from typing import List, Optional, Sequence
+import time
 
 import requests
 
@@ -79,20 +80,39 @@ class VisualQAOpenRouter:
             "max_tokens": self.max_tokens,
         }
 
+    def _post_with_retry(self, payload: dict, retries: int = 3, backoff: float = 1.0) -> requests.Response:
+        last_exc: Optional[Exception] = None
+        for attempt in range(retries):
+            try:
+                response = requests.post(
+                    self.endpoint,
+                    headers=self._headers(),
+                    json=payload,
+                    timeout=self.timeout,
+                )
+                # Retry on transient 5xx
+                if response.status_code >= 500:
+                    raise requests.HTTPError(f"Server error {response.status_code}", response=response)
+                response.raise_for_status()
+                return response
+            except Exception as exc:  # noqa: BLE001
+                last_exc = exc
+                if attempt < retries - 1:
+                    time.sleep(backoff * (2 ** attempt))
+                    continue
+                raise last_exc
+
     def extract(self, image_paths: Sequence[str], query: str, batch_size: int = 1) -> List[str]:
         """Run the configured OpenRouter model on each image."""
         responses: List[str] = []
         for image_path in image_paths:
             payload = self._payload(_encode_image(Path(image_path)), query)
-            response = requests.post(
-                self.endpoint,
-                headers=self._headers(),
-                json=payload,
-                timeout=self.timeout,
-            )
-            response.raise_for_status()
-            data = response.json()
-            choice = (data.get("choices") or [{}])[0]
-            message = choice.get("message", {})
-            responses.append(_extract_text_content(message.get("content")))
+            try:
+                response = self._post_with_retry(payload)
+                data = response.json()
+                choice = (data.get("choices") or [{}])[0]
+                message = choice.get("message", {})
+                responses.append(_extract_text_content(message.get("content")))
+            except Exception as exc:  # noqa: BLE001
+                responses.append(f"ERROR(OpenRouter VQA failed: {exc})")
         return responses

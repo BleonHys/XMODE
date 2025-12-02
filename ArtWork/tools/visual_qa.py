@@ -96,7 +96,12 @@ def get_image_analysis_tools(vqa):
             context=[context]
         try:
             vqa_answers=[]
-            image_paths=[(IMAGE_PATH / ctx['img_path']).as_posix() for ctx in context]
+            image_paths=[]
+            for ctx in context:
+                img = ctx.get('img_path') or ctx.get('image_path')
+                if not img:
+                    raise KeyError("img_path")
+                image_paths.append((IMAGE_PATH / img).as_posix())
             
             # print(image_paths)
             

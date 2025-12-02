@@ -107,12 +107,24 @@ def _execute_sql_query(query: str, db_path: str, as_dict=True) -> Dict[str, Any]
             cur = conn.cursor()
             # print("SQL:",change_current_time(query))
             cur.execute(query)
-            results = [dict(row) for row in cur.fetchall()]
+            raw_results = [dict(row) for row in cur.fetchall()]
+            # Normalize path keys so downstream tools can rely on img_path
+            results = []
+            for row in raw_results:
+                if "image_path" in row and "img_path" not in row:
+                    row["img_path"] = row["image_path"]
+                results.append(row)
             # print("results of SQL",results)
         else:
             engine = create_engine(f'sqlite:///{db_path}')
             database = SQLDatabase(engine, sample_rows_in_table_info=0)
-            results = database.run(query)
+            raw_results = database.run(query)
+            results = []
+            for row in raw_results:
+                if isinstance(row, dict):
+                    if "image_path" in row and "img_path" not in row:
+                        row["img_path"] = row["image_path"]
+                results.append(row)
         return {"status": "success", "data": results}
     except Exception as e:
         return {"status": "error", "message": str(e)}
