@@ -107,6 +107,30 @@ def _extract_data_from_context(context) -> Optional[list]:
         return None
     return None
 
+def _compress_data(parsed_data: list, max_rows: int = 50):
+    """
+    Reduce oversized datasets passed to the LLM by aggregating and sampling.
+    """
+    if not parsed_data or len(parsed_data) <= max_rows:
+        return parsed_data
+    year_counts = {}
+    for row in parsed_data:
+        year = (
+            row.get("inception_year")
+            or row.get("year")
+            or row.get("studydatetime")
+        )
+        if year is None:
+            continue
+        year_str = str(year)
+        year_counts[year_str] = year_counts.get(year_str, 0) + (
+            row.get("count_of_paintings")
+            or row.get("painting_count")
+            or 1
+        )
+    sample = parsed_data[:10]
+    return {"summary": {"total_rows": len(parsed_data), "year_counts": year_counts}, "sample": sample}
+
 def _invoke_with_retry(extractor, chain_input, attempts: int = 2):
     last_err = None
     for _ in range(attempts):
@@ -165,6 +189,18 @@ def get_plotting_tools(llm: BaseChatModel, log_path):
         parsed_data = _extract_data_from_context(context_str)
         if parsed_data is not None and len(parsed_data) == 0:
             return {"status": "error", "message": "No data returned from previous step; replan to retrieve rows before plotting."}
+        if parsed_data:
+            parsed_data = _compress_data(parsed_data)
+            if isinstance(parsed_data, dict) and "summary" in parsed_data:
+                year_counts = parsed_data["summary"].get("year_counts", {})
+                compact = [{"year": y, "count": c} for y, c in sorted(year_counts.items())]
+                parsed_data = compact
+            context_str = str(parsed_data)
+        try:
+            data_len = len(parsed_data) if parsed_data is not None else "n/a"
+            print(f"[debug:data_plotting] context_len={len(context_str)}, parsed_data_len={data_len}")
+        except Exception:
+            pass
         context_str += f"Save the generated plot to the following directory: {log_path}"
         chain_input = {"question": question,"context":context_str}
         # chain_input["context"] = [SystemMessage(content=context)]
