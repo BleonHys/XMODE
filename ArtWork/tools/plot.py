@@ -122,7 +122,10 @@ def _invoke_with_retry(extractor, chain_input, attempts: int = 2):
                     "truncated": True,
                 }
             last_err = exc
-    raise last_err
+    return {
+        "status": "error",
+        "message": f"data_plotting failed: {last_err}",
+    }
 
 
 def get_plotting_tools(llm: BaseChatModel, log_path):

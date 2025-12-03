@@ -123,7 +123,11 @@ def _invoke_with_retry(extractor, chain_input, attempts: int = 2):
                     "truncated": True,
                 }
             last_err = exc
-    raise last_err
+    # Do not propagate; return an error payload to keep the run alive
+    return {
+        "status": "error",
+        "message": f"data_preparation failed: {last_err}",
+    }
 
 
 def get_data_preparation_tools(llm: BaseChatModel, log_path):
