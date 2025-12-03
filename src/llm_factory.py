@@ -35,7 +35,7 @@ def build_chat_model(
             model=selected_model,
             temperature=temperature,
             api_key=settings.anthropic_api_key,
-            max_tokens=8000,
+            max_tokens=32000,
             timeout=180,
         )
         llm._llm_provider = "anthropic"
@@ -73,8 +73,8 @@ def build_structured_runnable(
     **kwargs,
 ):
     # Encourage models to return full structured payloads by allowing more tokens
-    llm = llm.bind(max_tokens=16384)
+    llm = llm.bind(max_tokens=32000)
     provider = getattr(llm, "_llm_provider", "openai")
     if provider == "anthropic":
-        return prompt | llm.with_structured_output(schema, max_output_tokens=16384)
+        return prompt | llm.with_structured_output(schema, max_output_tokens=32000)
     return create_structured_output_runnable(schema, llm, prompt, **kwargs)
