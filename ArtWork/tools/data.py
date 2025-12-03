@@ -59,8 +59,8 @@ class ExecuteCode(BaseModel):
         description="The simple code expression to execute by python_executor.",
     )
     
-    data: str = Field(
-        ...,
+    data: Optional[str] = Field(
+        "",
         description="The final data structure as a final output.",
     )
 
