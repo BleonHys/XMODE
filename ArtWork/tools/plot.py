@@ -2,6 +2,7 @@ import ast
 import re
 from typing import List, Optional, Union
 import json
+from pathlib import Path
 import os
 os.environ.setdefault("MPLBACKEND", "Agg")
 from src.llm_factory import build_structured_runnable
@@ -213,17 +214,35 @@ def get_plotting_tools(llm: BaseChatModel, log_path):
 
         if code_model.code=='':
             return code_model.reasoning 
+        # Ensure log directory exists and track before/after files
+        log_dir = Path(log_path)
+        log_dir.mkdir(parents=True, exist_ok=True)
+        before = {p.name for p in log_dir.glob("*.png")}
+
         codeExecution_result = python_repl.run(code_model.code)
+
+        after = {p.name for p in log_dir.glob("*.png")}
+        new_files = sorted(list(after - before))
+
         if "Error" in codeExecution_result:
             _error_handiling_prompt=f"Something went wrong on executing Code: `{code_model.code}`. This is the error I got: `{codeExecution_result}`. \\ Can you fixed the problem and write the fixed python code?"
             chain_input["info"] =[HumanMessage(content= _error_handiling_prompt)]
             code_model = extractor.invoke(chain_input)
             try:
-                return python_repl.run(code_model.code)
+                codeExecution_result = python_repl.run(code_model.code)
+                # refresh new files
+                after = {p.name for p in log_dir.glob("*.png")}
+                new_files = sorted(list(after - before))
             except Exception as e:
                 return repr(e)
-        else:
-            return code_model.code
+
+        if new_files:
+            return {"status": "success", "plot_path": str(log_dir / new_files[-1]), "note": codeExecution_result}
+        return {
+            "status": "error",
+            "message": "Plot code executed but no PNG was saved; check the generated code to ensure plt.savefig() writes to the provided log directory.",
+            "details": codeExecution_result,
+        }
 
     return StructuredTool.from_function(
         name = "data_plotting",
