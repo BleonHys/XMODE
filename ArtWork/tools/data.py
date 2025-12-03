@@ -174,8 +174,6 @@ def get_data_preparation_tools(llm: BaseChatModel, log_path):
         # Rate limit guard for huge contexts
         if len(context_str) > 72000:
             time.sleep(60)
-        if len(context_str) > 24000:
-            context_str = context_str[:24000]
         context_str += f"Save the generated data to the following directory: {log_path} and output the final data structure in data filed"
         chain_input = {"question": question,"context":context_str}
         # chain_input["context"] = [SystemMessage(content=context)]
