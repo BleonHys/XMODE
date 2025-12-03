@@ -36,6 +36,7 @@ def build_chat_model(
             temperature=temperature,
             api_key=settings.anthropic_api_key,
             max_tokens=8000,
+            timeout=180,
         )
         llm._llm_provider = "anthropic"
         return llm
@@ -47,6 +48,7 @@ def build_chat_model(
             model=selected_model,
             temperature=temperature,
             api_key=settings.openai_api_key,
+            timeout=180,
         )
         llm._llm_provider = "openai"
         return llm
