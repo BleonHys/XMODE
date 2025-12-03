@@ -35,7 +35,7 @@ def build_chat_model(
             model=selected_model,
             temperature=temperature,
             api_key=settings.anthropic_api_key,
-            max_tokens=16384,
+            max_tokens=8000,
         )
         llm._llm_provider = "anthropic"
         return llm
