@@ -23,7 +23,7 @@
     "openrouter_endpoint": "https://openrouter.ai/api/v1/chat/completions",
     "openrouter_model": "qwen/qwen3-vl-8b-instruct",
     "openrouter_timeout": 120,
-    "openrouter_max_tokens": 512
+    "openrouter_max_tokens": 256
   },
   "ehrxqa": {
     "language": "en",

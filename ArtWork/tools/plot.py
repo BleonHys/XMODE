@@ -189,6 +189,15 @@ def get_plotting_tools(llm: BaseChatModel, log_path):
         except Exception as e:
             return {"status": "error", "message": f"data_plotting failed: {e}"}
 
+        if isinstance(code_model, dict):
+            if code_model.get("truncated"):
+                return {
+                    "status": "error",
+                    "message": "LLM truncated structured output (max_tokens); replan or retry with higher max_tokens.",
+                }
+            if code_model.get("status") == "error":
+                return code_model
+
         if code_model.code=='':
             return code_model.reasoning 
         # Ensure log directory exists and track before/after files

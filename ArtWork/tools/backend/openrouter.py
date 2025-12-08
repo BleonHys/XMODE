@@ -108,11 +108,14 @@ class VisualQAOpenRouter:
         for image_path in image_paths:
             payload = self._payload(_encode_image(Path(image_path)), query)
             try:
+                print(f"[debug:openrouter] sending VQA request model={self.model} image={image_path}")
                 response = self._post_with_retry(payload)
+                print(f"[debug:openrouter] received status={response.status_code} for image={image_path}")
                 data = response.json()
                 choice = (data.get("choices") or [{}])[0]
                 message = choice.get("message", {})
                 responses.append(_extract_text_content(message.get("content")))
             except Exception as exc:  # noqa: BLE001
+                print(f"[debug:openrouter] VQA request failed for image={image_path}: {exc}")
                 responses.append(f"ERROR(OpenRouter VQA failed: {exc})")
         return responses

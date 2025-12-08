@@ -8,7 +8,6 @@ from langchain_openai import ChatOpenAI
 from langchain_anthropic import ChatAnthropic
 from pydantic import BaseModel
 from langchain.chains.openai_functions import create_structured_output_runnable
-
 from src.settings import get_settings
 
 Provider = Literal["openai", "anthropic"]
@@ -35,7 +34,8 @@ def build_chat_model(
             model=selected_model,
             temperature=temperature,
             api_key=settings.anthropic_api_key,
-            max_tokens=32000,
+            # Anthropic Tier1 outputs are capped around 8k; keep headroom but avoid truncation errors.
+            max_tokens=8000,
             timeout=180,
         )
         llm._llm_provider = "anthropic"
@@ -49,6 +49,7 @@ def build_chat_model(
             temperature=temperature,
             api_key=settings.openai_api_key,
             timeout=180,
+            max_retries=6,
         )
         llm._llm_provider = "openai"
         return llm
@@ -72,9 +73,14 @@ def build_structured_runnable(
     schema: Type[BaseModel],
     **kwargs,
 ):
-    # Encourage models to return full structured payloads by allowing more tokens
-    llm = llm.bind(max_tokens=32000)
+    # Encourage models to return full structured payloads while respecting provider limits
     provider = getattr(llm, "_llm_provider", "openai")
     if provider == "anthropic":
-        return prompt | llm.with_structured_output(schema, max_output_tokens=32000)
+        llm = llm.bind(max_tokens=8000)
+        return prompt | llm.with_structured_output(schema, max_output_tokens=8000)
+    if provider == "openai":
+        # gpt-4o supports up to 16384 completion tokens; stay below that to avoid 400s
+        llm = llm.bind(max_tokens=16000)
+        return create_structured_output_runnable(schema, llm, prompt, **kwargs)
+    llm = llm.bind(max_tokens=32000)
     return create_structured_output_runnable(schema, llm, prompt, **kwargs)

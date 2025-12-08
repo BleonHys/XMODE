@@ -234,3 +234,5 @@ vision_cache.db
 bhy_test/bhy_test/logs/
 bhy_test/langsmith_export.csv
 .DS_Store
+# Local helper notes
+codex-notes.md

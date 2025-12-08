@@ -94,21 +94,21 @@ def sort_child_runs(run):
 
 def extract_and_save_all_child_runs_by_project(project_name, data_path="experiments/xmode/en", filter_str = None):
     client = Client()
-    runs = list(client.list_runs(project_name=project_name, filter=filter_str, is_root=True))
+    runs = list(client.list_runs(project_name=project_name, filter=filter_str, is_root=True, timeout=60))
     runs = list(map(_extract_run, runs))
     res = extract_all_child_runs_by_paths(runs, project_name=project_name)
     data_path = Path(data_path)
+    # Write per-run files incrementally to avoid holding everything in memory for large exports
+    details_dir = data_path / f"{project_name}-details"
+    details_dir.mkdir(parents=True, exist_ok=True)
+    for i, item in enumerate(res):
+        with open(details_dir / f"{i}.json", 'w') as f:
+            json.dump(item, f, indent=2)
+
+    # Also write a combined file for convenience
     json_output_path = data_path / f'{project_name}-details.json'
     with open(json_output_path, 'w') as f:
         json.dump(res, f, indent=2)
-
-    # save the item of results in a file folder
-
-    (Path(json_output_path).parent / f"{project_name}-details").mkdir(parents=True, exist_ok=True)
-
-    for i, item in enumerate(res):
-        with open(Path(json_output_path).parent / f"{project_name}-details" / f"{i}.json", 'w') as f:
-            json.dump(item, f, indent=2)
 
 def check_chain_of_dict(parent_ids):
     # all values should be appears in keys at least once

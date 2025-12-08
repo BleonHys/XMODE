@@ -60,7 +60,7 @@ class ExecuteCode(BaseModel):
     )
     
     data: Optional[str] = Field(
-        "",
+        default=None,
         description="The final data structure as a final output.",
     )
 
@@ -187,12 +187,15 @@ def get_data_preparation_tools(llm: BaseChatModel, log_path):
         except Exception as e:
             return {"status": "error", "message": f"data_preparation failed: {e}"}
 
-        # Handle parser/LLM truncation signaled above
-        if isinstance(code_model, dict) and code_model.get("truncated"):
-            return {
-                "status": "error",
-                "message": "LLM truncated structured output (max_tokens); replan or retry with higher max_tokens.",
-            }
+        # Handle parser/LLM truncation or generic error payloads signaled above
+        if isinstance(code_model, dict):
+            if code_model.get("truncated"):
+                return {
+                    "status": "error",
+                    "message": "LLM truncated structured output (max_tokens); replan or retry with higher max_tokens.",
+                }
+            if code_model.get("status") == "error":
+                return code_model
 
         if code_model.code=='':
             return code_model.reasoning 

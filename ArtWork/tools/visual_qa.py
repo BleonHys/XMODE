@@ -102,10 +102,16 @@ def get_image_analysis_tools(vqa):
                 if not img:
                     raise KeyError("img_path")
                 image_paths.append((IMAGE_PATH / img).as_posix())
-            
-            # print(image_paths)
-            
-            answers= vqa.extract(image_paths, question)
+
+            # Process images in small batches to avoid huge payloads/timeouts
+            batch_size = 3
+            answers = []
+            for i in range(0, len(image_paths), batch_size):
+                batch_paths = image_paths[i : i + batch_size]
+                if len(image_paths) > batch_size:
+                    print(f"[debug:visual_qa] sending VQA batch {i}-{i+len(batch_paths)-1} of {len(image_paths)}")
+                batch_answers = vqa.extract(batch_paths, question)
+                answers.extend(batch_answers)
             
             for ctx , answer in zip(context,answers):
                 ctx[question]=answer
