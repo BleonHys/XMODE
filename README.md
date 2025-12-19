@@ -9,8 +9,9 @@ This repo includes a local results bundle under `PAWork/` that aggregates logs, 
 - `PAWork/Chatgpt/Run1` and `PAWork/Chatgpt/Run2`: ChatGPT + BLIP runs (log-batch, batch configs, LangSmith exports/runs, plots, logs).
 - `PAWork/Anthropic/Run1` and `PAWork/Anthropic/Run2`: Anthropic + QWEN runs (log-batch, batch configs, LangSmith exports/runs, plots, logs).
 - `PAWork/root-logs`: Copies of root-level `*.log` files for reference.
+- `2025.12.19_Artwork_Questions_31-82_Answers_ground_truth.xlsx`: ground truth to control the questions 31 to 82
 
-You can also find the file `PAWork/experiment_eval.xlsx` which shows how the files wher evaluated. 
+You can also find the file `PAWork/experiment_eval.xlsx` which shows how the files were evaluated. 
 
 ## Overview
 
