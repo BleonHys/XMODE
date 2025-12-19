@@ -1,0 +1,5 @@
+{
+  "status": "error",
+  "message": "No input data provided. Please replan and include image detection data with img_path and object information.",
+  "expected_format": "List of images with detected objects including books"
+}

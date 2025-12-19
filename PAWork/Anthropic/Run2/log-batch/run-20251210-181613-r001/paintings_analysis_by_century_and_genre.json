@@ -1,0 +1,136 @@
+{
+  "summary": {
+    "total_paintings": 101,
+    "total_centuries": 5,
+    "total_genres": 10
+  },
+  "paintings_count_per_century": [
+    {
+      "century": 15,
+      "century_label": "15th Century",
+      "count": 43
+    },
+    {
+      "century": 16,
+      "century_label": "16th Century",
+      "count": 21
+    },
+    {
+      "century": 18,
+      "century_label": "18th Century",
+      "count": 14
+    },
+    {
+      "century": 19,
+      "century_label": "19th Century",
+      "count": 22
+    },
+    {
+      "century": 20,
+      "century_label": "20th Century",
+      "count": 1
+    }
+  ],
+  "most_recent_painting_per_genre": [
+    {
+      "genre": "Hodegetria",
+      "most_recent_painting": {
+        "title": "Our Lady of Piasek",
+        "inception": "1500-01-01 00:00:00",
+        "inception_year": "1500",
+        "century": 15,
+        "century_label": "15th Century"
+      }
+    },
+    {
+      "genre": "allegory",
+      "most_recent_painting": {
+        "title": "The Source",
+        "inception": "1856-01-01 00:00:00",
+        "inception_year": "1856",
+        "century": 19,
+        "century_label": "19th Century"
+      }
+    },
+    {
+      "genre": "figure painting",
+      "most_recent_painting": {
+        "title": "The Source",
+        "inception": "1856-01-01 00:00:00",
+        "inception_year": "1856",
+        "century": 19,
+        "century_label": "19th Century"
+      }
+    },
+    {
+      "genre": "genre art",
+      "most_recent_painting": {
+        "title": "The Turkish Bath",
+        "inception": "1862-01-01 00:00:00",
+        "inception_year": "1862",
+        "century": 19,
+        "century_label": "19th Century"
+      }
+    },
+    {
+      "genre": "history painting",
+      "most_recent_painting": {
+        "title": "Antiochus and Stratonice",
+        "inception": "1840-01-01 00:00:00",
+        "inception_year": "1840",
+        "century": 19,
+        "century_label": "19th Century"
+      }
+    },
+    {
+      "genre": "interior view",
+      "most_recent_painting": {
+        "title": "The Lictors Bring to Brutus the Bodies of His Sons",
+        "inception": "1789-01-01 00:00:00",
+        "inception_year": "1789",
+        "century": 18,
+        "century_label": "18th Century"
+      }
+    },
+    {
+      "genre": "mythological painting",
+      "most_recent_painting": {
+        "title": "The Birth of Venus",
+        "inception": "1879-01-01 00:00:00",
+        "inception_year": "1879",
+        "century": 19,
+        "century_label": "19th Century"
+      }
+    },
+    {
+      "genre": "nude",
+      "most_recent_painting": {
+        "title": "The Birth of Venus",
+        "inception": "1879-01-01 00:00:00",
+        "inception_year": "1879",
+        "century": 19,
+        "century_label": "19th Century"
+      }
+    },
+    {
+      "genre": "portrait",
+      "most_recent_painting": {
+        "title": "The Milkmaid of Bordeaux",
+        "inception": "1827-01-01 00:00:00",
+        "inception_year": "1827",
+        "century": 19,
+        "century_label": "19th Century"
+      }
+    },
+    {
+      "genre": "religious art",
+      "most_recent_painting": {
+        "title": "Q113636993",
+        "inception": "2000-01-01 00:00:00",
+        "inception_year": "2000",
+        "century": 20,
+        "century_label": "20th Century"
+      }
+    }
+  ]
+}

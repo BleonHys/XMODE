@@ -1,0 +1,24 @@
+{
+  "title": "Count of Paintings by Art Movement",
+  "x_axis_label": "Art Movement",
+  "y_axis_label": "Number of Paintings",
+  "data": [
+    {
+      "movement_name": "Renaissance",
+      "painting_count": 65
+    },
+    {
+      "movement_name": "neoclassicism",
+      "painting_count": 36
+    }
+  ],
+  "movements": [
+    "Renaissance",
+    "neoclassicism"
+  ],
+  "counts": [
+    65,
+    36
+  ],
+  "total_paintings": 101
+}

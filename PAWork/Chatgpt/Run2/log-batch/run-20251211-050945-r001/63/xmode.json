@@ -1,0 +1,48 @@
+[
+    {
+        "question": "Which genre has the most paintings?",
+        "id": 63,
+        "xmode": [
+            {
+                "content": "Which genre has the most paintings?",
+                "type": "human",
+                "id": "c6699ee3-86eb-4bf4-9d8b-e01197f17007"
+            },
+            {
+                "content": "{'status': 'success', 'data': [{'genre': 'religious art', 'painting_count': 54}]}",
+                "additional_kwargs": {
+                    "idx": 1,
+                    "args": {
+                        "problem": "Which genre has the most paintings?"
+                    }
+                },
+                "type": "function",
+                "name": "text2SQL",
+                "id": "ceb5b93f-5928-48ad-a372-56fac84a3c53"
+            },
+            {
+                "content": "Thought: The data indicates that 'religious art' is the genre with the most paintings, with a count of 54 paintings.",
+                "type": "ai",
+                "id": "2b469dac-d69d-44e6-a78c-3754bf022b0a",
+                "tool_calls": [],
+                "invalid_tool_calls": []
+            },
+            {
+                "content": "{'Summary': 'Religious art is the genre with the most paintings.', 'details': 'According to the data, religious art has a total of 54 paintings, making it the genre with the highest number of paintings.', 'source': 'Data obtained from the executed plan which queried the painting counts by genre.', 'inference': 'religious art', 'extra explanation': 'The data provided shows that religious art has the highest number of paintings compared to other genres.'}",
+                "type": "ai",
+                "id": "cb0da3f2-d904-4bab-a2a8-7e539adc3bdb",
+                "tool_calls": [],
+                "invalid_tool_calls": []
+            }
+        ],
+        "prediction": [
+            {
+                "Summary": "Religious art is the genre with the most paintings.",
+                "details": "According to the data, religious art has a total of 54 paintings, making it the genre with the highest number of paintings.",
+                "source": "Data obtained from the executed plan which queried the painting counts by genre.",
+                "inference": "religious art",
+                "extra explanation": "The data provided shows that religious art has the highest number of paintings compared to other genres."
+            }
+        ]
+    }
+]

@@ -2,6 +2,16 @@
 
 This repository contains the code and resources for the paper [XMODE: Explainable Model for Data Extraction](https://arxiv.org/abs/2412.18428).
 
+## PAWork Results
+
+This repo includes a local results bundle under `PAWork/` that aggregates logs, JSON/CSV outputs, and plots from the evaluation runs.
+
+- `PAWork/Chatgpt/Run1` and `PAWork/Chatgpt/Run2`: ChatGPT + BLIP runs (log-batch, batch configs, LangSmith exports/runs, plots, logs).
+- `PAWork/Anthropic/Run1` and `PAWork/Anthropic/Run2`: Anthropic + QWEN runs (log-batch, batch configs, LangSmith exports/runs, plots, logs).
+- `PAWork/root-logs`: Copies of root-level `*.log` files for reference.
+
+You can also find the file `PAWork/experiment_eval.xlsx` which shows how the files wher evaluated. 
+
 ## Overview
 
 XMODE is a framework designed to enhance the explainability of data extraction models. It provides tools and methodologies to interpret and visualize the decision-making process of machine learning models used in data extraction tasks. 

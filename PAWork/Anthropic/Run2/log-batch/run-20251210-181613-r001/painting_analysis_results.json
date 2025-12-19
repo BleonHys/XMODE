@@ -1,0 +1,86 @@
+{
+  "analysis_summary": {
+    "total_paintings": 101,
+    "total_centuries": 5,
+    "total_genres": 10
+  },
+  "paintings_count_by_century": [
+    {
+      "century": 15,
+      "century_label": "15th Century",
+      "painting_count": 43
+    },
+    {
+      "century": 16,
+      "century_label": "16th Century",
+      "painting_count": 21
+    },
+    {
+      "century": 18,
+      "century_label": "18th Century",
+      "painting_count": 14
+    },
+    {
+      "century": 19,
+      "century_label": "19th Century",
+      "painting_count": 22
+    },
+    {
+      "century": 20,
+      "century_label": "20th Century",
+      "painting_count": 1
+    }
+  ],
+  "most_recent_century_by_genre": [
+    {
+      "genre": "Hodegetria",
+      "most_recent_century": 15,
+      "century_label": "15th Century"
+    },
+    {
+      "genre": "allegory",
+      "most_recent_century": 19,
+      "century_label": "19th Century"
+    },
+    {
+      "genre": "figure painting",
+      "most_recent_century": 19,
+      "century_label": "19th Century"
+    },
+    {
+      "genre": "genre art",
+      "most_recent_century": 19,
+      "century_label": "19th Century"
+    },
+    {
+      "genre": "history painting",
+      "most_recent_century": 19,
+      "century_label": "19th Century"
+    },
+    {
+      "genre": "interior view",
+      "most_recent_century": 18,
+      "century_label": "18th Century"
+    },
+    {
+      "genre": "mythological painting",
+      "most_recent_century": 19,
+      "century_label": "19th Century"
+    },
+    {
+      "genre": "nude",
+      "most_recent_century": 19,
+      "century_label": "19th Century"
+    },
+    {
+      "genre": "portrait",
+      "most_recent_century": 19,
+      "century_label": "19th Century"
+    },
+    {
+      "genre": "religious art",
+      "most_recent_century": 20,
+      "century_label": "20th Century"
+    }
+  ]
+}

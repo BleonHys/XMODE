@@ -1,0 +1,55 @@
+{
+  "langchain": {
+    "project": "XMODE-ArtWork-batch-anthropic-claude-sonnet-4-5-20250929-openrouter-qwen-qwen3-vl-8b-instruct-run-20251210-181613",
+    "tracing_v2": true
+  },
+  "models": {
+    "provider": "anthropic",
+    "default_chat_model": "gpt-4o",
+    "default_temperature": 0.0,
+    "anthropic_model": "claude-sonnet-4-5-20250929"
+  },
+  "artwork": {
+    "language": "en",
+    "db_path": "ArtWork/art.db",
+    "questions_file": "/home/bleon/git/XMODE/ArtWork/experiments/batch/tmp-questions/questions_en-offset0-limitall.json",
+    "output_dir_template": "/home/bleon/git/XMODE/ArtWork/experiments/batch/{language}/anthropic-claude-sonnet-4-5-20250929/run-20251210-181613-r001",
+    "log_dir": "/home/bleon/git/XMODE/ArtWork/experiments/log-batch/anthropic-claude-sonnet-4-5-20250929/run-20251210-181613-r001",
+    "thread_id": "artwork-batch-anthropic-claude-sonnet-4-5-20250929-run-20251210-181613-r001",
+    "langchain_project": "XMODE-ArtWork-batch-anthropic-claude-sonnet-4-5-20250929-openrouter-qwen-qwen3-vl-8b-instruct-run-20251210-181613",
+    "vqa_provider": "openrouter",
+    "ollama_endpoint": "http://localhost:11434/api/generate",
+    "ollama_model": "qwen3-vl:4b-instruct",
+    "openrouter_endpoint": "https://openrouter.ai/api/v1/chat/completions",
+    "openrouter_model": "qwen/qwen3-vl-8b-instruct",
+    "openrouter_timeout": 120,
+    "openrouter_max_tokens": 256
+  },
+  "ehrxqa": {
+    "language": "en",
+    "db_path": "mimic_iv_cxr.db",
+    "dataset_file": "dataset/mimic_iv_cxr/sampled_test_with_scope_preprocessed_balenced_answer_100.json",
+    "output_dir_template": "experiments/ehrxqa/xmode/{language}",
+    "thread_id": "ehrxqa",
+    "m3ae_endpoint": "http://localhost:8080",
+    "langchain_project": "xmode-vqa-gpt_4o-english"
+  },
+  "downloads": {
+    "artwork_db": {
+      "description": "Artwork SQLite database",
+      "path": "ArtWork/art.db",
+      "source": {
+        "type": "gdrive",
+        "id": "1OMyab3ZbY92gKQ9FfC0z2c6SImakESrf"
+      }
+    },
+    "ehrxqa_db": {
+      "description": "EHRXQA MIMIC CXR SQLite database",
+      "path": "mimic_iv_cxr.db",
+      "source": {
+        "type": "gdrive",
+        "id": "19o7R_nZ3vSkVn8QXXoMVfe1zw6xqXv-N"
+      }
+    }
+  }
+}

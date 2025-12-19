@@ -1,0 +1,12 @@
+{
+  "project_name": "XMODE-ArtWork-batch-openai-gpt-4o-blip-blip-vqa-base-20251209-045713",
+  "run_label": "20251209-045713-r001",
+  "model_provider": "openai",
+  "model_name": "gpt-4o",
+  "vqa_provider": "blip",
+  "vqa_model": "blip-vqa-base",
+  "config_path": "/home/bleon/git/XMODE/ArtWork/experiments/batch/tmp-configs/openai-gpt-4o/20251209-045713-r001.json",
+  "output_dir_template": "/home/bleon/git/XMODE/ArtWork/experiments/batch/{language}/openai-gpt-4o/20251209-045713-r001",
+  "log_dir": "/home/bleon/git/XMODE/ArtWork/experiments/log-batch/openai-gpt-4o/20251209-045713-r001",
+  "status": "success"
+}

@@ -1,0 +1,27 @@
+[
+    {
+        "century": 15,
+        "genre": "religious art",
+        "count": 42
+    },
+    {
+        "century": 16,
+        "genre": "religious art",
+        "count": 11
+    },
+    {
+        "century": 18,
+        "genre": "history painting",
+        "count": 8
+    },
+    {
+        "century": 19,
+        "genre": "nude",
+        "count": 8
+    },
+    {
+        "century": 20,
+        "genre": "religious art",
+        "count": 1
+    }
+]

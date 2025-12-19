@@ -1,0 +1,70 @@
+{
+  "title": "Oldest Painting Year per Genre",
+  "description": "Year of the oldest painting for each genre",
+  "data": [
+    {
+      "genre": "religious art",
+      "oldest_year": 1438
+    },
+    {
+      "genre": "Hodegetria",
+      "oldest_year": 1500
+    },
+    {
+      "genre": "history painting",
+      "oldest_year": 1530
+    },
+    {
+      "genre": "portrait",
+      "oldest_year": 1530
+    },
+    {
+      "genre": "mythological painting",
+      "oldest_year": 1788
+    },
+    {
+      "genre": "interior view",
+      "oldest_year": 1789
+    },
+    {
+      "genre": "nude",
+      "oldest_year": 1811
+    },
+    {
+      "genre": "allegory",
+      "oldest_year": 1856
+    },
+    {
+      "genre": "figure painting",
+      "oldest_year": 1856
+    },
+    {
+      "genre": "genre art",
+      "oldest_year": 1862
+    }
+  ],
+  "genres": [
+    "religious art",
+    "Hodegetria",
+    "history painting",
+    "portrait",
+    "mythological painting",
+    "interior view",
+    "nude",
+    "allegory",
+    "figure painting",
+    "genre art"
+  ],
+  "years": [
+    1438,
+    1500,
+    1530,
+    1530,
+    1788,
+    1789,
+    1811,
+    1856,
+    1856,
+    1862
+  ]
+}

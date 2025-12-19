@@ -1,0 +1,42 @@
+[
+    {
+        "genre": "Hodegetria",
+        "img_path": "images/img_58.jpg"
+    },
+    {
+        "genre": "allegory",
+        "img_path": "images/img_82.jpg"
+    },
+    {
+        "genre": "figure painting",
+        "img_path": "images/img_85.jpg"
+    },
+    {
+        "genre": "genre art",
+        "img_path": "images/img_95.jpg"
+    },
+    {
+        "genre": "history painting",
+        "img_path": "images/img_13.jpg"
+    },
+    {
+        "genre": "interior view",
+        "img_path": "images/img_99.jpg"
+    },
+    {
+        "genre": "mythological painting",
+        "img_path": "images/img_73.jpg"
+    },
+    {
+        "genre": "nude",
+        "img_path": "images/img_72.jpg"
+    },
+    {
+        "genre": "portrait",
+        "img_path": "images/img_4.jpg"
+    },
+    {
+        "genre": "religious art",
+        "img_path": "images/img_0.jpg"
+    }
+]

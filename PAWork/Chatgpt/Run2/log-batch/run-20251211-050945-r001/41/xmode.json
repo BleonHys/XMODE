@@ -1,0 +1,49 @@
+[
+    {
+        "question": "Which century is the most represented?",
+        "id": 41,
+        "xmode": [
+            {
+                "content": "Which century is the most represented?",
+                "type": "human",
+                "id": "b4741fa3-1861-4565-8410-ee6fce1ace69"
+            },
+            {
+                "content": "{'status': 'success', 'data': [{'century': 15, 'count': 43}]}",
+                "additional_kwargs": {
+                    "idx": 1,
+                    "args": {
+                        "problem": "Which century is the most represented?",
+                        "context": null
+                    }
+                },
+                "type": "function",
+                "name": "text2SQL",
+                "id": "d8d5b6a5-53c7-426e-8b38-81ccba3edb17"
+            },
+            {
+                "content": "Thought: The data indicates that the 15th century is the most represented with a count of 43.",
+                "type": "ai",
+                "id": "ed2b1c5b-14d6-46f9-9159-e55e24e78ccf",
+                "tool_calls": [],
+                "invalid_tool_calls": []
+            },
+            {
+                "content": "{'Summary': 'The 15th century is the most represented century.', 'details': 'Based on the data provided, the 15th century has the highest representation with a count of 43.', 'source': 'Data obtained from the executed plan.', 'inference': '15', 'extra explanation': 'The count of 43 indicates the number of representations or occurrences for the 15th century.'}",
+                "type": "ai",
+                "id": "d4e761f9-248c-4e4a-9e1a-204d0e1fc08e",
+                "tool_calls": [],
+                "invalid_tool_calls": []
+            }
+        ],
+        "prediction": [
+            {
+                "Summary": "The 15th century is the most represented century.",
+                "details": "Based on the data provided, the 15th century has the highest representation with a count of 43.",
+                "source": "Data obtained from the executed plan.",
+                "inference": "15",
+                "extra explanation": "The count of 43 indicates the number of representations or occurrences for the 15th century."
+            }
+        ]
+    }
+]

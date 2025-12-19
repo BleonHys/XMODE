@@ -1,0 +1,12 @@
+{
+  "project_name": "XMODE-ArtWork-batch-openai-gpt-4o-openrouter-qwen-qwen3-vl-8b-instruct-20251203-192955",
+  "run_label": "20251203-192955-r001",
+  "model_provider": "openai",
+  "model_name": "gpt-4o",
+  "vqa_provider": "openrouter",
+  "vqa_model": "qwen/qwen3-vl-8b-instruct",
+  "config_path": "/home/bleon/git/XMODE/ArtWork/experiments/batch/tmp-configs/openai-gpt-4o/20251203-192955-r001.json",
+  "output_dir_template": "/home/bleon/git/XMODE/ArtWork/experiments/batch/{language}/openai-gpt-4o/20251203-192955-r001",
+  "log_dir": "/home/bleon/git/XMODE/ArtWork/experiments/log-batch/openai-gpt-4o/20251203-192955-r001",
+  "status": "failed: Command '['/home/bleon/git/XMODE/.venv/bin/python', 'ArtWork/main.py']' returned non-zero exit status 1."
+}

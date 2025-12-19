@@ -1,0 +1,48 @@
+[
+    {
+        "question": "Which genre has the fewest paintings?",
+        "id": 64,
+        "xmode": [
+            {
+                "content": "Which genre has the fewest paintings?",
+                "type": "human",
+                "id": "e5ef11f5-21ed-4a58-89b5-7bb32f115d7b"
+            },
+            {
+                "content": "{'status': 'success', 'data': [{'genre': 'Hodegetria', 'painting_count': 1}]}",
+                "additional_kwargs": {
+                    "idx": 1,
+                    "args": {
+                        "problem": "Which genre has the fewest paintings?"
+                    }
+                },
+                "type": "function",
+                "name": "text2SQL",
+                "id": "8193fdc2-8c25-47d1-a51e-ab4e15fa3246"
+            },
+            {
+                "content": "Thought: The genre with the fewest paintings is 'Hodegetria', with only 1 painting.",
+                "type": "ai",
+                "id": "94e9518f-6bc8-4883-b9cf-b15f4214419d",
+                "tool_calls": [],
+                "invalid_tool_calls": []
+            },
+            {
+                "content": "{'Summary': 'The genre with the fewest paintings is Hodegetria.', 'details': 'The genre Hodegetria has only 1 painting, making it the genre with the fewest paintings.', 'source': 'Data obtained from the executed plan.', 'inference': 'Hodegetria', 'extra explanation': 'Hodegetria is a specific genre with a very limited number of paintings, specifically just one.'}",
+                "type": "ai",
+                "id": "ac26a4d2-f21a-4e7b-b787-e10af6b05532",
+                "tool_calls": [],
+                "invalid_tool_calls": []
+            }
+        ],
+        "prediction": [
+            {
+                "Summary": "The genre with the fewest paintings is Hodegetria.",
+                "details": "The genre Hodegetria has only 1 painting, making it the genre with the fewest paintings.",
+                "source": "Data obtained from the executed plan.",
+                "inference": "Hodegetria",
+                "extra explanation": "Hodegetria is a specific genre with a very limited number of paintings, specifically just one."
+            }
+        ]
+    }
+]

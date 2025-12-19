@@ -1,0 +1,48 @@
+[
+    {
+        "question": "Which century is the most represented?",
+        "id": 41,
+        "xmode": [
+            {
+                "content": "Which century is the most represented?",
+                "type": "human",
+                "id": "6f5104ac-6d6b-473d-bf97-c7bc3b1239d5"
+            },
+            {
+                "content": "{'status': 'success', 'data': [{'century': 15, 'count': 43}]}",
+                "additional_kwargs": {
+                    "idx": 1,
+                    "args": {
+                        "problem": "Which century is the most represented?"
+                    }
+                },
+                "type": "function",
+                "name": "text2SQL",
+                "id": "9341db8d-36dd-41f0-8f17-4a21adf431c6"
+            },
+            {
+                "content": "Thought: The data indicates that the 15th century is the most represented with a count of 43.",
+                "type": "ai",
+                "id": "14026a12-0e3d-4133-9857-6f2382debabe",
+                "tool_calls": [],
+                "invalid_tool_calls": []
+            },
+            {
+                "content": "{'Summary': 'The 15th century is the most represented century.', 'details': 'Based on the data provided, the 15th century has the highest representation with a count of 43.', 'source': 'Data obtained from the text2SQL function.', 'inference': '15', 'extra explanation': 'The count of 43 indicates the number of representations or occurrences for the 15th century.'}",
+                "type": "ai",
+                "id": "21ce1d70-09a8-407e-b6e9-c7d81fb63eae",
+                "tool_calls": [],
+                "invalid_tool_calls": []
+            }
+        ],
+        "prediction": [
+            {
+                "Summary": "The 15th century is the most represented century.",
+                "details": "Based on the data provided, the 15th century has the highest representation with a count of 43.",
+                "source": "Data obtained from the text2SQL function.",
+                "inference": "15",
+                "extra explanation": "The count of 43 indicates the number of representations or occurrences for the 15th century."
+            }
+        ]
+    }
+]

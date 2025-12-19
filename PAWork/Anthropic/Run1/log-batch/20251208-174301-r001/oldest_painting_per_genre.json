@@ -1,0 +1,55 @@
+{
+  "title": "Year of the Oldest Painting per Genre",
+  "data": [
+    {
+      "genre": "religious art",
+      "oldest_year": 1438,
+      "painting_title": "Predella of the Barbadori altarpiece"
+    },
+    {
+      "genre": "Hodegetria",
+      "oldest_year": 1500,
+      "painting_title": "Our Lady of Piasek"
+    },
+    {
+      "genre": "history painting",
+      "oldest_year": 1530,
+      "painting_title": "Portrait of Eleanor of Austria"
+    },
+    {
+      "genre": "portrait",
+      "oldest_year": 1530,
+      "painting_title": "Portrait of Eleanor of Austria"
+    },
+    {
+      "genre": "mythological painting",
+      "oldest_year": 1788,
+      "painting_title": "Paris and Helen"
+    },
+    {
+      "genre": "interior view",
+      "oldest_year": 1789,
+      "painting_title": "The Lictors Bring to Brutus the Bodies of His Sons"
+    },
+    {
+      "genre": "nude",
+      "oldest_year": 1811,
+      "painting_title": "Jupiter and Thetis"
+    },
+    {
+      "genre": "allegory",
+      "oldest_year": 1856,
+      "painting_title": "The Source"
+    },
+    {
+      "genre": "figure painting",
+      "oldest_year": 1856,
+      "painting_title": "The Source"
+    },
+    {
+      "genre": "genre art",
+      "oldest_year": 1862,
+      "painting_title": "The Turkish Bath"
+    }
+  ]
+}

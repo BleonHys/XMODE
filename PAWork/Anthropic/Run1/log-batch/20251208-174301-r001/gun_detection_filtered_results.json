@@ -1,0 +1,14 @@
+{
+  "status": "error",
+  "message": "Missing gun detection results in provided data",
+  "description": "The provided data contains only image file paths but no gun detection analysis results. Cannot filter images with guns without detection data.",
+  "error_details": "KeyError('img_path')",
+  "total_images_in_input": 101,
+  "images_with_guns_detected": [],
+  "filtered_image_count": 0,
+  "required_data_format": {
+    "example": "Each image should have detection results with objects detected, including labels like 'gun', 'weapon', etc."
+  },
+  "timestamp": "2025-12-09T00:11:05.736944",
+  "action_required": "Please provide image analysis results that include object detection data (detected objects, labels, confidence scores) for each image."
+}

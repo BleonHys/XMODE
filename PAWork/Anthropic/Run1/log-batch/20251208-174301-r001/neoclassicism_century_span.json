@@ -1,0 +1,10 @@
+{
+  "status": "error",
+  "message": "Missing required information: start_year and end_year are None",
+  "request": "Please replan and obtain the actual start year and end year for the Neoclassicism movement",
+  "input_data": {
+    "start_year": null,
+    "end_year": null
+  },
+  "calculation": "Cannot calculate centuries without valid year data"
+}

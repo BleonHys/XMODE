@@ -1,0 +1,47 @@
+{
+  "title": "Number of Paintings by Century",
+  "description": "Distribution of paintings across different centuries",
+  "data": [
+    {
+      "century": "15th Century",
+      "century_number": 15,
+      "count": 43,
+      "label": "15th Century: 43 paintings"
+    },
+    {
+      "century": "16th Century",
+      "century_number": 16,
+      "count": 21,
+      "label": "16th Century: 21 paintings"
+    },
+    {
+      "century": "18th Century",
+      "century_number": 18,
+      "count": 14,
+      "label": "18th Century: 14 paintings"
+    },
+    {
+      "century": "19th Century",
+      "century_number": 19,
+      "count": 22,
+      "label": "19th Century: 22 paintings"
+    },
+    {
+      "century": "20th Century",
+      "century_number": 20,
+      "count": 1,
+      "label": "20th Century: 1 paintings"
+    }
+  ],
+  "summary": {
+    "total_paintings": 101,
+    "total_centuries": 5,
+    "centuries_covered": [
+      15,
+      16,
+      18,
+      19,
+      20
+    ]
+  }
+}

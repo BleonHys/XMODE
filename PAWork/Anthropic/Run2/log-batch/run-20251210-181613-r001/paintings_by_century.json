@@ -1,0 +1,43 @@
+{
+  "title": "Number of Paintings by Century Based on Inception Dates",
+  "description": "Distribution of paintings across centuries",
+  "total_paintings": 101,
+  "data_by_century": [
+    {
+      "century": "15th Century",
+      "century_number": 15,
+      "year_range": "1401-1500",
+      "number_of_paintings": 43
+    },
+    {
+      "century": "16th Century",
+      "century_number": 16,
+      "year_range": "1501-1600",
+      "number_of_paintings": 21
+    },
+    {
+      "century": "18th Century",
+      "century_number": 18,
+      "year_range": "1701-1800",
+      "number_of_paintings": 14
+    },
+    {
+      "century": "19th Century",
+      "century_number": 19,
+      "year_range": "1801-1900",
+      "number_of_paintings": 22
+    },
+    {
+      "century": "20th Century",
+      "century_number": 20,
+      "year_range": "1901-2000",
+      "number_of_paintings": 1
+    }
+  ],
+  "summary": {
+    "earliest_century": "15th Century",
+    "latest_century": "20th Century",
+    "most_productive_century": 15,
+    "most_productive_century_count": 43
+  }
+}

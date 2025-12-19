@@ -1,0 +1,77 @@
+{
+  "title": "Count of Paintings by Genre",
+  "description": "Distribution of paintings across different artistic genres",
+  "total_paintings": 101,
+  "total_genres": 10,
+  "data": [
+    {
+      "genre": "religious art",
+      "count": 54
+    },
+    {
+      "genre": "portrait",
+      "count": 16
+    },
+    {
+      "genre": "history painting",
+      "count": 10
+    },
+    {
+      "genre": "nude",
+      "count": 8
+    },
+    {
+      "genre": "mythological painting",
+      "count": 4
+    },
+    {
+      "genre": "figure painting",
+      "count": 3
+    },
+    {
+      "genre": "allegory",
+      "count": 3
+    },
+    {
+      "genre": "interior view",
+      "count": 1
+    },
+    {
+      "genre": "genre art",
+      "count": 1
+    },
+    {
+      "genre": "Hodegetria",
+      "count": 1
+    }
+  ],
+  "genres": [
+    "religious art",
+    "portrait",
+    "history painting",
+    "nude",
+    "mythological painting",
+    "figure painting",
+    "allegory",
+    "interior view",
+    "genre art",
+    "Hodegetria"
+  ],
+  "counts": [
+    54,
+    16,
+    10,
+    8,
+    4,
+    3,
+    3,
+    1,
+    1,
+    1
+  ],
+  "plot_config": {
+    "x_axis_label": "Genre",
+    "y_axis_label": "Number of Paintings",
+    "chart_type": "bar_chart"
+  }
+}

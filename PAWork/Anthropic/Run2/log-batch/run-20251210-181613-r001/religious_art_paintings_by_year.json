@@ -1,0 +1,103 @@
+{
+  "title": "Number of Religious Art Paintings by Year",
+  "description": "Count of religious art paintings for each inception year",
+  "total_paintings": 54,
+  "unique_years": 19,
+  "data": [
+    {
+      "year": 1438,
+      "count": 1,
+      "label": "1438 (1 painting)"
+    },
+    {
+      "year": 1470,
+      "count": 2,
+      "label": "1470 (2 paintings)"
+    },
+    {
+      "year": 1472,
+      "count": 1,
+      "label": "1472 (1 painting)"
+    },
+    {
+      "year": 1474,
+      "count": 1,
+      "label": "1474 (1 painting)"
+    },
+    {
+      "year": 1475,
+      "count": 1,
+      "label": "1475 (1 painting)"
+    },
+    {
+      "year": 1476,
+      "count": 2,
+      "label": "1476 (2 paintings)"
+    },
+    {
+      "year": 1477,
+      "count": 13,
+      "label": "1477 (13 paintings)"
+    },
+    {
+      "year": 1479,
+      "count": 12,
+      "label": "1479 (12 paintings)"
+    },
+    {
+      "year": 1480,
+      "count": 3,
+      "label": "1480 (3 paintings)"
+    },
+    {
+      "year": 1483,
+      "count": 4,
+      "label": "1483 (4 paintings)"
+    },
+    {
+      "year": 1500,
+      "count": 2,
+      "label": "1500 (2 paintings)"
+    },
+    {
+      "year": 1520,
+      "count": 1,
+      "label": "1520 (1 painting)"
+    },
+    {
+      "year": 1525,
+      "count": 1,
+      "label": "1525 (1 painting)"
+    },
+    {
+      "year": 1528,
+      "count": 1,
+      "label": "1528 (1 painting)"
+    },
+    {
+      "year": 1536,
+      "count": 5,
+      "label": "1536 (5 paintings)"
+    },
+    {
+      "year": 1565,
+      "count": 1,
+      "label": "1565 (1 painting)"
+    },
+    {
+      "year": 1583,
+      "count": 1,
+      "label": "1583 (1 painting)"
+    },
+    {
+      "year": 1600,
+      "count": 1,
+      "label": "1600 (1 painting)"
+    },
+    {
+      "year": 2000,
+      "count": 1,
+      "label": "2000 (1 painting)"
+    }
+  ]
+}

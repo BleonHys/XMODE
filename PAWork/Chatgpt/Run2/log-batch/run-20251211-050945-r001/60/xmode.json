@@ -1,0 +1,48 @@
+[
+    {
+        "question": "How many centuries does the Neoclassicism movement span?",
+        "id": 60,
+        "xmode": [
+            {
+                "content": "How many centuries does the Neoclassicism movement span?",
+                "type": "human",
+                "id": "3577e587-9f93-484f-8722-d51a1f20e9d5"
+            },
+            {
+                "content": "{'status': 'success', 'data': [{'century_span': None}]}",
+                "additional_kwargs": {
+                    "idx": 1,
+                    "args": {
+                        "problem": "How many centuries does the Neoclassicism movement span?"
+                    }
+                },
+                "type": "function",
+                "name": "text2SQL",
+                "id": "ae1476a6-1a8a-4b5b-bb07-1d59cb048d9b"
+            },
+            {
+                "content": "Thought: The Neoclassicism movement is generally considered to have spanned from the mid-18th century to the early 19th century, covering approximately one century. However, the provided data does not specify the exact century span, so I will provide the answer based on general historical knowledge.",
+                "type": "ai",
+                "id": "4417b29c-28f1-4adb-962e-2f3f55966d5b",
+                "tool_calls": [],
+                "invalid_tool_calls": []
+            },
+            {
+                "content": "{'Summary': 'The Neoclassicism movement spans approximately one century.', 'details': 'Neoclassicism is generally considered to have begun in the mid-18th century and continued into the early 19th century, covering roughly one century.', 'source': 'General historical knowledge about the Neoclassicism movement.', 'inference': '1', 'extra explanation': 'The movement is typically associated with the period from around 1750 to 1830.'}",
+                "type": "ai",
+                "id": "93f2095f-44b6-47fb-aa6d-258452196b95",
+                "tool_calls": [],
+                "invalid_tool_calls": []
+            }
+        ],
+        "prediction": [
+            {
+                "Summary": "The Neoclassicism movement spans approximately one century.",
+                "details": "Neoclassicism is generally considered to have begun in the mid-18th century and continued into the early 19th century, covering roughly one century.",
+                "source": "General historical knowledge about the Neoclassicism movement.",
+                "inference": "1",
+                "extra explanation": "The movement is typically associated with the period from around 1750 to 1830."
+            }
+        ]
+    }
+]

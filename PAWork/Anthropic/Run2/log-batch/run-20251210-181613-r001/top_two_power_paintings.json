@@ -1,0 +1,32 @@
+{
+  "query": "Identify and extract the two paintings that most clearly depict power",
+  "criteria": "Based on elements like authority figures, crowns, thrones, military scenes, rulers, dominant poses, or symbols of authority",
+  "extraction_timestamp": "2025-12-11T02:45:53.250697",
+  "total_paintings_analyzed": 22,
+  "top_two_paintings_depicting_power": [
+    {
+      "rank": 1,
+      "title": "Jupiter and Thetis",
+      "inception_date": "1811-01-01 00:00:00",
+      "art_movement": "neoclassicism",
+      "genre": "nude",
+      "image_path": "images/img_76.jpg",
+      "image_url": "http://commons.wikimedia.org/wiki/Special:FilePath/J%C3%BApiter%20y%20Tetis%2C%20por%20Dominique%20Ingres.jpg",
+      "power_rating": "10/10",
+      "power_analysis_summary": "Yes, this painting clearly depicts power — in fact, it is a masterful and unambiguous representation of divine authority.",
+      "full_power_analysis": "Yes, this painting clearly depicts power — in fact, it is a masterful and unambiguous representation of divine authority."
+    },
+    {
+      "rank": 2,
+      "title": "Jupiter and Thetis",
+      "inception_date": "1811-01-01 00:00:00",
+      "art_movement": "neoclassicism",
+      "genre": "mythological painting",
+      "image_path": "images/img_77.jpg",
+      "image_url": "http://commons.wikimedia.org/wiki/Special:FilePath/J%C3%BApiter%20y%20Tetis%2C%20por%20Dominique%20Ingres.jpg",
+      "power_rating": "10/10",
+      "power_analysis_summary": "Yes, this painting clearly depicts power. It is a powerful representation of divine authority through multiple visual cues.",
+      "full_power_analysis": "Yes, this painting clearly depicts power. It is a powerful representation of divine authority through multiple visual cues."
+    }
+  ]
+}

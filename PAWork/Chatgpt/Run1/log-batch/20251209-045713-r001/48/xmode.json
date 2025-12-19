@@ -1,0 +1,1787 @@
+[
+    {
+        "question": "What pictures portray Nelson Mandela? Give me their titles.",
+        "id": 48,
+        "xmode": [
+            {
+                "content": "What pictures portray Nelson Mandela? Give me their titles.",
+                "type": "human",
+                "id": "fffb5f5b-f9d9-4559-975f-56b8d09cae5c"
+            },
+            {
+                "content": "{'status': 'success', 'data': [{'img_path': 'images/img_0.jpg'}, {'img_path': 'images/img_1.jpg'}, {'img_path': 'images/img_2.jpg'}, {'img_path': 'images/img_3.jpg'}, {'img_path': 'images/img_4.jpg'}, {'img_path': 'images/img_5.jpg'}, {'img_path': 'images/img_6.jpg'}, {'img_path': 'images/img_7.jpg'}, {'img_path': 'images/img_8.jpg'}, {'img_path': 'images/img_9.jpg'}, {'img_path': 'images/img_10.jpg'}, {'img_path': 'images/img_11.jpg'}, {'img_path': 'images/img_12.jpg'}, {'img_path': 'images/img_13.jpg'}, {'img_path': 'images/img_14.jpg'}, {'img_path': 'images/img_15.jpg'}, {'img_path': 'images/img_16.jpg'}, {'img_path': 'images/img_17.jpg'}, {'img_path': 'images/img_18.jpg'}, {'img_path': 'images/img_19.jpg'}, {'img_path': 'images/img_20.jpg'}, {'img_path': 'images/img_21.jpg'}, {'img_path': 'images/img_22.jpg'}, {'img_path': 'images/img_23.jpg'}, {'img_path': 'images/img_24.jpg'}, {'img_path': 'images/img_25.jpg'}, {'img_path': 'images/img_26.jpg'}, {'img_path': 'images/img_27.jpg'}, {'img_path': 'images/img_28.jpg'}, {'img_path': 'images/img_29.jpg'}, {'img_path': 'images/img_30.jpg'}, {'img_path': 'images/img_31.jpg'}, {'img_path': 'images/img_32.jpg'}, {'img_path': 'images/img_33.jpg'}, {'img_path': 'images/img_34.jpg'}, {'img_path': 'images/img_35.jpg'}, {'img_path': 'images/img_36.jpg'}, {'img_path': 'images/img_37.jpg'}, {'img_path': 'images/img_38.jpg'}, {'img_path': 'images/img_39.jpg'}, {'img_path': 'images/img_40.jpg'}, {'img_path': 'images/img_41.jpg'}, {'img_path': 'images/img_42.jpg'}, {'img_path': 'images/img_43.jpg'}, {'img_path': 'images/img_44.jpg'}, {'img_path': 'images/img_45.jpg'}, {'img_path': 'images/img_46.jpg'}, {'img_path': 'images/img_47.jpg'}, {'img_path': 'images/img_48.jpg'}, {'img_path': 'images/img_49.jpg'}, {'img_path': 'images/img_50.jpg'}, {'img_path': 'images/img_51.jpg'}, {'img_path': 'images/img_52.jpg'}, {'img_path': 'images/img_53.jpg'}, {'img_path': 'images/img_54.jpg'}, {'img_path': 'images/img_55.jpg'}, {'img_path': 'images/img_56.jpg'}, {'img_path': 'images/img_57.jpg'}, {'img_path': 'images/img_58.jpg'}, {'img_path': 'images/img_59.jpg'}, {'img_path': 'images/img_60.jpg'}, {'img_path': 'images/img_61.jpg'}, {'img_path': 'images/img_62.jpg'}, {'img_path': 'images/img_63.jpg'}, {'img_path': 'images/img_64.jpg'}, {'img_path': 'images/img_65.jpg'}, {'img_path': 'images/img_66.jpg'}, {'img_path': 'images/img_67.jpg'}, {'img_path': 'images/img_68.jpg'}, {'img_path': 'images/img_69.jpg'}, {'img_path': 'images/img_70.jpg'}, {'img_path': 'images/img_71.jpg'}, {'img_path': 'images/img_72.jpg'}, {'img_path': 'images/img_73.jpg'}, {'img_path': 'images/img_74.jpg'}, {'img_path': 'images/img_75.jpg'}, {'img_path': 'images/img_76.jpg'}, {'img_path': 'images/img_77.jpg'}, {'img_path': 'images/img_78.jpg'}, {'img_path': 'images/img_79.jpg'}, {'img_path': 'images/img_80.jpg'}, {'img_path': 'images/img_81.jpg'}, {'img_path': 'images/img_82.jpg'}, {'img_path': 'images/img_83.jpg'}, {'img_path': 'images/img_84.jpg'}, {'img_path': 'images/img_85.jpg'}, {'img_path': 'images/img_86.jpg'}, {'img_path': 'images/img_87.jpg'}, {'img_path': 'images/img_88.jpg'}, {'img_path': 'images/img_89.jpg'}, {'img_path': 'images/img_90.jpg'}, {'img_path': 'images/img_91.jpg'}, {'img_path': 'images/img_92.jpg'}, {'img_path': 'images/img_93.jpg'}, {'img_path': 'images/img_94.jpg'}, {'img_path': 'images/img_95.jpg'}, {'img_path': 'images/img_96.jpg'}, {'img_path': 'images/img_97.jpg'}, {'img_path': 'images/img_98.jpg'}, {'img_path': 'images/img_99.jpg'}, {'img_path': 'images/img_100.jpg'}]}",
+                "additional_kwargs": {
+                    "idx": 1,
+                    "args": {
+                        "problem": "What pictures portray Nelson Mandela? Give me their titles."
+                    }
+                },
+                "type": "function",
+                "name": "text2SQL",
+                "id": "8a758ac6-7feb-4f29-867b-4b1cf0ec7dc4"
+            },
+            {
+                "content": "Thought: The response from the function only provides image paths without any titles or descriptions, which does not answer the user's question about the titles of pictures portraying Nelson Mandela. I need to replan to obtain the titles of these images.",
+                "type": "ai",
+                "id": "53fcf507-bc41-4890-a415-4af5aa2df205",
+                "tool_calls": [],
+                "invalid_tool_calls": []
+            },
+            {
+                "content": "Context from last attempt: The current data only includes image paths without titles or descriptions. I need to find a way to obtain the titles or descriptions of these images to answer the user's question. - Begin counting at : 2",
+                "type": "system",
+                "id": "e8f08952-7324-431f-91d2-aa096ddd5a37"
+            },
+            {
+                "content": "[{'img_path': 'images/img_0.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 2,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_0.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "3cf7877f-db0d-4a8e-87d0-578b62f0b2d6"
+            },
+            {
+                "content": "[{'img_path': 'images/img_1.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 3,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_1.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "ccdc8ffb-3f95-4e42-ae61-8bc6baec568c"
+            },
+            {
+                "content": "[{'img_path': 'images/img_2.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 4,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_2.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "5655c12f-af85-49bf-8255-57eef31ccca4"
+            },
+            {
+                "content": "[{'img_path': 'images/img_3.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 5,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_3.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "925c1f37-0a4f-4c47-bff3-b1bd728ad4ac"
+            },
+            {
+                "content": "[{'img_path': 'images/img_4.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 6,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_4.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "19531f88-00e2-42fe-9d31-0a94c2d51bd4"
+            },
+            {
+                "content": "[{'img_path': 'images/img_5.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 7,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_5.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "6f4f80ec-6508-4cf4-8c54-32cf805639f8"
+            },
+            {
+                "content": "[{'img_path': 'images/img_6.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 8,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_6.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "09155acf-a270-48d6-b7e0-425fe6bdc401"
+            },
+            {
+                "content": "[{'img_path': 'images/img_7.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 9,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_7.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "007643e3-66ab-4f77-a350-578408c32896"
+            },
+            {
+                "content": "[{'img_path': 'images/img_8.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 10,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_8.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "6c4ab1e9-8fad-4336-b822-050f75acd55c"
+            },
+            {
+                "content": "[{'img_path': 'images/img_9.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 11,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_9.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "98411ba6-6827-4570-a9b6-9b6201df0122"
+            },
+            {
+                "content": "[{'img_path': 'images/img_10.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 12,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_10.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "3785aa07-2e47-4235-aadf-104ad61e5c10"
+            },
+            {
+                "content": "[{'img_path': 'images/img_11.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 13,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_11.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "d7079653-0abb-4531-8576-5c8c44bdceee"
+            },
+            {
+                "content": "[{'img_path': 'images/img_12.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 14,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_12.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "fe0693fb-85f0-4a5d-94e1-b3f83e8037f1"
+            },
+            {
+                "content": "[{'img_path': 'images/img_13.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 15,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_13.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "c129103f-8b21-43af-828f-50e19ed66f5a"
+            },
+            {
+                "content": "[{'img_path': 'images/img_14.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 16,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_14.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "8ea422e8-5cd8-42a8-9166-41c81fcc8f4a"
+            },
+            {
+                "content": "[{'img_path': 'images/img_15.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 17,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_15.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "efbfd6d9-39f0-4749-ba71-16768d1dbd29"
+            },
+            {
+                "content": "[{'img_path': 'images/img_16.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 18,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_16.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "01f9c525-1d37-44a2-87c9-6c7a41a499ee"
+            },
+            {
+                "content": "[{'img_path': 'images/img_17.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 19,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_17.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "2417cc32-a231-4dd6-838a-7edf86f831fb"
+            },
+            {
+                "content": "[{'img_path': 'images/img_18.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 20,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_18.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "5f716dac-1825-4bf6-9c0d-f38224bc5589"
+            },
+            {
+                "content": "[{'img_path': 'images/img_19.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 21,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_19.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "959b12c9-4545-4b58-b68a-9c355d580dbc"
+            },
+            {
+                "content": "[{'img_path': 'images/img_20.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 22,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_20.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "232bf7bd-9f49-41aa-a15d-483c697cff8c"
+            },
+            {
+                "content": "[{'img_path': 'images/img_21.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 23,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_21.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "4e3d5ce1-9c43-4a11-8fde-96ab8d8f712f"
+            },
+            {
+                "content": "[{'img_path': 'images/img_22.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 24,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_22.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "e89fcdcd-0640-4036-aed5-b361758d18f4"
+            },
+            {
+                "content": "[{'img_path': 'images/img_23.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 25,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_23.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "94f9dbcb-5ae6-4e1e-a46c-400eaccfb8b9"
+            },
+            {
+                "content": "[{'img_path': 'images/img_24.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 26,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_24.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "29e4be6d-c3c8-4fd8-9614-93dfb9aa5813"
+            },
+            {
+                "content": "[{'img_path': 'images/img_25.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 27,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_25.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "5e267375-47fc-4f68-9b96-54f86aaeb24e"
+            },
+            {
+                "content": "[{'img_path': 'images/img_26.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 28,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_26.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "43db7f04-66fe-4637-815e-b349ad393da0"
+            },
+            {
+                "content": "[{'img_path': 'images/img_27.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 29,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_27.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "fa798866-1f52-4ffa-83e2-ee8de3963ee9"
+            },
+            {
+                "content": "[{'img_path': 'images/img_28.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 30,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_28.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "f3b58498-e67b-4d89-90c7-7d5820631a2f"
+            },
+            {
+                "content": "[{'img_path': 'images/img_29.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 31,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_29.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "a48d0121-f4cf-4cab-ba11-b247c6ffe0bd"
+            },
+            {
+                "content": "[{'img_path': 'images/img_30.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 32,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_30.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "1f7f62e2-31b5-47b7-a1b0-caf992bfe234"
+            },
+            {
+                "content": "[{'img_path': 'images/img_31.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 33,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_31.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "18dc096d-5df8-4a63-b96e-e0e93f6ccf99"
+            },
+            {
+                "content": "[{'img_path': 'images/img_32.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 34,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_32.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "f614ca2f-e431-4ada-b1d7-223e45ea5933"
+            },
+            {
+                "content": "[{'img_path': 'images/img_33.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 35,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_33.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "8b6a962b-67aa-438e-b991-456a3df1a214"
+            },
+            {
+                "content": "[{'img_path': 'images/img_34.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 36,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_34.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "00c8f18d-fb65-4406-b4b7-ed541ba222c0"
+            },
+            {
+                "content": "[{'img_path': 'images/img_35.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 37,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_35.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "ddcd9a91-4a39-420e-9b76-7a136dcd61e4"
+            },
+            {
+                "content": "[{'img_path': 'images/img_36.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 38,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_36.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "e7ad1871-eb23-4a9f-a62e-e8f9763b4440"
+            },
+            {
+                "content": "[{'img_path': 'images/img_37.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 39,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_37.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "ad3ec4cc-5398-492a-8397-b233d8b3230c"
+            },
+            {
+                "content": "[{'img_path': 'images/img_38.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 40,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_38.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "4b874d7e-78b6-4d7c-8cbe-6742f31e0172"
+            },
+            {
+                "content": "[{'img_path': 'images/img_39.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 41,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_39.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "ea2c1b2a-84e2-4b8c-bc61-3133f418ede5"
+            },
+            {
+                "content": "[{'img_path': 'images/img_40.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 42,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_40.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "02a18da5-5c5a-4218-947b-95881f1d5e3d"
+            },
+            {
+                "content": "[{'img_path': 'images/img_41.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 43,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_41.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "fec080c8-0254-4528-83cb-79d0d7871cd9"
+            },
+            {
+                "content": "[{'img_path': 'images/img_42.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 44,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_42.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "e375ee81-7429-4c61-b168-28fd161948e9"
+            },
+            {
+                "content": "[{'img_path': 'images/img_43.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 45,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_43.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "129c2802-3ce7-47f8-9c35-4147145b06e9"
+            },
+            {
+                "content": "[{'img_path': 'images/img_44.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 46,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_44.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "ffc85985-f1eb-4f5f-bed2-819ca9bcb902"
+            },
+            {
+                "content": "[{'img_path': 'images/img_45.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 47,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_45.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "0a9cb499-c7e8-4974-b77a-630a70092812"
+            },
+            {
+                "content": "[{'img_path': 'images/img_46.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 48,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_46.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "30c57f4e-c637-47b8-a1c0-71de5d89e03f"
+            },
+            {
+                "content": "[{'img_path': 'images/img_47.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 49,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_47.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "81b206ae-9726-4eea-8d60-5102cea5c7a3"
+            },
+            {
+                "content": "[{'img_path': 'images/img_48.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 50,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_48.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "99b6e003-44ee-47de-97a0-24d1b37df914"
+            },
+            {
+                "content": "[{'img_path': 'images/img_49.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 51,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_49.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "ded5dbd4-2692-481b-8ccb-8c073fbfcb43"
+            },
+            {
+                "content": "[{'img_path': 'images/img_50.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 52,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_50.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "a846bc11-1c82-4b68-91d9-16489224fcfd"
+            },
+            {
+                "content": "[{'img_path': 'images/img_51.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 53,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_51.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "97b37906-1256-43a7-81e2-5f4b0b6049a4"
+            },
+            {
+                "content": "[{'img_path': 'images/img_52.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 54,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_52.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "418817ab-ae59-44fe-9f32-5748a4189c2b"
+            },
+            {
+                "content": "[{'img_path': 'images/img_53.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 55,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_53.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "56d32df6-91d9-473a-8650-547c8e0877e9"
+            },
+            {
+                "content": "[{'img_path': 'images/img_54.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 56,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_54.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "d907d328-daaa-4dcc-9a3f-d18c9b0cd55e"
+            },
+            {
+                "content": "[{'img_path': 'images/img_55.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 57,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_55.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "78e6f611-d82e-419f-8443-e06071ece230"
+            },
+            {
+                "content": "[{'img_path': 'images/img_56.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 58,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_56.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "f485e41f-58a2-46a1-8488-6763f9f7759f"
+            },
+            {
+                "content": "[{'img_path': 'images/img_57.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 59,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_57.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "d77d247e-f0d8-4c00-9059-9ad1efc13ecc"
+            },
+            {
+                "content": "[{'img_path': 'images/img_58.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 60,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_58.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "993b78d4-f5b6-4239-bde5-77de59c7d6ee"
+            },
+            {
+                "content": "[{'img_path': 'images/img_59.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 61,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_59.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "f0d1ef7d-8e02-4cca-8127-7ae4f4aa6bc1"
+            },
+            {
+                "content": "[{'img_path': 'images/img_60.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 62,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_60.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "a17006bb-b8fc-4f7a-be94-5d1aa1fb6c91"
+            },
+            {
+                "content": "[{'img_path': 'images/img_61.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 63,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_61.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "d972e0c2-7e7f-4a7f-9e39-0dedbff86ef5"
+            },
+            {
+                "content": "[{'img_path': 'images/img_62.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 64,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_62.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "bc0f52d8-e158-4c10-be9e-834eacf6494b"
+            },
+            {
+                "content": "[{'img_path': 'images/img_63.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 65,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_63.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "72756d5b-e30b-4fcc-b509-431c1bb8fa9f"
+            },
+            {
+                "content": "[{'img_path': 'images/img_64.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 66,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_64.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "8da28033-170e-480a-a059-0a88fac9cff4"
+            },
+            {
+                "content": "[{'img_path': 'images/img_65.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 67,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_65.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "c301b2d7-e656-4db0-87b7-3fcbb9f3874a"
+            },
+            {
+                "content": "[{'img_path': 'images/img_66.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 68,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_66.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "451edf26-c47d-469d-942a-db9d95757f69"
+            },
+            {
+                "content": "[{'img_path': 'images/img_67.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 69,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_67.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "17dc6b0a-db58-420b-a577-275d7c88f513"
+            },
+            {
+                "content": "[{'img_path': 'images/img_68.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 70,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_68.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "98e69dba-931b-46bb-8689-77aaf705eff5"
+            },
+            {
+                "content": "[{'img_path': 'images/img_69.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 71,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_69.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "4129c154-c20a-43bf-b29f-4b00dd8e5ddd"
+            },
+            {
+                "content": "[{'img_path': 'images/img_70.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 72,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_70.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "bcbb73e6-92f7-4f7d-83f5-212584dec132"
+            },
+            {
+                "content": "[{'img_path': 'images/img_71.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 73,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_71.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "00544107-6d5d-4212-af80-4f8ce620e60f"
+            },
+            {
+                "content": "[{'img_path': 'images/img_72.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 74,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_72.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "c0490729-7074-4dda-ad32-03f2ab77805c"
+            },
+            {
+                "content": "[{'img_path': 'images/img_73.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 75,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_73.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "77f91205-4f62-46c2-85c6-495367c712b6"
+            },
+            {
+                "content": "[{'img_path': 'images/img_74.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 76,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_74.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "862f6b36-59c9-47bc-8a48-9058ddf5f2e9"
+            },
+            {
+                "content": "[{'img_path': 'images/img_75.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 77,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_75.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "9996d135-ff26-40c4-9a0c-9754bb41cfdd"
+            },
+            {
+                "content": "[{'img_path': 'images/img_76.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 78,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_76.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "475731d6-3c74-4c96-afbf-755586a78de9"
+            },
+            {
+                "content": "[{'img_path': 'images/img_77.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 79,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_77.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "1ffa0880-a083-46f3-802d-d3eafa661485"
+            },
+            {
+                "content": "[{'img_path': 'images/img_78.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 80,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_78.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "4e304896-df00-4c6b-bee2-d21e2d22670f"
+            },
+            {
+                "content": "[{'img_path': 'images/img_79.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 81,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_79.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "c7cf10ea-7f3e-4b7d-b482-7a9121c17850"
+            },
+            {
+                "content": "[{'img_path': 'images/img_80.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 82,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_80.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "59ec5fdd-8971-4fc4-a194-8fe037d96d9b"
+            },
+            {
+                "content": "[{'img_path': 'images/img_81.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 83,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_81.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "cd45c685-dcb2-4f24-80ed-b2a0326a1a5b"
+            },
+            {
+                "content": "[{'img_path': 'images/img_82.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 84,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_82.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "7e7f19a2-f9c5-475a-b2c8-25d9aaa57ab5"
+            },
+            {
+                "content": "[{'img_path': 'images/img_83.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 85,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_83.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "20113253-b5de-423a-a9b9-3d5f3d323c35"
+            },
+            {
+                "content": "[{'img_path': 'images/img_84.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 86,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_84.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "293ff4cc-7cbd-4369-9d62-891325b71a25"
+            },
+            {
+                "content": "[{'img_path': 'images/img_85.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 87,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_85.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "00a2acdb-c1ba-4c2e-b572-44321806ca73"
+            },
+            {
+                "content": "[{'img_path': 'images/img_86.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 88,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_86.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "91ca6058-f44a-481c-9c39-0720fa1fd7b0"
+            },
+            {
+                "content": "[{'img_path': 'images/img_87.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 89,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_87.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "88bb979c-379f-449a-a726-078fbf3f0811"
+            },
+            {
+                "content": "[{'img_path': 'images/img_88.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 90,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_88.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "0d01e889-1b46-4bbc-aea2-d15a5646c836"
+            },
+            {
+                "content": "[{'img_path': 'images/img_89.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 91,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_89.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "d764e38b-be28-470a-a407-e54bc7c3a94a"
+            },
+            {
+                "content": "[{'img_path': 'images/img_90.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 92,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_90.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "f73984c6-0092-4927-a795-a8e598b819b5"
+            },
+            {
+                "content": "[{'img_path': 'images/img_91.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 93,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_91.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "fec0f409-2144-45dc-942c-039524a679e0"
+            },
+            {
+                "content": "[{'img_path': 'images/img_92.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 94,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_92.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "aa66df63-2a15-4e66-bb96-bd8ebec57a8a"
+            },
+            {
+                "content": "[{'img_path': 'images/img_93.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 95,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_93.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "80621707-c0ea-42de-bb07-3cf9b6881797"
+            },
+            {
+                "content": "[{'img_path': 'images/img_94.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 96,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_94.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "5fcf98c8-560f-4919-b3bd-454b9c000c91"
+            },
+            {
+                "content": "[{'img_path': 'images/img_95.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 97,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_95.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "4ec1d410-ac1a-472b-af88-77053958e5ae"
+            },
+            {
+                "content": "[{'img_path': 'images/img_96.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 98,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_96.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "8f47547d-07e9-4d4c-b376-60c66e4d8a23"
+            },
+            {
+                "content": "[{'img_path': 'images/img_97.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 99,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_97.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "c0ed0e3f-1d6b-46f4-bba3-5d8d9ad1d0d8"
+            },
+            {
+                "content": "[{'img_path': 'images/img_98.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 100,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_98.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "17c87322-3e4a-4f7f-8ae1-bb86e35086c8"
+            },
+            {
+                "content": "[{'img_path': 'images/img_99.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 101,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_99.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "a89ed039-3776-4b6a-85c5-3ab3af8bc50e"
+            },
+            {
+                "content": "[{'img_path': 'images/img_100.jpg', 'Does this image portray Nelson Mandela?': 'no'}]",
+                "additional_kwargs": {
+                    "idx": 102,
+                    "args": {
+                        "question": "Does this image portray Nelson Mandela?",
+                        "context": [
+                            {
+                                "img_path": "images/img_100.jpg"
+                            }
+                        ]
+                    }
+                },
+                "type": "function",
+                "name": "image_analysis",
+                "id": "f34ec343-dbba-4356-a8c4-6e0a8967613c"
+            },
+            {
+                "content": "join",
+                "additional_kwargs": {
+                    "idx": 103,
+                    "args": []
+                },
+                "type": "function",
+                "name": "join",
+                "id": "13ab1190-867a-41aa-bda8-1f0a3fa0655f"
+            },
+            {
+                "content": "Thought: The image analysis results indicate that none of the images portray Nelson Mandela. Therefore, I cannot provide titles of pictures portraying him as none were identified.",
+                "type": "ai",
+                "id": "f9ed04c8-d556-4a27-9c66-03dfb460a258",
+                "tool_calls": [],
+                "invalid_tool_calls": []
+            },
+            {
+                "content": "{'Summary': 'No images portraying Nelson Mandela were identified.', 'details': 'After analyzing 101 images, none were found to portray Nelson Mandela.', 'source': 'Image analysis results from the provided dataset.', 'inference': 'No', 'extra explanation': 'The dataset provided did not contain any images of Nelson Mandela.'}",
+                "type": "ai",
+                "id": "77533ce1-331c-4f9b-9dee-e187a35ca8a7",
+                "tool_calls": [],
+                "invalid_tool_calls": []
+            }
+        ],
+        "prediction": [
+            {
+                "Summary": "No images portraying Nelson Mandela were identified.",
+                "details": "After analyzing 101 images, none were found to portray Nelson Mandela.",
+                "source": "Image analysis results from the provided dataset.",
+                "inference": "No",
+                "extra explanation": "The dataset provided did not contain any images of Nelson Mandela."
+            }
+        ]
+    }
+]

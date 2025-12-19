@@ -1,0 +1,12 @@
+{
+  "project_name": "XMODE-ArtWork-batch-anthropic-claude-sonnet-4-5-20250929-openrouter-qwen-qwen3-vl-8b-instruct-run-20251210-181613",
+  "run_label": "run-20251210-181613-r001",
+  "model_provider": "anthropic",
+  "model_name": "claude-sonnet-4-5-20250929",
+  "vqa_provider": "openrouter",
+  "vqa_model": "qwen/qwen3-vl-8b-instruct",
+  "config_path": "/home/bleon/git/XMODE/ArtWork/experiments/batch/tmp-configs/anthropic-claude-sonnet-4-5-20250929/run-20251210-181613-r001.json",
+  "output_dir_template": "/home/bleon/git/XMODE/ArtWork/experiments/batch/{language}/anthropic-claude-sonnet-4-5-20250929/run-20251210-181613-r001",
+  "log_dir": "/home/bleon/git/XMODE/ArtWork/experiments/log-batch/anthropic-claude-sonnet-4-5-20250929/run-20251210-181613-r001",
+  "status": "success"
+}

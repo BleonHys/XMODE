@@ -1,0 +1,274 @@
+{
+  "title": "Number of Paintings per Year",
+  "x_axis_label": "Year",
+  "y_axis_label": "Number of Paintings",
+  "data_points": [
+    {
+      "inception_year": "1438",
+      "painting_count": 1
+    },
+    {
+      "inception_year": "1470",
+      "painting_count": 2
+    },
+    {
+      "inception_year": "1472",
+      "painting_count": 1
+    },
+    {
+      "inception_year": "1474",
+      "painting_count": 1
+    },
+    {
+      "inception_year": "1475",
+      "painting_count": 1
+    },
+    {
+      "inception_year": "1476",
+      "painting_count": 2
+    },
+    {
+      "inception_year": "1477",
+      "painting_count": 13
+    },
+    {
+      "inception_year": "1479",
+      "painting_count": 12
+    },
+    {
+      "inception_year": "1480",
+      "painting_count": 3
+    },
+    {
+      "inception_year": "1483",
+      "painting_count": 4
+    },
+    {
+      "inception_year": "1500",
+      "painting_count": 3
+    },
+    {
+      "inception_year": "1520",
+      "painting_count": 1
+    },
+    {
+      "inception_year": "1525",
+      "painting_count": 1
+    },
+    {
+      "inception_year": "1528",
+      "painting_count": 1
+    },
+    {
+      "inception_year": "1530",
+      "painting_count": 2
+    },
+    {
+      "inception_year": "1536",
+      "painting_count": 7
+    },
+    {
+      "inception_year": "1550",
+      "painting_count": 1
+    },
+    {
+      "inception_year": "1565",
+      "painting_count": 2
+    },
+    {
+      "inception_year": "1583",
+      "painting_count": 1
+    },
+    {
+      "inception_year": "1585",
+      "painting_count": 1
+    },
+    {
+      "inception_year": "1600",
+      "painting_count": 4
+    },
+    {
+      "inception_year": "1764",
+      "painting_count": 1
+    },
+    {
+      "inception_year": "1770",
+      "painting_count": 1
+    },
+    {
+      "inception_year": "1771",
+      "painting_count": 1
+    },
+    {
+      "inception_year": "1784",
+      "painting_count": 1
+    },
+    {
+      "inception_year": "1785",
+      "painting_count": 1
+    },
+    {
+      "inception_year": "1787",
+      "painting_count": 1
+    },
+    {
+      "inception_year": "1788",
+      "painting_count": 2
+    },
+    {
+      "inception_year": "1789",
+      "painting_count": 2
+    },
+    {
+      "inception_year": "1793",
+      "painting_count": 2
+    },
+    {
+      "inception_year": "1799",
+      "painting_count": 1
+    },
+    {
+      "inception_year": "1800",
+      "painting_count": 1
+    },
+    {
+      "inception_year": "1806",
+      "painting_count": 2
+    },
+    {
+      "inception_year": "1811",
+      "painting_count": 2
+    },
+    {
+      "inception_year": "1814",
+      "painting_count": 1
+    },
+    {
+      "inception_year": "1824",
+      "painting_count": 2
+    },
+    {
+      "inception_year": "1827",
+      "painting_count": 1
+    },
+    {
+      "inception_year": "1840",
+      "painting_count": 1
+    },
+    {
+      "inception_year": "1856",
+      "painting_count": 9
+    },
+    {
+      "inception_year": "1862",
+      "painting_count": 2
+    },
+    {
+      "inception_year": "1879",
+      "painting_count": 2
+    },
+    {
+      "inception_year": "2000",
+      "painting_count": 1
+    }
+  ],
+  "years": [
+    1438,
+    1470,
+    1472,
+    1474,
+    1475,
+    1476,
+    1477,
+    1479,
+    1480,
+    1483,
+    1500,
+    1520,
+    1525,
+    1528,
+    1530,
+    1536,
+    1550,
+    1565,
+    1583,
+    1585,
+    1600,
+    1764,
+    1770,
+    1771,
+    1784,
+    1785,
+    1787,
+    1788,
+    1789,
+    1793,
+    1799,
+    1800,
+    1806,
+    1811,
+    1814,
+    1824,
+    1827,
+    1840,
+    1856,
+    1862,
+    1879,
+    2000
+  ],
+  "painting_counts": [
+    1,
+    2,
+    1,
+    1,
+    1,
+    2,
+    13,
+    12,
+    3,
+    4,
+    3,
+    1,
+    1,
+    1,
+    2,
+    7,
+    1,
+    2,
+    1,
+    1,
+    4,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2,
+    1,
+    1,
+    2,
+    2,
+    1,
+    2,
+    1,
+    1,
+    9,
+    2,
+    2,
+    1
+  ],
+  "total_years": 42,
+  "total_paintings": 101,
+  "year_range": {
+    "min_year": 1438,
+    "max_year": 2000
+  },
+  "statistics": {
+    "max_paintings_in_year": 13,
+    "min_paintings_in_year": 1,
+    "average_paintings_per_year": 2.4
+  }
+}

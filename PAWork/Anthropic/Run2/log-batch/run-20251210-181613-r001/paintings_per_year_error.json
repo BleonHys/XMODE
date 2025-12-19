@@ -1,0 +1,23 @@
+{
+  "status": "error",
+  "message": "Cannot prepare plotting data - SQL query failed",
+  "details": "You can only execute one statement at a time.",
+  "required_data_format": {
+    "description": "To prepare data for plotting paintings per year, I need SQL results in the following format:",
+    "expected_structure": [
+      {
+        "year": 2020,
+        "count": 15
+      },
+      {
+        "year": 2021,
+        "count": 23
+      },
+      {
+        "year": 2022,
+        "count": 18
+      }
+    ]
+  },
+  "suggestion": "Please fix the SQL query to execute only one statement at a time and retrieve the painting counts per year"
+}

@@ -1,0 +1,42 @@
+[
+    {
+        "genre": "Hodegetria",
+        "painting_count": 1
+    },
+    {
+        "genre": "allegory",
+        "painting_count": 3
+    },
+    {
+        "genre": "figure painting",
+        "painting_count": 3
+    },
+    {
+        "genre": "genre art",
+        "painting_count": 1
+    },
+    {
+        "genre": "history painting",
+        "painting_count": 10
+    },
+    {
+        "genre": "interior view",
+        "painting_count": 1
+    },
+    {
+        "genre": "mythological painting",
+        "painting_count": 4
+    },
+    {
+        "genre": "nude",
+        "painting_count": 8
+    },
+    {
+        "genre": "portrait",
+        "painting_count": 16
+    },
+    {
+        "genre": "religious art",
+        "painting_count": 54
+    }
+]

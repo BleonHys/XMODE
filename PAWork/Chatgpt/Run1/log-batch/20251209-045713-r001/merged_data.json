@@ -1,0 +1,52 @@
+[
+    {
+        "img_path": "images/img_58.jpg",
+        "How many swords are depicted?": 0,
+        "genre": "Hodegetria"
+    },
+    {
+        "img_path": "images/img_82.jpg",
+        "How many swords are depicted?": 0,
+        "genre": "allegory"
+    },
+    {
+        "img_path": "images/img_85.jpg",
+        "How many swords are depicted?": 0,
+        "genre": "figure painting"
+    },
+    {
+        "img_path": "images/img_95.jpg",
+        "How many swords are depicted?": 1,
+        "genre": "genre art"
+    },
+    {
+        "img_path": "images/img_13.jpg",
+        "How many swords are depicted?": 0,
+        "genre": "history painting"
+    },
+    {
+        "img_path": "images/img_99.jpg",
+        "How many swords are depicted?": 1,
+        "genre": "interior view"
+    },
+    {
+        "img_path": "images/img_73.jpg",
+        "How many swords are depicted?": 1,
+        "genre": "mythological painting"
+    },
+    {
+        "img_path": "images/img_72.jpg",
+        "How many swords are depicted?": 1,
+        "genre": "nude"
+    },
+    {
+        "img_path": "images/img_4.jpg",
+        "How many swords are depicted?": 1,
+        "genre": "portrait"
+    },
+    {
+        "img_path": "images/img_0.jpg",
+        "How many swords are depicted?": 6,
+        "genre": "religious art"
+    }
+]

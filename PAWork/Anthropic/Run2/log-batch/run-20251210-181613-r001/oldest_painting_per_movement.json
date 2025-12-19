@@ -1,0 +1,17 @@
+{
+  "title": "Year of Oldest Painting per Art Movement",
+  "x_axis_label": "Art Movement",
+  "y_axis_label": "Year",
+  "data_points": [
+    {
+      "movement_name": "Renaissance",
+      "oldest_painting_year": 1438,
+      "display_label": "Renaissance (1438)"
+    },
+    {
+      "movement_name": "neoclassicism",
+      "oldest_painting_year": 1764,
+      "display_label": "neoclassicism (1764)"
+    }
+  ]
+}

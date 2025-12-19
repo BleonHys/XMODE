@@ -1,0 +1,7 @@
+{
+  "query": "Count of paintings depicting War grouped by year",
+  "total_war_paintings": 0,
+  "years_with_war_paintings": 0,
+  "war_paintings_by_year": [],
+  "note": "No paintings with genre \"War\" found in the provided dataset. All paintings are categorized as \"history painting\"."
+}

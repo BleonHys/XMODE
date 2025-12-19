@@ -1,0 +1,430 @@
+{
+  "status": "incomplete_data",
+  "message": "Cannot filter artworks by skin tone - required analysis data is missing",
+  "error_encountered": "KeyError('img_path')",
+  "data_received": {
+    "total_artworks": 101,
+    "fields_available": [
+      "rowid",
+      "title"
+    ],
+    "fields_missing": [
+      "skin_tone_analysis",
+      "image_analysis",
+      "people_detected",
+      "skin_tone_classification"
+    ]
+  },
+  "filtered_results": {
+    "artworks_with_darker_skin_tone": [],
+    "count": 0,
+    "note": "Unable to filter - skin tone data not available in provided results"
+  },
+  "all_artworks_received": [
+    {
+      "rowid": 1,
+      "title": "Predella of the Barbadori altarpiece"
+    },
+    {
+      "rowid": 2,
+      "title": "Judith"
+    },
+    {
+      "rowid": 3,
+      "title": "Judith"
+    },
+    {
+      "rowid": 4,
+      "title": "Die durch Engel bekrönte Muttergottes mit Kind im Kreise der 14 Schutzheiligen des Hauses Zimmern"
+    },
+    {
+      "rowid": 5,
+      "title": "Der kniende Stifter Graf Gottfried Werner von Zimmern – Christus am Ölberg"
+    },
+    {
+      "rowid": 6,
+      "title": "Der kniende Stifter Graf Gottfried Werner von Zimmern – Christus am Ölberg"
+    },
+    {
+      "rowid": 7,
+      "title": "Die kniende Stifterin Gräfin Apollonia von Henneberg – Christus am Ölberg"
+    },
+    {
+      "rowid": 8,
+      "title": "Die kniende Stifterin Gräfin Apollonia von Henneberg – Christus am Ölberg"
+    },
+    {
+      "rowid": 9,
+      "title": "Christi Abschied von seiner Mutter"
+    },
+    {
+      "rowid": 10,
+      "title": "The capture of Christ"
+    },
+    {
+      "rowid": 11,
+      "title": "Madonna/Virgin and Child with the Infant St John the Baptist."
+    },
+    {
+      "rowid": 12,
+      "title": "Sant'Orsola in gloria"
+    },
+    {
+      "rowid": 13,
+      "title": "Portrait of Eleanor of Austria"
+    },
+    {
+      "rowid": 14,
+      "title": "Portrait of Eleanor of Austria"
+    },
+    {
+      "rowid": 15,
+      "title": "Saint Dominic"
+    },
+    {
+      "rowid": 16,
+      "title": "Saint Dominic"
+    },
+    {
+      "rowid": 17,
+      "title": "Nursing Madonna"
+    },
+    {
+      "rowid": 18,
+      "title": "Saint John the Baptist"
+    },
+    {
+      "rowid": 19,
+      "title": "Christ of the Mercy"
+    },
+    {
+      "rowid": 20,
+      "title": "Death and Assumption of the Virgin Mary"
+    },
+    {
+      "rowid": 21,
+      "title": "Entry to the Paradise and vision of the Crucified"
+    },
+    {
+      "rowid": 22,
+      "title": "ascension"
+    },
+    {
+      "rowid": 23,
+      "title": "altarpiece of Sainte Engratia"
+    },
+    {
+      "rowid": 24,
+      "title": "Sainte Engratia"
+    },
+    {
+      "rowid": 25,
+      "title": "The Arrest of Santa Engracia"
+    },
+    {
+      "rowid": 26,
+      "title": "Imprisonment of Sainte Engratia"
+    },
+    {
+      "rowid": 27,
+      "title": "predella from altarpiece of Sainte Engratia"
+    },
+    {
+      "rowid": 28,
+      "title": "Calvary from altarpiece of Sainte Engratia from altarpiece of Sainte Engratia"
+    },
+    {
+      "rowid": 29,
+      "title": "Altarpiece of Santo Domingo de Silos"
+    },
+    {
+      "rowid": 30,
+      "title": "Altarpiece of Santo Domingo de Silos"
+    },
+    {
+      "rowid": 31,
+      "title": "Death of Santo Domingo de Silos"
+    },
+    {
+      "rowid": 32,
+      "title": "Death of Santo Domingo de Silos"
+    },
+    {
+      "rowid": 33,
+      "title": "Altarpiece of Mare de Déu de la Misericordia by Bartolomé Bermejo"
+    },
+    {
+      "rowid": 34,
+      "title": "Altarpiece of Mare de Déu de la Misericordia by Bartolomé Bermejo"
+    },
+    {
+      "rowid": 35,
+      "title": "Q61962938"
+    },
+    {
+      "rowid": 36,
+      "title": "Q61962938"
+    },
+    {
+      "rowid": 37,
+      "title": "Q61963030"
+    },
+    {
+      "rowid": 38,
+      "title": "Q61963030"
+    },
+    {
+      "rowid": 39,
+      "title": "Q61963077"
+    },
+    {
+      "rowid": 40,
+      "title": "Q61963077"
+    },
+    {
+      "rowid": 41,
+      "title": "Q61963086"
+    },
+    {
+      "rowid": 42,
+      "title": "Q61963086"
+    },
+    {
+      "rowid": 43,
+      "title": "Saint Damian"
+    },
+    {
+      "rowid": 44,
+      "title": "Saint Damian"
+    },
+    {
+      "rowid": 45,
+      "title": "Descent from the Cross"
+    },
+    {
+      "rowid": 46,
+      "title": "Descent from the Cross"
+    },
+    {
+      "rowid": 47,
+      "title": "The Adoration of the Magi"
+    },
+    {
+      "rowid": 48,
+      "title": "The Adoration of the Magi"
+    },
+    {
+      "rowid": 49,
+      "title": "Q61965321"
+    },
+    {
+      "rowid": 50,
+      "title": "Q61965321"
+    },
+    {
+      "rowid": 51,
+      "title": "Triptych of the Virgin of Montserrat"
+    },
+    {
+      "rowid": 52,
+      "title": "Triptych of the Virgin of Montserrat"
+    },
+    {
+      "rowid": 53,
+      "title": "Triptych of the Virgin of Montserrat"
+    },
+    {
+      "rowid": 54,
+      "title": "Triptych of the Virgin of Montserrat"
+    },
+    {
+      "rowid": 55,
+      "title": "Portrait of Pope Gregory XIII"
+    },
+    {
+      "rowid": 56,
+      "title": "Calavera"
+    },
+    {
+      "rowid": 57,
+      "title": "Madonna with grapes"
+    },
+    {
+      "rowid": 58,
+      "title": "Q66287947"
+    },
+    {
+      "rowid": 59,
+      "title": "Our Lady of Piasek"
+    },
+    {
+      "rowid": 60,
+      "title": "Our Lady of Piasek"
+    },
+    {
+      "rowid": 61,
+      "title": "Saint John the Baptist by Ercole de' Roberti"
+    },
+    {
+      "rowid": 62,
+      "title": "Portrait of Pope Julius III"
+    },
+    {
+      "rowid": 63,
+      "title": "Portrait of Pope Julius III"
+    },
+    {
+      "rowid": 64,
+      "title": "Q113636993"
+    },
+    {
+      "rowid": 65,
+      "title": "Portrait of Pope Gregory XIII, bust-length"
+    },
+    {
+      "rowid": 66,
+      "title": "Mademoiselle Caroline Rivière"
+    },
+    {
+      "rowid": 67,
+      "title": "The Oath of the Horatii"
+    },
+    {
+      "rowid": 68,
+      "title": "The Oath of the Horatii"
+    },
+    {
+      "rowid": 69,
+      "title": "Portrait of Antoine-Laurent Lavoisier and his wife"
+    },
+    {
+      "rowid": 70,
+      "title": "The Death of Marat"
+    },
+    {
+      "rowid": 71,
+      "title": "The Death of Marat"
+    },
+    {
+      "rowid": 72,
+      "title": "Antiochus and Stratonice"
+    },
+    {
+      "rowid": 73,
+      "title": "Mars Being Disarmed by Venus"
+    },
+    {
+      "rowid": 74,
+      "title": "Mars Being Disarmed by Venus"
+    },
+    {
+      "rowid": 75,
+      "title": "Portrait of Lady Clan Henderson"
+    },
+    {
+      "rowid": 76,
+      "title": "Portrait of David Garrick"
+    },
+    {
+      "rowid": 77,
+      "title": "Jupiter and Thetis"
+    },
+    {
+      "rowid": 78,
+      "title": "Jupiter and Thetis"
+    },
+    {
+      "rowid": 79,
+      "title": "The Death of General Wolfe"
+    },
+    {
+      "rowid": 80,
+      "title": "The Source"
+    },
+    {
+      "rowid": 81,
+      "title": "The Source"
+    },
+    {
+      "rowid": 82,
+      "title": "The Source"
+    },
+    {
+      "rowid": 83,
+      "title": "The Source"
+    },
+    {
+      "rowid": 84,
+      "title": "The Source"
+    },
+    {
+      "rowid": 85,
+      "title": "The Source"
+    },
+    {
+      "rowid": 86,
+      "title": "The Source"
+    },
+    {
+      "rowid": 87,
+      "title": "The Source"
+    },
+    {
+      "rowid": 88,
+      "title": "The Source"
+    },
+    {
+      "rowid": 89,
+      "title": "Napoleon I on his Imperial Throne"
+    },
+    {
+      "rowid": 90,
+      "title": "The Birth of Venus"
+    },
+    {
+      "rowid": 91,
+      "title": "The Birth of Venus"
+    },
+    {
+      "rowid": 92,
+      "title": "The Intervention of the Sabine Women"
+    },
+    {
+      "rowid": 93,
+      "title": "The Death of Socrates"
+    },
+    {
+      "rowid": 94,
+      "title": "Grande Odalisque"
+    },
+    {
+      "rowid": 95,
+      "title": "The Turkish Bath"
+    },
+    {
+      "rowid": 96,
+      "title": "The Turkish Bath"
+    },
+    {
+      "rowid": 97,
+      "title": "The Milkmaid of Bordeaux"
+    },
+    {
+      "rowid": 98,
+      "title": "Paris and Helen"
+    },
+    {
+      "rowid": 99,
+      "title": "The Lictors Bring to Brutus the Bodies of His Sons"
+    },
+    {
+      "rowid": 100,
+      "title": "The Lictors Bring to Brutus the Bodies of His Sons"
+    },
+    {
+      "rowid": 101,
+      "title": "Portrait of Madame Récamier"
+    }
+  ],
+  "recommendation": "Please rerun the image analysis tool to include skin tone detection and classification data"
+}

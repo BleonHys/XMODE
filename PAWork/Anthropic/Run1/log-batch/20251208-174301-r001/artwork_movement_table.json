@@ -1,0 +1,42 @@
+{
+  "title": "Artwork Images by Movement",
+  "columns": [
+    "Image Number",
+    "Movement"
+  ],
+  "total_records": 8,
+  "data": [
+    {
+      "Image Number": 72,
+      "Movement": "neoclassicism"
+    },
+    {
+      "Image Number": 76,
+      "Movement": "neoclassicism"
+    },
+    {
+      "Image Number": 79,
+      "Movement": "neoclassicism"
+    },
+    {
+      "Image Number": 80,
+      "Movement": "neoclassicism"
+    },
+    {
+      "Image Number": 81,
+      "Movement": "neoclassicism"
+    },
+    {
+      "Image Number": 89,
+      "Movement": "neoclassicism"
+    },
+    {
+      "Image Number": 93,
+      "Movement": "neoclassicism"
+    },
+    {
+      "Image Number": 94,
+      "Movement": "neoclassicism"
+    }
+  ]
+}
